@@ -1,0 +1,14 @@
+{
+  "name": "erIOT",
+  "version": "1.0.0",
+  "description": "erIOT project",
+  "main": "index.js",
+  "author": "Erioifpud",
+  "license": "MIT",
+  "dependencies": {
+    "getmac": "^1.4.6",
+    "mosca": "^2.8.3",
+    "mqtt": "^2.18.8",
+    "redis": "^2.8.0"
+  }
+}

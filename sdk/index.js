@@ -4,7 +4,7 @@ const {
 } = require('node-machine-id')
 
 const machineId = machineIdSync()
-
+// TODO: 改成Promise
 class Client {
   constructor(options) {
     this.options = options || {}

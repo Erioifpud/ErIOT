@@ -6,9 +6,9 @@
   "author": "Erioifpud",
   "license": "MIT",
   "dependencies": {
-    "getmac": "^1.4.6",
     "mosca": "^2.8.3",
     "mqtt": "^2.18.8",
+    "node-machine-id": "^1.1.10",
     "redis": "^2.8.0"
   }
 }

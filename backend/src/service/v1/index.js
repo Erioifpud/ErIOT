@@ -1,5 +1,5 @@
-const common = require('./common')
+const _public = require('./public')
 
 module.exports = (router, prefix) => {
-  common(router, prefix)
+  _public(router, prefix + '/public')
 }

@@ -23,23 +23,31 @@ Permission.belongsToMany(Role, {
   foreignKey: 'permId'
 })
 
-sequelize.sync().then(() => {
-  // Step One: Create a user
-  // User.create({
-  // 	email: 'example@example.com'
-  // }).then(function (user) {
-  // 	// Step Two: Create Todo
-  // 	return Todo.create({
-  // 		description: 'Learn many-to-many associations'
-  // 	}).then(function (todo) {
-  // 		// Step Three: Add todo to user
-  // 		return user.addTodos([todo])
-  // 	});
-  // }).then(function () {
-  // 	console.log('Everything worked, check the database.');
-  // }).catch(function () {
-  // 	console.log('Something went wrong. Catch was executed.');
-  // });
+sequelize.sync({ force: true }).then(async () => {
+  const user = await User.create({
+    username: 'root',
+    password: '$2b$12$cUIwdwL1wHdlZmaK3UYQae3dYWFNz3xH70QwJq9c7i6X/zvdlKCFi'
+  })
+  const role1 = await Role.create({
+    name: 'test1'
+  })
+  const role2 = await Role.create({
+    name: 'test2'
+  })
+  const permission1 = await Permission.create({
+    rule: '/test/\\w+'
+  })
+  const permission2 = await Permission.create({
+    rule: '/test2/\\w+'
+  })
+  const permission3 = await Permission.create({
+    rule: '/test3/\\w+'
+  })
+  user.addRoles(role1)
+  user.addRoles(role2)
+  role1.addPermissions(permission1)
+  role1.addPermissions(permission2)
+  role2.addPermissions(permission3)
 })
 
 module.exports = {

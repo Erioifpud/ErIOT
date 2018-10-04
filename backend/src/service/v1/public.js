@@ -12,6 +12,7 @@ async function register (ctx) {
     }
     body.password = await bcrypt.hash(body.password, 12)
     const user = await User.findOne({
+      attributes: ['id'],
       where: { username: body.username }
     })
     if (user) {
@@ -36,8 +37,7 @@ async function login (ctx) {
     if (user) {
       const flag = await bcrypt.compare(body.password, user.password)
       if (flag) {
-        const test = await User.findOne({
-          attributes: ['id', 'username'],
+        const info = await User.findOne({
           where: {
             id: user.id
           },
@@ -54,25 +54,8 @@ async function login (ctx) {
             }
           ]
         })
-        // const roles = await user.getRoles()
-        // const test = await Permission.findAll({
-        //   include: [
-        //     {
-        //       model: Role,
-        //       where: {
-        //         id: {
-        //           $in: roles.map(r => r.id)
-        //         }
-        //       },
-        //       required: true
-        //     }
-        //   ]
-        // })
-        const token = jwt.sign({
-          id: user.id,
-          username: user.username
-        }, jwtConfig.secret, { expiresIn: jwtConfig.maxAge })
-        ctx.body = success({ token, test, user })
+        const token = jwt.sign({ info }, jwtConfig.secret, { expiresIn: jwtConfig.maxAge })
+        ctx.body = { token, ...success({ username: user.username }) }
         return
       }
     }

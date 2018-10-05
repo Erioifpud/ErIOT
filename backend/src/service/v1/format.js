@@ -20,11 +20,25 @@ const format = (success, data, code) => {
   }
 }
 
+const success = (data) => {
+  return format(true, data)
+}
+
+const error = (code, data) => {
+  return format(false, data, code)
+}
+
+const respSuccess = (ctx, data) => {
+  ctx.body = { ...ctx.body, ...success(data) }
+}
+
+const respError = (ctx, code, data) => {
+  ctx.body = { ...ctx.body, ...error(code, data) }
+}
+
 module.exports = {
-  success (data) {
-    return format(true, data)
-  },
-  error (code, data) {
-    return format(false, data, code)
-  }
+  success,
+  error,
+  respSuccess,
+  respError
 }

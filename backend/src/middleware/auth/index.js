@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 module.exports = {
   async auth (ctx, next) {
     if (!/Bearer \w+/.test(ctx.header.authorization)) {
-      next()
+      await next()
     } else {
       const token = ctx.header.authorization.split(' ')[1]
       const decoded = jwt.verify(token, jwtConfig.secret, {
@@ -12,8 +12,8 @@ module.exports = {
       })
 
       console.log('decoded', decoded)
-      ctx.body = ctx
-      next()
+      // ctx.body = ctx
+      await next()
     }
   }
 }

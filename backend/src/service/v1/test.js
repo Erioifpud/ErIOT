@@ -1,4 +1,4 @@
-const { success } = require('./format')
+const { respSuccess } = require('./format')
 const jwt = require('jsonwebtoken')
 const jwtConfig = require('../../config/jwt.json')
 
@@ -7,7 +7,7 @@ async function test (ctx) {
   const decoded = jwt.verify(token, jwtConfig.secret, {
     maxAge: jwtConfig.maxAge
   })
-  ctx.body = success(decoded)
+  respSuccess(ctx, decoded)
 }
 
 module.exports = (router, prefix) => {

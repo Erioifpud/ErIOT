@@ -1,5 +1,6 @@
 const jwtConfig = require('../../config/jwt.json')
 const jwt = require('jsonwebtoken')
+const { respError } = require('../../util/format')
 
 module.exports = {
   async auth (ctx, next) {
@@ -10,10 +11,17 @@ module.exports = {
       const decoded = jwt.verify(token, jwtConfig.secret, {
         maxAge: jwtConfig.maxAge
       })
-
-      console.log('decoded', decoded)
-      // ctx.body = ctx
-      await next()
+      const allRules = decoded.info.roles.reduce((a, b) => {
+        const permissions = b.permissions.map(item => item.rule)
+        return a.concat(permissions)
+      }, [])
+      const validRules = Array.from(new Set(allRules))
+      if (validRules.some(rule => RegExp(rule).test(ctx.url))) {
+        await next()
+      } else {
+        console.log(validRules)
+        respError(ctx, 403, '访问受限')
+      }
     }
   }
 }

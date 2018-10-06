@@ -1,4 +1,4 @@
-const { respSuccess, respError, success } = require('./format')
+const { respSuccess, respError, success } = require('../../util/format')
 const bcrypt = require('bcrypt')
 const { User, Role, Permission } = require('../../model/entity')
 const jwt = require('jsonwebtoken')

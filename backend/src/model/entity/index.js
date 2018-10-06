@@ -35,13 +35,13 @@ sequelize.sync({ force: true }).then(async () => {
     name: 'test2'
   })
   const permission1 = await Permission.create({
-    rule: '/test/\\w+'
+    rule: '/v\\d/test/\\w{0,}'
   })
   const permission2 = await Permission.create({
-    rule: '/test2/\\w+'
+    rule: '/v\\d/test2/\\w{0,}'
   })
   const permission3 = await Permission.create({
-    rule: '/test3/\\w+'
+    rule: '/v\\d/test3/\\w{0,}'
   })
   user.addRoles(role1)
   user.addRoles(role2)

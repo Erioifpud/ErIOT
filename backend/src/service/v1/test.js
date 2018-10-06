@@ -1,4 +1,4 @@
-const { respSuccess } = require('./format')
+const { respSuccess } = require('../../util/format')
 const jwt = require('jsonwebtoken')
 const jwtConfig = require('../../config/jwt.json')
 

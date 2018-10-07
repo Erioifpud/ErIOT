@@ -1,6 +1,7 @@
 const jwtConfig = require('../../config/jwt.json')
 const jwt = require('jsonwebtoken')
 const { respError } = require('../../util/format')
+const { findUserPermissionsById } = require('../../model/dao/user')
 
 module.exports = {
   async auth (ctx, next) {
@@ -9,9 +10,11 @@ module.exports = {
     } else {
       const token = ctx.header.authorization.split(' ')[1]
       const decoded = jwt.verify(token, jwtConfig.secret, {
-        maxAge: jwtConfig.maxAge
+        algorithm: jwtConfig.algorithm
       })
-      const allRules = decoded.info.roles.reduce((a, b) => {
+      console.log(decoded)
+      const fullUser = await findUserPermissionsById(decoded.user.id)
+      const allRules = fullUser.roles.reduce((a, b) => {
         const permissions = b.permissions.map(item => item.rule)
         return a.concat(permissions)
       }, [])

@@ -4,9 +4,7 @@ const jwtConfig = require('../../config/jwt.json')
 
 async function test (ctx) {
   const token = ctx.header.authorization.split(' ')[1]
-  const decoded = jwt.verify(token, jwtConfig.secret, {
-    maxAge: jwtConfig.maxAge
-  })
+  const decoded = jwt.verify(token, jwtConfig.secret, { algorithm: jwtConfig.algorithm })
   respSuccess(ctx, decoded)
 }
 

@@ -1,6 +1,6 @@
 const { respSuccess, respError, success } = require('../../util/format')
 const bcrypt = require('bcrypt')
-const { User, Role, Permission } = require('../../model/entity')
+const userDAO = require('../../model/dao/user')
 const jwt = require('jsonwebtoken')
 const jwtConfig = require('../../config/jwt.json')
 
@@ -11,14 +11,11 @@ async function register (ctx) {
       respError(ctx, 400, '用户名或密码为空')
     }
     body.password = await bcrypt.hash(body.password, 12)
-    const user = await User.findOne({
-      attributes: ['id'],
-      where: { username: body.username }
-    })
+    const user = await userDAO.findUserByUsername(body.username, ['id'])
     if (user) {
       respError(ctx, 406, '用户名重复')
     } else {
-      User.create(body)
+      userDAO.addUserByNameAndPass(body)
       respSuccess(ctx, { username: body.username })
     }
   } catch (err) {
@@ -29,33 +26,13 @@ async function register (ctx) {
 async function login (ctx) {
   const { body } = ctx.request
   try {
-    const user = await User.findOne({
-      where: {
-        username: body.username
-      }
-    })
+    const user = await userDAO.findUserByUsername(body.username)
     if (user) {
       const flag = await bcrypt.compare(body.password, user.password)
       if (flag) {
-        const info = await User.findOne({
-          attributes: ['id', 'username'],
-          where: {
-            id: user.id
-          },
-          include: [
-            {
-              model: Role,
-              through: { attributes: [] },
-              include: [
-                {
-                  model: Permission,
-                  through: { attributes: [] }
-                }
-              ]
-            }
-          ]
-        })
-        const token = jwt.sign({ info }, jwtConfig.secret, { expiresIn: jwtConfig.maxAge })
+        // const info = await userDAO.findUserPermissionsById(user.id)
+        user.password = ''
+        const token = jwt.sign({ user }, jwtConfig.secret, { expiresIn: jwtConfig.expireTime })
         ctx.body = { token, ...success({ username: user.username }) }
       }
     } else {

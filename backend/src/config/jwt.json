@@ -1,6 +1,6 @@
 {
   "secret": "d22bd517693f3bf6d15e4766f7df546f",
   "expireTime": "1h",
-  "renewalTime": 3600,
+  "renewalTime": 1800,
   "algorithm": "HS512"
 }

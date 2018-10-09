@@ -1,4 +1,5 @@
-const { Sequelize, sequelize } = require('../../db')
+const Sequelize = require('sequelize')
+const { sequelize } = require('../../db')
 
 const Permission = sequelize.define(
   'permission',

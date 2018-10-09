@@ -22,6 +22,5 @@ sequelize.authenticate()
   })
 
 module.exports = {
-  Sequelize,
   sequelize
 }

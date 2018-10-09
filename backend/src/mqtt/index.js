@@ -1,25 +1,25 @@
 const mqtt = require('mqtt')
-const mqttConfig = require('../config/basic.json')
+const mqttConfig = require('../config/mqtt.json')
 
 const client = mqtt.connect(mqttConfig.server)
 
 client.on('connect', function () {
-  client.subscribe('$pub/+/#', function (err) {
+  client.subscribe('pub/+/#', (err) => {
     if (!err) {
-      // client.publish('presence', 'Hello mqtt')
+      console.log('mqtt client init!')
     }
   })
 })
 
-client.on('message', function (topic, message) {
-  // message is Buffer
-  if (/^pub\/\w{64}\/\w+\/\w+$/.test(message.toString())) {
-
+client.on('message', (topic, message) => {
+  if (/^pub\/\w{64}\/\w+\/\w+$/.test(topic)) {
+    console.log(topic)
+    console.log(message.toString())
   }
 })
 
-const sendMessage = (device, fullPath, message) => {
-  client.publish(`sub/${device}/${fullPath}`, message)
+const sendMessage = (clientId, room, deviceName, message) => {
+  client.publish(`sub/${clientId}/${room}/${deviceName}`, message)
 }
 
 module.exports = {

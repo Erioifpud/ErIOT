@@ -6,6 +6,7 @@ const { auth } = require('./middleware/auth')
 const { renewal } = require('./middleware/renewal')
 const jwtConfig = require('./config/jwt.json')
 const router = require('./service')
+const mqtt = require('./mqtt')
 const app = new Koa()
 
 app.use(cors({ credentials: true }))
@@ -16,4 +17,5 @@ app.use(renewal)
 app.use(router.routes())
 app.use(router.allowedMethods())
 app.listen(3000)
+mqtt
 console.log('http://127.0.0.1:3000/')

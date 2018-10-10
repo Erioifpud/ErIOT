@@ -9,11 +9,11 @@ const getClientModel = (clientId) => {
       primaryKey: true
     },
     room: {
-      type: Sequelize.STRING(32),
+      type: Sequelize.STRING,
       allowNull: false
     },
     deviceName: {
-      type: Sequelize.STRING(32),
+      type: Sequelize.STRING,
       allowNull: false
     },
     data: {
@@ -34,14 +34,16 @@ const checkIfClientExist = async (clientId) => {
 }
 
 const createTableByClientId = async (clientId) => {
-  const existed = await checkIfClientExist(clientId)
-  const result = existed ? await getClientModel(clientId) : await getClientModel(clientId).sync()
-  return result
+  // const existed = await checkIfClientExist(clientId)
+  // const result = existed ? await getClientModel(clientId) : await getClientModel(clientId).sync()
+  // return result
+  const model = await getClientModel(clientId).sync()
+  return model
 }
 
 const saveData = async (clientId, room, deviceName, data) => {
   const model = await createTableByClientId(clientId)
-  const result = await model.create({
+  const result = model.create({
     room,
     deviceName,
     data
@@ -51,12 +53,25 @@ const saveData = async (clientId, room, deviceName, data) => {
 
 const saveDataSet = async (clientId, dataset) => {
   const model = await createTableByClientId(clientId)
-  // all null
-  const result = await model.bulkCreate(dataset, { returning: true })
+  const result = model.bulkCreate(dataset, { returning: true })
   return result
+}
+
+const findDataById = async (clientId, where = {}, limit = 10, order = [['id', 'asc']]) => {
+  const model = await createTableByClientId(clientId)
+  return model.findAll({
+    limit,
+    where,
+    order
+  })
+}
+
+const findDataByIds = async (clientIds) => {
+  const model = await createTableByClientId(clientId)
 }
 
 module.exports = {
   saveData,
-  saveDataSet
+  saveDataSet,
+  findDataById
 }

@@ -2,14 +2,72 @@ FORMAT: 1A
 
 # ErIOT Example Server API
 
-# Client API Root [/]
+# Group Client API Root
 
-## Get client data [GET /client]
-+ Response 200 (application/json)
-    + Headers
-        Authorization: <JWT>
+## Client data [/client/{clientId}]
 
-## Get data by client [GET /]
-+ Response 200 (application/json)
+### Read data point(s) [GET]
+通过**id**和**过滤条件**去查询对应客户端下的数据点。
+
++ Parameters
+    + clientId: c24b0fe51856497eebb6a2bfcd120247aac0d6334d670bb92e09a00ce8169365 (string) - 客户端的唯一标识符，使用sdk进行生成。
+    + room: livingroom (string) - 查询与某个房间相关的数据点。
+    + device: light (string) - 查询与某个电子设备相关的数据点。
+    + limit: 10 (number) - 查询的结果数。
+    + start: `2018-10-10 09:30:00` (string) - 起始时间，查询时间段内的数据。
+    + end: `2018-10-10 10:30:00` (string) - 结束时间，查询时间段内的数据。
+    + min: 10 (number) - 查询数据的最小值。
+    + max: 50 (number) - 查询数据的最大值。
+    + sum: 30 (number) - 查询指定分钟内的数据**总值**。
+    + avr: 30 (number) - 查询指定分钟内的数据**平均值**。
+    + med: 30 (number) - 查询指定分钟内的数据**中位数**。
+    + cb: func (string) - JSONP跨域请求的函数名。
+
++ Request
     + Headers
-        Authorization: <JWT>
+        Authorization: {JWT}
+
++ Response 200 (application/json)
+    + Body
+        {
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJ1c2VybmFtZSI6InJvb3QiLCJwYXNzd29yZCI6IiJ9LCJpYXQiOjE1MzkxNTczMjcsImV4cCI6MTUzOTE2MDkyN30.R7fM84xf-yzY-TpSSZ_6ovuNxfp1KLojt4f9zwpF_Bs",
+            "data": {
+                ...
+            }
+        }
+
+        {
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJ1c2VybmFtZSI6InJvb3QiLCJwYXNzd29yZCI6IiJ9LCJpYXQiOjE1MzkxNTczMjcsImV4cCI6MTUzOTE2MDkyN30.R7fM84xf-yzY-TpSSZ_6ovuNxfp1KLojt4f9zwpF_Bs",
+            "error": {
+                "code": 406,
+                "data": {
+                    ...
+                }
+            }
+        }
+
+### Write data point(s) [POST]
+往房间内的电子设备节点提交数据，创建时间由服务器生成。
+
++ Parameters
+    + clientId: c24b0fe51856497eebb6a2bfcd120247aac0d6334d670bb92e09a00ce8169365 (string) - 客户端的唯一标识符，使用sdk进行生成。
+    + room: livingroom (string) - 提交的数据点所在的房间。
+    + device: light (string) - 提交的数据点对应的电子设备。
+    + data: 1.00 (double) - 提交的数据点。
+
++ Request (application/json)
+    + Headers
+        Authorization: {JWT}
+
+    + Body
+        {
+            "room": "livingroom",
+            "device": "light",
+            "data": 1.00
+        }
+
++ Response 200 (application/json)
+    + Body
+    {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJ1c2VybmFtZSI6InJvb3QiLCJwYXNzd29yZCI6IiJ9LCJpYXQiOjE1MzkxNTczMjcsImV4cCI6MTUzOTE2MDkyN30.R7fM84xf-yzY-TpSSZ_6ovuNxfp1KLojt4f9zwpF_Bs",
+    }

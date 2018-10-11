@@ -2,6 +2,9 @@ const { sequelize } = require('../../db')
 const User = require('./user')
 const Role = require('./role')
 const Permission = require('./permission')
+const Client = require('./client')
+const Place = require('./place')
+const Device = require('./device')
 
 module.exports = () => sequelize.sync({ force: true }).then(async () => {
   const user = await User.create({
@@ -28,4 +31,7 @@ module.exports = () => sequelize.sync({ force: true }).then(async () => {
   role1.addPermissions(permission1)
   role2.addPermissions(permission2)
   role2.addPermissions(permission3)
+  Client.sync()
+  Place.sync()
+  Device.sync()
 })

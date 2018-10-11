@@ -74,29 +74,33 @@
 </div>
 
 
+<div class="ui horizontal divider">
+  <a href="#client-api-root">Client API Root</a>
+</div>
+
 <div class="ui accordion fluid">
   
     
     <div class="title active">
       <i class="dropdown icon"></i>
       
-        <strong>Client API Root</strong>
+        <strong>Client data</strong>
       
     </div>
     <div class="content active">
       <div class="ui fluid secondary vertical menu">
       
-        <a class="item green" href="#client-api-root-get-client-data">
+        <a class="item green" href="#client-api-root-client-data-read-data-point%28s%29">
           <i class="ui green empty circular label"></i>
           
-            <span>Get client data</span>
+            <span>Read data point(s)</span>
           
         </a>
       
-        <a class="item green" href="#client-api-root-get-data-by-client">
-          <i class="ui green empty circular label"></i>
+        <a class="item blue" href="#client-api-root-client-data-write-data-point%28s%29">
+          <i class="ui blue empty circular label"></i>
           
-            <span>Get data by client</span>
+            <span>Write data point(s)</span>
           
         </a>
       
@@ -121,8 +125,8 @@
         <div class="ui hidden divider"></div>
         
 
-  <div class="ui horizontal divider" >
-    
+  <div class="ui horizontal divider" id="client-api-root">
+    Client API Root
   </div>
   <div class="ui header center aligned">
     <div class="ui header">
@@ -136,7 +140,7 @@
       <div class="ui stacked segments">
         <div class="ui basic segment resource">
           <div class="ui purple huge ribbon label">
-            Client API Root
+            Client data
           </div>
           <div class="ui header">
             <div class="ui sub header">
@@ -154,10 +158,11 @@
 </div>
 
           <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="client-api-root-get-client-data">
-              Get client data
+            <h3 class="ui block center aligned header" id="client-api-root-client-data-read-data-point(s)">
+              Read data point(s)
             </h3>
-            <div class="description"></div>
+            <div class="description"><p>通过<strong>id</strong>和<strong>过滤条件</strong>去查询对应客户端下的数据点。</p>
+</div>
 
             
               <h4 class="ui horizontal divider">
@@ -169,10 +174,248 @@
                   <h3>GET</h3>
                 </div>
                 <a class="ui basic fluid green label">
-                  <code>/client</code>
+                  <code>/client/{clientId}</code>
                 </a>
               </div>
               
+                <table class="ui celled definition table">
+                  <thead>
+                    <tr>
+                      <th colspan="4">Parameters</th>
+                    </tr>
+                  <thead>
+                  <tbody>
+                    
+                      
+  
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>clientId</code></td>
+      <td class="center aligned">
+        <code>string</code>
+        <code class="ui label">c24b0fe51856497eebb6a2bfcd120247aac0d6334d670bb92e09a00ce8169365</code>
+        
+      </td>
+      <td class="eight wide">
+        <p>客户端的唯一标识符，使用sdk进行生成。</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>room</code></td>
+      <td class="center aligned">
+        <code>string</code>
+        <code class="ui label">livingroom</code>
+        
+      </td>
+      <td class="eight wide">
+        <p>查询与某个房间相关的数据点。</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>device</code></td>
+      <td class="center aligned">
+        <code>string</code>
+        <code class="ui label">light</code>
+        
+      </td>
+      <td class="eight wide">
+        <p>查询与某个电子设备相关的数据点。</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>limit</code></td>
+      <td class="center aligned">
+        <code>number</code>
+        <code class="ui label">10</code>
+        
+      </td>
+      <td class="eight wide">
+        <p>查询的结果数。</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>start</code></td>
+      <td class="center aligned">
+        <code>string</code>
+        <code class="ui label">2018-10-10 09:30:00</code>
+        
+      </td>
+      <td class="eight wide">
+        <p>起始时间，查询时间段内的数据。</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>end</code></td>
+      <td class="center aligned">
+        <code>string</code>
+        <code class="ui label">2018-10-10 10:30:00</code>
+        
+      </td>
+      <td class="eight wide">
+        <p>结束时间，查询时间段内的数据。</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>min</code></td>
+      <td class="center aligned">
+        <code>number</code>
+        <code class="ui label">10</code>
+        
+      </td>
+      <td class="eight wide">
+        <p>查询数据的最小值。</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>max</code></td>
+      <td class="center aligned">
+        <code>number</code>
+        <code class="ui label">50</code>
+        
+      </td>
+      <td class="eight wide">
+        <p>查询数据的最大值。</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>sum</code></td>
+      <td class="center aligned">
+        <code>number</code>
+        <code class="ui label">30</code>
+        
+      </td>
+      <td class="eight wide">
+        <p>查询指定分钟内的数据<strong>总值</strong>。</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>avr</code></td>
+      <td class="center aligned">
+        <code>number</code>
+        <code class="ui label">30</code>
+        
+      </td>
+      <td class="eight wide">
+        <p>查询指定分钟内的数据<strong>平均值</strong>。</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>med</code></td>
+      <td class="center aligned">
+        <code>number</code>
+        <code class="ui label">30</code>
+        
+      </td>
+      <td class="eight wide">
+        <p>查询指定分钟内的数据<strong>中位数</strong>。</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>cb</code></td>
+      <td class="center aligned">
+        <code>string</code>
+        <code class="ui label">func</code>
+        
+      </td>
+      <td class="eight wide">
+        <p>JSONP跨域请求的函数名。</p>
+
+        
+      </td>
+    </tr>
+  
+
+                    
+                    
+                  </tbody>
+                </table>
+              
+              
+                
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Authorization</td>
+      <td><code>{JWT}</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
               
               
 
@@ -192,11 +435,6 @@
       <td><code>application/json</code></td>
     </tr>
   
-    <tr>
-      <td class="four wide">Authorization</td>
-      <td><code>&lt;JWT&gt;</code></td>
-    </tr>
-  
   </tbody>
 </table>
 
@@ -206,7 +444,7 @@
                     <a class="ui blue circular label">
                       200
                     </a>
-                    <code></code>
+                    <code>application/json</code>
                   </div>
                   <div class="content tabbed">
                     <div class="ui top attached tabular menu">
@@ -215,7 +453,22 @@
                     </div>
                     <div class="ui bottom attached active tab segment" data-tab="body">
                       <pre style="white-space: inherit">
-                        <code class="language-"></code>
+                        <code class="language-json">{
+    &#34;token&#34;: &#34;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJ1c2VybmFtZSI6InJvb3QiLCJwYXNzd29yZCI6IiJ9LCJpYXQiOjE1MzkxNTczMjcsImV4cCI6MTUzOTE2MDkyN30.R7fM84xf-yzY-TpSSZ_6ovuNxfp1KLojt4f9zwpF_Bs&#34;,
+    &#34;data&#34;: {
+        ...
+    }
+}
+{
+    &#34;token&#34;: &#34;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJ1c2VybmFtZSI6InJvb3QiLCJwYXNzd29yZCI6IiJ9LCJpYXQiOjE1MzkxNTczMjcsImV4cCI6MTUzOTE2MDkyN30.R7fM84xf-yzY-TpSSZ_6ovuNxfp1KLojt4f9zwpF_Bs&#34;,
+    &#34;error&#34;: {
+        &#34;code&#34;: 406,
+        &#34;data&#34;: {
+            ...
+        }
+    }
+}
+</code>
                       </pre>
                     </div>
                     <div class="ui bottom attached tab segment" data-tab="schema">
@@ -237,10 +490,11 @@
 </div>
 
           <div class="ui basic segment">
-            <h3 class="ui block center aligned header" id="client-api-root-get-data-by-client">
-              Get data by client
+            <h3 class="ui block center aligned header" id="client-api-root-client-data-write-data-point(s)">
+              Write data point(s)
             </h3>
-            <div class="description"></div>
+            <div class="description"><p>往房间内的电子设备节点提交数据，创建时间由服务器生成。</p>
+</div>
 
             
               <h4 class="ui horizontal divider">
@@ -248,15 +502,151 @@
               </h4>
               <div class="description"></div>
               <div class="fluid ui large labeled button">
-                <div class="ui green large button">
-                  <h3>GET</h3>
+                <div class="ui blue large button">
+                  <h3>POST</h3>
                 </div>
-                <a class="ui basic fluid green label">
-                  <code>/</code>
+                <a class="ui basic fluid blue label">
+                  <code>/client/{clientId}</code>
                 </a>
               </div>
               
+                <table class="ui celled definition table">
+                  <thead>
+                    <tr>
+                      <th colspan="4">Parameters</th>
+                    </tr>
+                  <thead>
+                  <tbody>
+                    
+                      
+  
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>clientId</code></td>
+      <td class="center aligned">
+        <code>string</code>
+        <code class="ui label">c24b0fe51856497eebb6a2bfcd120247aac0d6334d670bb92e09a00ce8169365</code>
+        
+      </td>
+      <td class="eight wide">
+        <p>客户端的唯一标识符，使用sdk进行生成。</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>room</code></td>
+      <td class="center aligned">
+        <code>string</code>
+        <code class="ui label">livingroom</code>
+        
+      </td>
+      <td class="eight wide">
+        <p>提交的数据点所在的房间。</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>device</code></td>
+      <td class="center aligned">
+        <code>string</code>
+        <code class="ui label">light</code>
+        
+      </td>
+      <td class="eight wide">
+        <p>提交的数据点对应的电子设备。</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <td class="center aligned one wide">
+        <i class="ui empty circular label black" data-content="required" data-position="top center"></i>
+      </td>
+      <td><code>data</code></td>
+      <td class="center aligned">
+        <code>double</code>
+        <code class="ui label">1.00</code>
+        
+      </td>
+      <td class="eight wide">
+        <p>提交的数据点。</p>
+
+        
+      </td>
+    </tr>
+  
+
+                    
+                    
+                  </tbody>
+                </table>
               
+              
+                
+<table class="ui celled definition table">
+  <thead>
+    <tr>
+      <th colspan="2">Headers</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+    <tr>
+      <td class="four wide">Content-Type</td>
+      <td><code>application/json</code></td>
+    </tr>
+  
+    <tr>
+      <td class="four wide">Authorization</td>
+      <td><code>{JWT}</code></td>
+    </tr>
+  
+  </tbody>
+</table>
+
+              
+              
+                <div class="ui stacked segment">
+                  <div class="ui fluid transaction accordion">
+                    <div class="title">
+                      <code>application/json</code>
+                    </div>
+                    <div class="content tabbed">
+                      <div class="ui top attached tabular menu">
+                        <a data-tab="body" class="active item">BODY</a>
+                        <a data-tab="schema" class="item">SCHEMA</a>
+                      </div>
+                      <div class="ui bottom attached active tab segment" data-tab="body">
+                        <pre style="white-space: inherit">
+                          <code class="language-json">{
+    &#34;room&#34;: &#34;livingroom&#34;,
+    &#34;device&#34;: &#34;light&#34;,
+    &#34;data&#34;: 1.00
+}
+</code>
+                        </pre>
+                      </div>
+                      <div class="ui bottom attached tab segment" data-tab="schema">
+                        <pre style="white-space: inherit">
+                          <code class="language-json"></code>
+                        </pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               
 
               <h4 class="ui horizontal divider">RESPONSE</h4>
@@ -275,11 +665,6 @@
       <td><code>application/json</code></td>
     </tr>
   
-    <tr>
-      <td class="four wide">Authorization</td>
-      <td><code>&lt;JWT&gt;</code></td>
-    </tr>
-  
   </tbody>
 </table>
 
@@ -289,7 +674,7 @@
                     <a class="ui blue circular label">
                       200
                     </a>
-                    <code></code>
+                    <code>application/json</code>
                   </div>
                   <div class="content tabbed">
                     <div class="ui top attached tabular menu">
@@ -298,7 +683,10 @@
                     </div>
                     <div class="ui bottom attached active tab segment" data-tab="body">
                       <pre style="white-space: inherit">
-                        <code class="language-"></code>
+                        <code class="language-json">{
+&#34;token&#34;: &#34;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJ1c2VybmFtZSI6InJvb3QiLCJwYXNzd29yZCI6IiJ9LCJpYXQiOjE1MzkxNTczMjcsImV4cCI6MTUzOTE2MDkyN30.R7fM84xf-yzY-TpSSZ_6ovuNxfp1KLojt4f9zwpF_Bs&#34;,
+}
+</code>
                       </pre>
                     </div>
                     <div class="ui bottom attached tab segment" data-tab="schema">

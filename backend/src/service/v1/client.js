@@ -1,6 +1,4 @@
 const { respSuccess } = require('../../util/format')
-const client = require('../../model/dao/client')
-const clientDAO = require('../../model/dao/client')
 
 async function clientGet (ctx) {
   const { clientId } = ctx.params

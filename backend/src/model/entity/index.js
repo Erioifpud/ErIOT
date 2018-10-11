@@ -1,7 +1,9 @@
-const { sequelize } = require('../../db')
 const User = require('./user')
 const Role = require('./role')
 const Permission = require('./permission')
+const Client = require('./client')
+const Place = require('./place')
+const Device = require('./device')
 const initDB = require('./init')
 
 User.belongsToMany(Role, {
@@ -24,10 +26,33 @@ Permission.belongsToMany(Role, {
   foreignKey: 'permId'
 })
 
+Client.belongsToMany(Place, {
+  through: 'client_place',
+  foreignKey: 'clientId'
+})
+
+Place.belongsToMany(Client, {
+  through: 'client_place',
+  foreignKey: 'placeId'
+})
+
+Place.belongsToMany(Device, {
+  through: 'place_device',
+  foreignKey: 'placeId'
+})
+
+Device.belongsToMany(Place, {
+  through: 'place_device',
+  foreignKey: 'deviceId'
+})
+
 initDB()
 
 module.exports = {
   User,
   Role,
-  Permission
+  Permission,
+  Client,
+  Place,
+  Device
 }

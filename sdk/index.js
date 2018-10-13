@@ -1,4 +1,4 @@
-const mqtt = require('mqtt')
+const mqtt = require('async-mqtt')
 const {
   machineIdSync
 } = require('node-machine-id')
@@ -9,64 +9,71 @@ class Client {
   constructor(options) {
     this.options = options || {}
     this.client = mqtt.connect(this.options.server)
-    // this.group = group
-    // this.server = server
+    this.client.subscribe(this._channel('sub'))
   }
 
   _init() {
-    this.client.on('connect', () => {
+    this.client.on('connect', async () => {
       console.log(`${this._channel()} connected!`)
-    })
-    this.client.on('reconnect', () => {
-      console.log(`${this._channel()} reconnected!`)
+      // await this.client.subscribe(this._channel('sub'), (err) => {
+      //   if (!err) {
+      //     console.log(`${this._channel()} subscribed!`)
+      //   }
+      // })
     })
   }
 
   _channel(status) {
-    let template = `${this.options.group}|${machineIdSync()}`
+    let template = `${machineIdSync()}/${this.options.room}/${this.options.deviceName}`
     if (status !== 'pub' && status !== 'sub') {
       return template
     } else {
-      return `${template}|${status}`
+      return `${status}/${template}`
     }
   }
 
-  isConnected() {
+  async isConnected() {
     return this.client && this.client.connected
   }
 
-  pub(message) {
+  async send(message) {
     if (this.isConnected()) {
-      this.client.publish(this._channel('pub'), message)
+      console.log('sent:', message)
+      await this.client.publish(this._channel('pub'), message)
     }
   }
 
   // @checkConntected()
   // cb(msg)
-  sub(cb) {
-    if (this.isConnected()) {
-      this.client.subscribe(this._channel('sub'), (err) => {
-        if (err) {
-          throw err
-        } else {
-          this.client.on('message', (channel, message) => {
-            if (this._channel('sub') === channel) {
-              cb && cb(message)
-            }
-          })
-        }
-      })
-    }
+  async receive(cb) {
+    this.client.on('message', (topic, message) => {
+      if (this._channel('sub') === topic) {
+        cb && cb(message)
+      }
+    })
+    // if (this.isConnected()) {
+    //   this.client.subscribe(this._channel('sub'), (err) => {
+    //     if (!err) {
+    //       this.client.on('message', (topic, message) => {
+    //         if (this._channel('sub') === topic) {
+    //           cb && cb(message)
+    //         }
+    //       })
+    //     }
+    //   })
+    // }
   }
 
   // cb(err)
-  unsub(cb) {
+  async unsub(cb) {
     if (this.isConnected()) {
-      this.client.unsubscribe(this._channel('sub', cb))
+      await this.client.unsubscribe(this._channel('sub', cb))
     }
   }
 
-  close() {
-    this.client.end()
+  async close() {
+    await this.client.end()
   }
 }
+
+module.exports = Client

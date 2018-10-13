@@ -19,10 +19,10 @@ const redisSetting = {
 
 const moscaSetting = {
   port: 2994,
-  backend: redisSetting,
-  persistence: {
-    factory: mosca.persistence.Redis
-  },
+  // backend: redisSetting,
+  // persistence: {
+  //   factory: mosca.persistence.Redis
+  // },
   http: {
     port: 2995,
     bundle: true,
@@ -33,9 +33,9 @@ const moscaSetting = {
 var server = new mosca.Server(moscaSetting)
 
 server.on("ready", () => {
-  server.authenticate = authenticate
-  server.authorizePublish = authorizePublish
-  server.authorizeSubscribe = authorizeSubscribe
+  // server.authenticate = authenticate
+  // server.authorizePublish = authorizePublish
+  // server.authorizeSubscribe = authorizeSubscribe
 
   // loadAuthorizer('./credentials.json', (err, authorizer) => {
   //   if (err) {

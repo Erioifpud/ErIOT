@@ -11,6 +11,8 @@ const Device = sequelize.define(`device`, {
     type: Sequelize.STRING,
     allowNull: false
   }
+}, {
+  timestamps: false
 })
 
 module.exports = Device

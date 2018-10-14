@@ -11,6 +11,8 @@ const Place = sequelize.define(`place`, {
     type: Sequelize.STRING,
     allowNull: false
   }
+}, {
+  timestamps: false
 })
 
 module.exports = Place

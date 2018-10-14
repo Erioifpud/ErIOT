@@ -11,12 +11,10 @@ const format = (success, data, code) => {
   if (isPrimitive(data) || isArray(data)) {
     data = { msg: data }
   }
-  if (success) {
-    return { data }
-  } else {
-    return {
-      error: { code, data }
-    }
+  return {
+    error: !success,
+    code: success ? null : code,
+    data
   }
 }
 

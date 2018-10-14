@@ -30,6 +30,7 @@ async function test (ctx) {
   //     $between: [new Date('2018-10-10'), new Date('2018-10-11')]
   //   }
   // })
+  clientDAO.findDataByClientId('123123123')
   respSuccess(ctx, {})
 }
 

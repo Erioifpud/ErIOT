@@ -1,18 +1,16 @@
 const Sequelize = require('sequelize')
 const { sequelize } = require('../../db')
 
-const Client = sequelize.define(`client`, {
+const DataPoint = sequelize.define(`datapoint`, {
   id: {
-    type: Sequelize.STRING,
-    // autoIncrement: true,
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
     primaryKey: true
   },
-  name: {
+  data: {
     type: Sequelize.STRING,
     allowNull: false
   }
-}, {
-  timestamps: false
 })
 
-module.exports = Client
+module.exports = DataPoint

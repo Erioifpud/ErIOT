@@ -5,6 +5,7 @@ const Permission = require('./permission')
 const Client = require('./client')
 const Place = require('./place')
 const Device = require('./device')
+const DataPoint = require('./datapoint')
 
 module.exports = () => sequelize.sync({ force: true }).then(async () => {
   const user = await User.create({
@@ -31,7 +32,34 @@ module.exports = () => sequelize.sync({ force: true }).then(async () => {
   role1.addPermissions(permission1)
   role2.addPermissions(permission2)
   role2.addPermissions(permission3)
-  Client.sync()
-  Place.sync()
-  Device.sync()
+
+  const place = await Place.create({
+    name: 'my_livingroom'
+  })
+  const device = await Device.create({
+    name: 'light'
+  })
+  const client1 = await Client.create({
+    id: '123123123',
+    name: 'pi_zero'
+  })
+  const client2 = await Client.create({
+    id: '456456456',
+    name: 'arduino'
+  })
+  const dataPoint1 = await DataPoint.create({
+    data: 1
+  })
+  const dataPoint2 = await DataPoint.create({
+    data: 2
+  })
+  const dataPoint3 = await DataPoint.create({
+    data: 3
+  })
+  place.addDevices(device)
+  device.addClients(client1)
+  device.addClients(client2)
+  client1.addDatapoints(dataPoint1)
+  client1.addDatapoints(dataPoint2)
+  client1.addDatapoints(dataPoint3)
 })

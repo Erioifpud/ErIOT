@@ -8,7 +8,7 @@ const DataPoint = sequelize.define(`datapoint`, {
     primaryKey: true
   },
   data: {
-    type: Sequelize.STRING,
+    type: Sequelize.DOUBLE,
     allowNull: false
   }
 })

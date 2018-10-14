@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const jwtConfig = require('../../config/jwt.json')
 const client = require('../../model/dao/client')
 const clientDAO = require('../../model/dao/client')
+const userDAO = require('../../model/dao/user')
 
 async function test (ctx) {
   const token = ctx.header.authorization.split(' ')[1]
@@ -30,8 +31,9 @@ async function test (ctx) {
   //     $between: [new Date('2018-10-10'), new Date('2018-10-11')]
   //   }
   // })
-  clientDAO.findDataByClientId('123123123')
-  respSuccess(ctx, {})
+  const result = await clientDAO.findDataByClientId('123123123', new Date('2018-10-17 18:33:47'))
+  // const result2 = await userDAO.findUserByUsername('root')
+  respSuccess(ctx, { result })
 }
 
 module.exports = (router, prefix) => {

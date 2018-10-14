@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const { sequelize } = require('../../db')
-const { Client, Place, Device } = require('../entity')
+const { Client, DataPoint } = require('../entity')
 
 // const getClientModel = (clientId) => {
 //   return sequelize.define(`client_${clientId}`, {
@@ -72,19 +72,28 @@ const { Client, Place, Device } = require('../entity')
 // }
 
 const appendQuery = (template, op, key, val) => {
-  template.where[key] = {
-    ...template.where[key],
+  if (!template.include[0].where) {
+    template.include[0].where = {}
+  }
+  const includeWhere = template.include[0].where
+  includeWhere[key] = {
+    ...includeWhere,
     [op]: val
   }
 }
 
-const findDataByClientId = (clientId, limit = 10, start, end, min, max, sum, avr) => {
+const findDataByClientId = (clientId, start, end, min, max, sum, avr, limit = 10) => {
   const template = {
     // attributes: ['id', 'place', 'device', 'data', 'createdAt'],
     limit,
     where: {
       id: clientId
-    }
+    },
+    include: [
+      {
+        model: DataPoint
+      }
+    ]
   }
   if (start && !isNaN(new Date(start))) {
     appendQuery(template, Sequelize.Op.$gte, 'createdAt', new Date(start))
@@ -108,6 +117,7 @@ const findDataByClientId = (clientId, limit = 10, start, end, min, max, sum, avr
     appendQuery(template, Sequelize.Op.$between, 'createdAt', [new Date(now - avr * 60000), now])
     template.attributes = [[sequelize.fn('AVG', sequelize.col('data')), 'avr']]
   }
+  console.log('template', JSON.stringify(template))
   return Client.findAll(template)
 }
 

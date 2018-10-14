@@ -4,6 +4,7 @@ const Permission = require('./permission')
 const Client = require('./client')
 const Place = require('./place')
 const Device = require('./device')
+const DataPoint = require('./datapoint')
 const initDB = require('./init')
 
 User.belongsToMany(Role, {
@@ -26,24 +27,30 @@ Permission.belongsToMany(Role, {
   foreignKey: 'permId'
 })
 
-Client.belongsToMany(Place, {
-  through: 'client_place',
+Place.hasMany(Device, {
+  foreignKey: 'placeId'
+})
+
+Device.belongsTo(Place, {
+  foreignKey: 'placeId'
+})
+
+Device.belongsToMany(Client, {
+  through: 'device_client',
+  foreignKey: 'deviceId'
+})
+
+Client.belongsToMany(Device, {
+  through: 'device_client',
   foreignKey: 'clientId'
 })
 
-Place.belongsToMany(Client, {
-  through: 'client_place',
-  foreignKey: 'placeId'
+Client.hasMany(DataPoint, {
+  foreignKey: 'clientId'
 })
 
-Place.belongsToMany(Device, {
-  through: 'place_device',
-  foreignKey: 'placeId'
-})
-
-Device.belongsToMany(Place, {
-  through: 'place_device',
-  foreignKey: 'deviceId'
+DataPoint.belongsTo(Client, {
+  foreignKey: 'clientId'
 })
 
 initDB()
@@ -54,5 +61,6 @@ module.exports = {
   Permission,
   Client,
   Place,
-  Device
+  Device,
+  DataPoint
 }

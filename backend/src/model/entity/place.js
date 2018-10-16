@@ -5,7 +5,8 @@ const Place = sequelize.define(`place`, {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
-    primaryKey: true
+    primaryKey: true,
+    unique: true
   },
   name: {
     type: Sequelize.STRING,

@@ -23,15 +23,47 @@
   resolved "http://registry.npm.taobao.org/@koa/cors/download/@koa/cors-2.2.2.tgz#9084ab7f58107734e6b19d602d99538eda73f2d0"
   integrity sha1-kISrf1gQdzTmsZ1gLZlTjtpz8tA=
 
+"@types/bluebird@*":
+  version "3.5.24"
+  resolved "http://registry.npm.taobao.org/@types/bluebird/download/@types/bluebird-3.5.24.tgz#11f76812531c14f793b8ecbf1de96f672905de8a"
+  integrity sha1-EfdoElMcFPeTuOy/HelvZykF3oo=
+
+"@types/continuation-local-storage@*":
+  version "3.2.1"
+  resolved "http://registry.npm.taobao.org/@types/continuation-local-storage/download/@types/continuation-local-storage-3.2.1.tgz#a33e0df9dce9b424d1c98fc4fdebd8578dceec7e"
+  integrity sha1-oz4N+dzptCTRyY/E/evYV43O7H4=
+  dependencies:
+    "@types/node" "*"
+
 "@types/geojson@^1.0.0":
   version "1.0.6"
   resolved "http://registry.npm.taobao.org/@types/geojson/download/@types/geojson-1.0.6.tgz#3e02972728c69248c2af08d60a48cbb8680fffdf"
   integrity sha1-PgKXJyjGkkjCrwjWCkjLuGgP/98=
 
+"@types/lodash@*":
+  version "4.14.117"
+  resolved "http://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.117.tgz#695a7f514182771a1e0f4345d189052ee33c8778"
+  integrity sha1-aVp/UUGCdxoeD0NF0YkFLuM8h3g=
+
 "@types/node@*":
   version "10.11.3"
   resolved "http://registry.npm.taobao.org/@types/node/download/@types/node-10.11.3.tgz#c055536ac8a5e871701aa01914be5731539d01ee"
   integrity sha1-wFVTasil6HFwGqAZFL5XMVOdAe4=
+
+"@types/sequelize@^4.27.28":
+  version "4.27.28"
+  resolved "http://registry.npm.taobao.org/@types/sequelize/download/@types/sequelize-4.27.28.tgz#9715441c87691f00e06205d44eb62a469e332358"
+  integrity sha1-lxVEHIdpHwDgYgXUTrYqRp4zI1g=
+  dependencies:
+    "@types/bluebird" "*"
+    "@types/continuation-local-storage" "*"
+    "@types/lodash" "*"
+    "@types/validator" "*"
+
+"@types/validator@*":
+  version "9.4.2"
+  resolved "http://registry.npm.taobao.org/@types/validator/download/@types/validator-9.4.2.tgz#9fec264b35f0ea21d0967eeec2dcd6a798b34350"
+  integrity sha1-n+wmSzXw6iHQln7uwtzWp5izQ1A=
 
 "@vertx/core@3.5.3":
   version "3.5.3"

@@ -1,5 +1,4 @@
 const Sequelize = require('sequelize')
-const { sequelize } = require('../../db')
 const { Client, DataPoint } = require('../entity')
 
 // const getClientModel = (clientId) => {
@@ -77,14 +76,13 @@ const appendQuery = (template, op, key, val) => {
   }
   const includeWhere = template.include[0].where
   includeWhere[key] = {
-    ...includeWhere,
+    ...includeWhere[key],
     [op]: val
   }
 }
 
-const findDataByClientId = (clientId, start, end, min, max, sum, avr, limit = 10) => {
+const findDataByClientId = (clientId, options, limit = 10) => {
   const template = {
-    // attributes: ['id', 'place', 'device', 'data', 'createdAt'],
     limit,
     where: {
       id: clientId
@@ -95,32 +93,47 @@ const findDataByClientId = (clientId, start, end, min, max, sum, avr, limit = 10
       }
     ]
   }
+  const { start, end, min, max } = options
   if (start && !isNaN(new Date(start))) {
-    appendQuery(template, Sequelize.Op.$gte, 'createdAt', new Date(start))
+    appendQuery(template, Sequelize.Op.gte, 'createdAt', new Date(start))
   }
   if (end && !isNaN(new Date(end))) {
-    appendQuery(template, Sequelize.Op.$lte, 'createdAt', new Date(end))
+    appendQuery(template, Sequelize.Op.lte, 'createdAt', new Date(end))
   }
   if (min && !isNaN(parseInt(min))) {
-    appendQuery(template, Sequelize.Op.$gte, 'data', min)
+    appendQuery(template, Sequelize.Op.gte, 'data', min)
   }
   if (max && !isNaN(parseInt(max))) {
-    appendQuery(template, Sequelize.Op.$lte, 'data', max)
+    appendQuery(template, Sequelize.Op.lte, 'data', max)
   }
-  if (sum && parseInt(sum) >= 10 && parseInt(sum) <= 1440) {
-    const now = new Date()
-    appendQuery(template, Sequelize.Op.$between, 'createdAt', [new Date(now - sum * 60000), now])
-    template.attributes = [[sequelize.fn('SUM', sequelize.col('data')), 'sum']]
-  }
-  if (avr && parseInt(avr) >= 10 && parseInt(avr) <= 1440) {
-    const now = new Date()
-    appendQuery(template, Sequelize.Op.$between, 'createdAt', [new Date(now - avr * 60000), now])
-    template.attributes = [[sequelize.fn('AVG', sequelize.col('data')), 'avr']]
-  }
+  // if (sum && parseInt(sum) >= 10 && parseInt(sum) <= 1440) {
+  //   const now = new Date()
+  //   appendQuery(template, Sequelize.Op.between, 'createdAt', [new Date(now - sum * 60000), now])
+  //   template.include[0].attributes = [[sequelize.fn('SUM', sequelize.col('data')), 'sum']]
+  // }
+  // if (avr && parseInt(avr) >= 10 && parseInt(avr) <= 1440) {
+  //   const now = new Date()
+  //   appendQuery(template, Sequelize.Op.between, 'createdAt', [new Date(now - avr * 60000), now])
+  //   template.attributes = [[sequelize.fn('AVG', sequelize.col('data')), 'avr']]
+  // }
   console.log('template', JSON.stringify(template))
   return Client.findAll(template)
 }
 
+const addClientByIdAndName = (id, name) => {
+  return Client.findOrCreate({
+    where: {
+      id,
+      name
+    },
+    defaults: {
+      id,
+      name
+    }
+  })
+}
+
 module.exports = {
-  findDataByClientId
+  findDataByClientId,
+  addClientByIdAndName
 }

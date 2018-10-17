@@ -1,9 +1,9 @@
-const Sequelize = require('sequelize')
-const { sequelize } = require('../../db')
 const { Device, Client } = require('../entity')
 
+const addDeviceByName = (name) => Device.create({ name })
+
 const findClientByDeviceId = (id) => {
-  return Device.findAll({
+  return Device.findOne({
     where: {
       id
     },
@@ -16,32 +16,20 @@ const findClientByDeviceId = (id) => {
   })
 }
 
-const findClientByDeviceName = (id) => {
-  return Device.findAll({
-    where: {
-      id
-    },
-    include: [
-      {
-        model: Client,
-        through: { attributes: [] }
-      }
-    ]
-  })
-}
-
-const addDeviceByName = (name) => {
+const findOrAddDeviceByName = (name, transaction) => {
   return Device.findOrCreate({
     where: {
       name
     },
     defaults: {
       name
-    }
+    },
+    transaction
   })
 }
 
 module.exports = {
   findClientByDeviceId,
+  findOrAddDeviceByName,
   addDeviceByName
 }

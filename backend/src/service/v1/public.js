@@ -1,6 +1,6 @@
 const { respSuccess, respError, success } = require('../../util/format')
 const bcrypt = require('bcrypt')
-const userDAO = require('../../model/dao/user')
+const { userDAO } = require('../../model/dao')
 const jwt = require('jsonwebtoken')
 const jwtConfig = require('../../config/jwt.json')
 

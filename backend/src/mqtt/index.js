@@ -1,5 +1,6 @@
 const mqtt = require('mqtt')
 const mqttConfig = require('../config/mqtt.json')
+const { saveTopicAndMessage } = require('../util/persistence')
 
 const client = mqtt.connect(mqttConfig.server)
 
@@ -11,10 +12,13 @@ client.on('connect', function () {
   })
 })
 
-client.on('message', (topic, message) => {
-  if (/^pub\/\w{64}\/\w+\/\w+$/.test(topic)) {
-    console.log(topic)
-    console.log(message.toString())
+client.on('message', async (topic, message) => {
+  // const re = /^pub\/(?<placeName>\w{64})\/(?<deviceName>\w+)\/(?<clientId>\w+)$/
+  const re = /^pub\/(\w+)\/(\w+)\/(\w{64})$/
+  if (re.test(topic)) {
+    console.log('received:', topic, message.toString())
+    const [_, placeName, deviceName, clientId] = re.exec(topic)
+    await saveTopicAndMessage({ placeName, deviceName, clientId }, message.toString())
   }
 })
 

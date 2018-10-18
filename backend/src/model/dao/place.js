@@ -1,7 +1,7 @@
 const { Place, Device } = require('../entity')
 
-const findDeviceByPlaceId = (id) => {
-  return Place.findOne({
+const findDeviceByPlaceId = (id, raw = false) => {
+  const template = {
     where: {
       id
     },
@@ -11,7 +11,33 @@ const findDeviceByPlaceId = (id) => {
         attributes: { exclude: ['placeId'] }
       }
     ]
-  })
+  }
+  if (raw) {
+    template.raw = true
+    template.nest = true
+  }
+  return Place.findOne(template)
+}
+
+const findDeviceByPlaceName = (name, raw = false) => {
+  const template = {
+    where: {
+      name
+    },
+    include: [
+      {
+        model: Device,
+        attributes: { exclude: ['placeId'] }
+      }
+    ],
+    raw: true,
+    nest: true
+  }
+  if (raw) {
+    template.raw = true
+    template.nest = true
+  }
+  return Place.findOne(template)
 }
 
 const findOrAddPlaceByName = (name, transaction) => {
@@ -28,5 +54,6 @@ const findOrAddPlaceByName = (name, transaction) => {
 
 module.exports = {
   findDeviceByPlaceId,
-  findOrAddPlaceByName
+  findOrAddPlaceByName,
+  findDeviceByPlaceName
 }

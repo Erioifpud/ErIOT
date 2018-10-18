@@ -14,18 +14,19 @@ const appendQuery = (template, op, key, val) => {
   }
 }
 
-const findDataByClientId = (clientId, options, limit = 10) => {
+const findDataByClientId = (clientId, options, raw = false) => {
   const template = {
-    limit,
     where: {
       id: clientId
     },
     include: [
       {
-        model: DataPoint
+        model: DataPoint,
+        attributes: { exclude: ['clientId'] }
       }
     ]
   }
+  template.limit = options.limit || 10
   const { start, end, min, max } = options
   if (start && !isNaN(new Date(start))) {
     appendQuery(template, Sequelize.Op.gte, 'createdAt', new Date(start))
@@ -39,6 +40,10 @@ const findDataByClientId = (clientId, options, limit = 10) => {
   if (max && !isNaN(parseInt(max))) {
     appendQuery(template, Sequelize.Op.lte, 'data', max)
   }
+  if (raw) {
+    template.raw = true
+    template.nest = true
+  }
   // if (sum && parseInt(sum) >= 10 && parseInt(sum) <= 1440) {
   //   const now = new Date()
   //   appendQuery(template, Sequelize.Op.between, 'createdAt', [new Date(now - sum * 60000), now])
@@ -49,7 +54,6 @@ const findDataByClientId = (clientId, options, limit = 10) => {
   //   appendQuery(template, Sequelize.Op.between, 'createdAt', [new Date(now - avr * 60000), now])
   //   template.attributes = [[sequelize.fn('AVG', sequelize.col('data')), 'avr']]
   // }
-  console.log('template', JSON.stringify(template))
   return Client.findAll(template)
 }
 

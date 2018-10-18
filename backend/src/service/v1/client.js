@@ -1,9 +1,10 @@
 const { respSuccess } = require('../../util/format')
+const { clientDAO } = require('../../model/dao')
 
 async function clientGet (ctx) {
   const { clientId } = ctx.params
-
-  respSuccess(ctx, ctx.query)
+  const result = await clientDAO.findDataByClientId(clientId, ctx.query)
+  respSuccess(ctx, result)
 }
 
 module.exports = (router, prefix) => {

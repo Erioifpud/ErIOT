@@ -9,11 +9,11 @@ const isArray = (val) => {
 
 const format = (success, data, code) => {
   if (isPrimitive(data) || isArray(data)) {
-    data = { msg: data }
+    data = { result: data }
   }
   return {
     error: !success,
-    code: success ? null : code,
+    code: success ? 200 : code,
     data
   }
 }

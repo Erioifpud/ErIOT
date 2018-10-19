@@ -77,3 +77,4 @@ mqtt-server/*.json
 
 .DS_Store
 .vscode
+dist/

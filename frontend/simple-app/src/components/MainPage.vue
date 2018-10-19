@@ -1,0 +1,51 @@
+<template>
+  <div>
+    <div class="vux-demo">
+      <!-- <img class="logo" src="../assets/vux_logo.png"> -->
+      <x-icon type="wifi" size="80" style="fill:#39495c;position:relative;"></x-icon>
+      <h1> </h1>
+    </div>
+    <group title="cell demo">
+      <cell title="VUX" value="cool" is-link></cell>
+    </group>
+  </div>
+</template>
+
+<script>
+import { Group, Cell } from 'vux'
+import mixin from '@/mixin'
+
+export default {
+  mixins: [mixin.updateBar],
+  components: {
+    Group,
+    Cell
+  },
+  data () {
+    return {
+      // note: changing this line won't causes changes
+      // with hot-reload because the reloaded component
+      // preserves its current state and we are modifying
+      // its initial state.
+      msg: 'Hello World!'
+    }
+  },
+  async mounted () {
+    const { data, err } = await this.$request('post', 'public/login', {
+      username: 'roota',
+      password: 'root'
+    })
+    console.log(data, err)
+  }
+}
+</script>
+
+<style>
+.vux-demo {
+  text-align: center;
+}
+.logo {
+  width: 100px;
+  height: 100px
+}
+</style>

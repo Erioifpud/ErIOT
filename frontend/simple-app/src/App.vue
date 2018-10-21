@@ -1,12 +1,18 @@
 <template>
   <div id="app">
+    <div v-transfer-dom>
+      <loading :show="loading" text="请稍候..."></loading>
+    </div>
+    <div>
+      <toast></toast>
+    </div>
     <Header></Header>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import { Drawer } from 'vux'
+import { Loading, Toast } from 'vux'
 import { mapState } from 'vuex'
 import Header from './components/Header'
 
@@ -19,11 +25,13 @@ export default {
   },
   components: {
     Header,
-    Drawer
+    Loading,
+    Toast
   },
   computed: {
     ...mapState([
-      'drawerVisibility'
+      'drawerVisibility',
+      'loading'
     ])
   }
 }

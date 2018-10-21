@@ -31,11 +31,7 @@ export default {
     }
   },
   async mounted () {
-    const { data, err } = await this.$request('post', 'public/login', {
-      username: 'roota',
-      password: 'root'
-    })
-    console.log(data, err)
+
   }
 }
 </script>

@@ -1,8 +1,8 @@
 <template>
   <XHeader :title="title" :left-options="{ showBack: !$route.meta.hideBack }">
-    <!-- <span v-if="$route.path === '/'" slot="overwrite-left" @click="toggleDrawer">
-      <x-icon type="navicon" size="35" style="fill:#fff;position:relative;top:-8px;left:-3px;"></x-icon>
-    </span> -->
+    <span v-if="$route.path === '/login'" slot="right" @click="toRegister">
+      <p>注册</p>
+    </span>
   </XHeader>
 </template>
 
@@ -12,9 +12,9 @@ import { mapMutations, mapState } from 'vuex'
 
 export default {
   methods: {
-    ...mapMutations([
-      'toggleDrawer'
-    ])
+    toRegister () {
+      this.$router.push('/register')
+    }
   },
   components: {
     XHeader

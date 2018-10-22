@@ -7,9 +7,11 @@
   "license": "MIT",
   "dependencies": {
     "async-mqtt": "^2.0.0",
+    "axios": "^0.18.0",
     "mosca": "^2.8.3",
     "mqtt": "^2.18.8",
     "node-machine-id": "^1.1.10",
-    "redis": "^2.8.0"
+    "redis": "^2.8.0",
+    "sleep": "^5.2.3"
   }
 }

@@ -4,6 +4,8 @@ const client = require('./client')
 const place = require('./place')
 const device = require('./device')
 const query = require('./query')
+const user = require('./user')
+const admin = require('./admin')
 
 module.exports = (router, prefix) => {
   _public(router, prefix + '/public')
@@ -12,4 +14,6 @@ module.exports = (router, prefix) => {
   place(router, prefix + '/place')
   device(router, prefix + '/device')
   query(router, prefix + '/query')
+  user(router, prefix + '/user')
+  admin(router, prefix + '/admin')
 }

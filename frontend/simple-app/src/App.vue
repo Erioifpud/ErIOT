@@ -3,35 +3,42 @@
     <div v-transfer-dom>
       <loading :show="loading" text="请稍候..."></loading>
     </div>
-    <div>
+    <div v-transfer-dom>
       <toast></toast>
     </div>
     <Header></Header>
     <router-view></router-view>
+    <tab-bar v-if="$route.name !== 'LoginPage'"></tab-bar>
   </div>
 </template>
 
 <script>
-import { Loading, Toast } from 'vux'
+import { Loading, Toast, TransferDom } from 'vux'
 import { mapState } from 'vuex'
 import Header from './components/Header'
+import TabBar from './components/TabBar'
 
 export default {
   name: 'app',
   data () {
     return {
-      // title: '456'
+      roles: []
     }
   },
   components: {
     Header,
     Loading,
-    Toast
+    Toast,
+    TabBar
+  },
+  directives: {
+    TransferDom
   },
   computed: {
     ...mapState([
       'drawerVisibility',
-      'loading'
+      'loading',
+      'transition'
     ])
   }
 }
@@ -42,5 +49,97 @@ export default {
 
 body {
   background-color: #fbf9fe;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0)
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(100%, 0, 0)
+  }
+}
+
+@keyframes inRight {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes outRight {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+.slide-in-enter-active, .slide-out-leave-active {
+  position: absolute;
+  width: 100%;
+  // top: 0;
+  animation-duration: .5s;
+  animation-fill-mode: both;
+}
+
+.show-enter, .show-leave-to {
+  opacity: 0;
+}
+
+.slide-out-leave {
+  transform: translate(0, 0);
+}
+
+.slide-in-enter-active {
+  animation-name: inRight;
+}
+
+.slide-out-leave-active {
+  animation-name: outRight;
 }
 </style>

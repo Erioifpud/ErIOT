@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '@/store'
 import MainPage from '@/components/MainPage'
 import LoginPage from '@/components/LoginPage'
-import RegisterPage from '@/components/RegisterPage'
+import AdminPage from '@/components/AdminPage'
 
 Vue.use(Router)
 
@@ -26,9 +27,13 @@ const router = new Router({
       }
     },
     {
-      path: '/register',
-      name: 'RegisterPage',
-      component: RegisterPage
+      path: '/admin',
+      name: 'AdminPage',
+      component: AdminPage,
+      meta: {
+        requireAuth: true,
+        hideBack: true
+      }
     }
   ]
 })
@@ -48,5 +53,20 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
+
+router._push = router.push
+
+router.forward = router.push = (target) => {
+  store.commit('setTransitionAction', 'forward')
+  setTimeout(() => { router._push(target) })
+}
+
+router.back = (target) => {
+  store.commit('setTransitionAction', 'back')
+  if (target) {
+    setTimeout(() => { router._push(target) })
+  }
+  history.go(-1)
+}
 
 export default router

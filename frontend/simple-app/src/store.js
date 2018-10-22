@@ -7,7 +7,8 @@ const store = new Vuex.Store({
   state: {
     title: 'erIOT',
     drawerVisibility: false,
-    loading: false
+    loading: false,
+    transition: 'forward'
   },
   mutations: {
     changeTitle (state, title) {
@@ -21,6 +22,13 @@ const store = new Vuex.Store({
     },
     showLoading (state) {
       state.loading = true
+    },
+    setTransitionAction (state, action) {
+      if (action === 'forward') {
+        state.transition = 'slide-in'
+      } else {
+        state.transition = 'slide-out'
+      }
     }
   }
 })

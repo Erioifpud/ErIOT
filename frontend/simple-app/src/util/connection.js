@@ -38,7 +38,7 @@ function responseFilter (response) {
     ls.setItem('token', response.data.token)
     console.log('set token:', response.data.token)
   }
-  return response
+  return response.data
 }
 
 function requestFilter (request) {

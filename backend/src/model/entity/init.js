@@ -8,15 +8,19 @@ const Device = require('./device')
 const DataPoint = require('./datapoint')
 
 module.exports = () => sequelize.sync({ force: true }).then(async () => {
-  const user = await User.create({
+  const user1 = await User.create({
     username: 'root',
-    password: '$2b$12$cUIwdwL1wHdlZmaK3UYQae3dYWFNz3xH70QwJq9c7i6X/zvdlKCFi'
+    password: '$2b$12$hRJVCT2zBbllTbDCp11WLuksmTxqf9dQ4daSLFOKNkh8kbgBkyl2q'
+  })
+  const user2 = await User.create({
+    username: 'rootn',
+    password: '$2b$12$hRJVCT2zBbllTbDCp11WLuksmTxqf9dQ4daSLFOKNkh8kbgBkyl2q'
   })
   const role1 = await Role.create({
     name: 'member'
   })
   const role2 = await Role.create({
-    name: 'test2'
+    name: 'admin'
   })
   const permission1 = await Permission.create({
     rule: '/v\\d/\\w+'
@@ -27,11 +31,13 @@ module.exports = () => sequelize.sync({ force: true }).then(async () => {
   const permission3 = await Permission.create({
     rule: '/v\\d/test3/\\w{0,}'
   })
-  user.addRoles(role1)
-  user.addRoles(role2)
+  user1.addRoles(role1)
+  user1.addRoles(role2)
+  user2.addRoles(role1)
   role1.addPermissions(permission1)
-  role2.addPermissions(permission2)
-  role2.addPermissions(permission3)
+  role1.addPermissions(permission2)
+  role1.addPermissions(permission3)
+  role2.addPermissions(permission1)
 
   const place = await Place.create({
     name: 'my_livingroom'

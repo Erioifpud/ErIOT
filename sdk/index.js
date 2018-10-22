@@ -1,10 +1,8 @@
 const mqtt = require('async-mqtt')
-const {
-  machineIdSync
-} = require('node-machine-id')
+const { machineIdSync } = require('node-machine-id')
+const sleep = require('sleep')
 
 const machineId = machineIdSync()
-// TODO: 改成Promise
 class Client {
   constructor(options) {
     this.options = options || {}
@@ -15,16 +13,11 @@ class Client {
   _init() {
     this.client.on('connect', async () => {
       console.log(`${this._channel()} connected!`)
-      // await this.client.subscribe(this._channel('sub'), (err) => {
-      //   if (!err) {
-      //     console.log(`${this._channel()} subscribed!`)
-      //   }
-      // })
     })
   }
 
   _channel(status) {
-    let template = `${machineIdSync()}/${this.options.room}/${this.options.deviceName}`
+    let template = `${this.options.place}/${this.options.device}/${machineIdSync()}`
     if (status !== 'pub' && status !== 'sub') {
       return template
     } else {
@@ -36,11 +29,16 @@ class Client {
     return this.client && this.client.connected
   }
 
-  async send(message) {
+  send(message) {
+    message = message.toString()
     if (this.isConnected()) {
       console.log('sent:', message)
-      await this.client.publish(this._channel('pub'), message)
+      return this.client.publish(this._channel('pub'), message)
     }
+  }
+
+  sleep(ms) {
+    sleep.msleep(ms)
   }
 
   // @checkConntected()
@@ -51,17 +49,6 @@ class Client {
         cb && cb(message)
       }
     })
-    // if (this.isConnected()) {
-    //   this.client.subscribe(this._channel('sub'), (err) => {
-    //     if (!err) {
-    //       this.client.on('message', (topic, message) => {
-    //         if (this._channel('sub') === topic) {
-    //           cb && cb(message)
-    //         }
-    //       })
-    //     }
-    //   })
-    // }
   }
 
   // cb(err)

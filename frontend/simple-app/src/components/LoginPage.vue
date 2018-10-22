@@ -7,6 +7,7 @@
     </group>
     <box gap="10px 10px">
       <x-button type="primary" @click.native="handleLogin">登陆</x-button>
+      <x-button type="default" @click.native="handleRegister">注册</x-button>
     </box>
   </div>
 </template>
@@ -42,6 +43,17 @@ export default {
       } else if (data) {
         this.$vux.toast.text('登陆成功', 'bottom')
         this.$router.push('/')
+      }
+    },
+    async handleRegister () {
+      const { data, err } = await this.$request('post', 'public/register', {
+        username: this.username,
+        password: this.password
+      })
+      if (err) {
+        this.$vux.toast.text(err.result, 'bottom')
+      } else if (data) {
+        this.$vux.toast.text('注册成功', 'bottom')
       }
     }
   }

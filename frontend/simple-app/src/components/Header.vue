@@ -1,14 +1,14 @@
 <template>
   <XHeader :title="title" :left-options="{ showBack: !$route.meta.hideBack }">
-    <span v-if="$route.path === '/login'" slot="right" @click="toRegister">
+    <!-- <span v-if="$route.path === '/login'" slot="right" @click="toRegister">
       <p>注册</p>
-    </span>
+    </span> -->
   </XHeader>
 </template>
 
 <script>
 import { XHeader } from 'vux'
-import { mapMutations, mapState } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   methods: {

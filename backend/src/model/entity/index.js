@@ -27,6 +27,16 @@ Permission.belongsToMany(Role, {
   foreignKey: 'permId'
 })
 
+User.belongsToMany(Place, {
+  through: 'user_place',
+  foreignKey: 'userId'
+})
+
+Place.belongsToMany(User, {
+  through: 'user_place',
+  foreignKey: 'placeId'
+})
+
 Place.hasMany(Device, {
   foreignKey: 'placeId'
 })

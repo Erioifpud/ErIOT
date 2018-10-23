@@ -12,22 +12,20 @@ const instance = axios.create({
 instance.interceptors.request.use(requestFilter, errorHandler)
 instance.interceptors.response.use(responseFilter, errorHandler)
 
-function toQueryString (obj) {
-  return obj ? Object.keys(obj).sort().map(function (key) {
-    var val = obj[key]
-    if (Array.isArray(val)) {
-      return val.sort().map(function (val2) {
-        return key + '=' + val2
-      }).join('&')
-    }
-
-    if (val === '' || val === undefined) {
-      return
-    }
-
-    return key + '=' + val
-  }).join('&') : ''
-}
+// function toQueryString (obj) {
+//   return obj ? Object.keys(obj).sort().map(function (key) {
+//     var val = obj[key]
+//     if (Array.isArray(val)) {
+//       return val.sort().map(function (val2) {
+//         return key + '=' + val2
+//       }).join('&')
+//     }
+//     if (val === '' || val === undefined) {
+//       return
+//     }
+//     return key + '=' + val
+//   }).join('&') : ''
+// }
 
 function responseFilter (response) {
   store.commit('hideLoading')
@@ -43,6 +41,9 @@ function responseFilter (response) {
 
 function requestFilter (request) {
   store.commit('showLoading')
+  if (request.method === 'get') {
+    request.params = request.data
+  }
   const ls = window.localStorage
   if (ls.getItem('token')) {
     console.log(request)

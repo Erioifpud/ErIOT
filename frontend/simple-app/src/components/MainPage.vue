@@ -6,8 +6,8 @@
       <h1> </h1>
     </div>
     <group title="用户信息">
-      <cell title="编号" :value="this.user.id"></cell>
-      <cell title="用户名" :value="this.user.username"></cell>
+      <cell title="编号" :value="user.id"></cell>
+      <cell title="用户名" :value="user.username"></cell>
       <cell
         title="角色"
         is-link

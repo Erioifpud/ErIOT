@@ -3,6 +3,14 @@ const { addUserHandler } = require('./inject')
 
 const addUserByNameAndPass = (info) => User.create(info)
 
+const findAllUsers = () => {
+  return User.findAll({
+    attributes: {
+      exclude: ['password']
+    }
+  })
+}
+
 const findUserByUsername = (username, attrs) => {
   const query = {
     where: {
@@ -15,7 +23,7 @@ const findUserByUsername = (username, attrs) => {
   return User.findOne(query)
 }
 
-const findUserRoleById = (id) => User.findOne({
+const findUserRoleById = (id, options) => User.findOne({
   attributes: ['id', 'username'],
   where: {
     id
@@ -25,7 +33,8 @@ const findUserRoleById = (id) => User.findOne({
       model: Role,
       through: { attributes: [] }
     }
-  ]
+  ],
+  ...options
 })
 
 const findUserPermissionsById = (id) => User.findOne({
@@ -65,5 +74,6 @@ module.exports = {
   findUserByUsername,
   addUserByNameAndPass: new Proxy(addUserByNameAndPass, addUserHandler),
   findPlaceById,
-  findUserRoleById
+  findUserRoleById,
+  findAllUsers
 }

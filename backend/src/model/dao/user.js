@@ -11,6 +11,32 @@ const findAllUsers = () => {
   })
 }
 
+const findAllUserPermissions = () => User.findAll({
+  attributes: ['id', 'username'],
+  include: [
+    {
+      model: Role,
+      through: { attributes: [] },
+      include: [
+        {
+          model: Permission,
+          through: { attributes: [] }
+        }
+      ]
+    }
+  ]
+})
+
+const findAllUserPlaces = () => User.findAll({
+  attributes: ['id', 'username'],
+  include: [
+    {
+      model: Place,
+      through: { attributes: [] }
+    }
+  ]
+})
+
 const findUserByUsername = (username, attrs) => {
   const query = {
     where: {
@@ -69,11 +95,16 @@ const findPlaceById = (id) => User.findOne({
   ]
 })
 
+const findUserById = (id) => User.findById(id)
+
 module.exports = {
   findUserPermissionsById,
   findUserByUsername,
   addUserByNameAndPass: new Proxy(addUserByNameAndPass, addUserHandler),
   findPlaceById,
   findUserRoleById,
-  findAllUsers
+  findAllUsers,
+  findAllUserPermissions,
+  findAllUserPlaces,
+  findUserById
 }

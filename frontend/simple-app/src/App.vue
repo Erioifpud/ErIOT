@@ -6,14 +6,16 @@
     <div v-transfer-dom>
       <toast></toast>
     </div>
-    <Header></Header>
-    <router-view></router-view>
-    <tab-bar v-if="$route.name !== 'LoginPage'"></tab-bar>
+    <view-box body-padding-bottom="55px" body-padding-top="46px">
+      <Header slot="header"></Header>
+      <router-view></router-view>
+      <tab-bar slot="bottom" v-if="$route.name !== 'LoginPage'"></tab-bar>
+    </view-box>
   </div>
 </template>
 
 <script>
-import { Loading, Toast, TransferDom } from 'vux'
+import { Loading, Toast, TransferDom, ViewBox } from 'vux'
 import { mapState } from 'vuex'
 import Header from './components/Header'
 import TabBar from './components/TabBar'
@@ -29,7 +31,8 @@ export default {
     Header,
     Loading,
     Toast,
-    TabBar
+    TabBar,
+    ViewBox
   },
   directives: {
     TransferDom

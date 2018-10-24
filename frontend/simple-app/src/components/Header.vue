@@ -1,5 +1,5 @@
 <template>
-  <XHeader :title="title" :left-options="{ showBack: !$route.meta.hideBack }">
+  <XHeader class="header" :title="title" :left-options="{ showBack: !$route.meta.hideBack }">
     <!-- <span v-if="$route.path === '/login'" slot="right" @click="toRegister">
       <p>注册</p>
     </span> -->
@@ -27,6 +27,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.header {
+  position: fixed;
+  width: 100%;
+  z-index: 1010;
+}
 </style>

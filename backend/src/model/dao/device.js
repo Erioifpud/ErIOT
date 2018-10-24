@@ -2,6 +2,12 @@ const { Device, Client } = require('../entity')
 
 const addDeviceByName = (name) => Device.create({ name })
 
+const findAllDevices = () => Device.findAll({
+  attributes: {
+    exclude: ['placeId']
+  }
+})
+
 const findClientByDeviceId = (id, raw = false) => {
   const template = {
     attributes: {
@@ -37,8 +43,12 @@ const findOrAddDeviceByName = (name, transaction) => {
   })
 }
 
+const findDeviceById = (id) => Device.findById(id)
+
 module.exports = {
   findClientByDeviceId,
   findOrAddDeviceByName,
-  addDeviceByName
+  addDeviceByName,
+  findAllDevices,
+  findDeviceById
 }

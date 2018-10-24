@@ -1,5 +1,5 @@
 <template>
-  <tabbar>
+  <tabbar style="position: fixed;">
     <tabbar-item selected link="/">
       <x-icon type="home" slot="icon"></x-icon>
       <span slot="label">Home</span>

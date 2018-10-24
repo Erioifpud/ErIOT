@@ -3,6 +3,8 @@ const { Client, DataPoint } = require('../entity')
 
 const addClientByIdAndName = (id, name) => Client.create({ id, name })
 
+const findAllClients = () => Client.findAll()
+
 const appendQuery = (template, op, key, val) => {
   if (!template.include[0].where) {
     template.include[0].where = {}
@@ -70,8 +72,12 @@ const findOrAddClientByIdAndName = (id, name, transaction) => {
   })
 }
 
+const findClientById = (id) => Client.findById(id)
+
 module.exports = {
   findDataByClientId,
   findOrAddClientByIdAndName,
-  addClientByIdAndName
+  addClientByIdAndName,
+  findAllClients,
+  findClientById
 }

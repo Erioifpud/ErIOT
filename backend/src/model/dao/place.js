@@ -1,4 +1,4 @@
-const { Place, Device } = require('../entity')
+const { Place, Device, Client } = require('../entity')
 
 const findDeviceByPlaceId = (id, raw = false) => {
   const template = {
@@ -18,6 +18,8 @@ const findDeviceByPlaceId = (id, raw = false) => {
   }
   return Place.findOne(template)
 }
+
+const findAllPlaces = () => Place.findAll()
 
 const findDeviceByPlaceName = (name, raw = false) => {
   const template = {
@@ -52,8 +54,28 @@ const findOrAddPlaceByName = (name, transaction) => {
   })
 }
 
+const findAllPlaceClients = () => Place.findAll({
+  include: [
+    {
+      model: Device,
+      attributes: { exclude: ['placeId'] },
+      include: [
+        {
+          model: Client,
+          through: { attributes: [] }
+        }
+      ]
+    }
+  ]
+})
+
+const findPlaceById = (id) => Place.findById(id)
+
 module.exports = {
   findDeviceByPlaceId,
   findOrAddPlaceByName,
-  findDeviceByPlaceName
+  findDeviceByPlaceName,
+  findAllPlaces,
+  findAllPlaceClients,
+  findPlaceById
 }

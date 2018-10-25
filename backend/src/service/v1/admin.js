@@ -103,7 +103,19 @@ async function ownerAdd (ctx) {
 }
 
 async function permissionDel (ctx) {
-
+  const { ids: [userId, roleId, permissionId] } = ctx.request.body
+  const user = await userDAO.findUserById(userId)
+  const role = await roleDAO.findRoleById(roleId)
+  const permission = await permissionDAO.findPermissionById(permissionId)
+  if (!user || !role || !permission) {
+    respError(ctx, 400, '参数错误')
+    return
+  }
+  await role.removePermission(permission)
+  await permission.removeRole(role)
+  // await user.removeRole(role)
+  // await role.removeUser(user)
+  respSuccess(ctx, true)
 }
 
 async function deviceDel (ctx) {
@@ -123,4 +135,6 @@ module.exports = (router, prefix) => {
   router.post(prefix + '/associate/device', deviceAdd)
   router.post(prefix + '/associate/owner', ownerAdd)
   router.del(prefix + '/associate/permission', permissionDel)
+  router.del(prefix + '/associate/device', deviceDel)
+  router.del(prefix + '/associate/owner', ownerDel)
 }

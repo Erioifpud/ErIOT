@@ -4,9 +4,9 @@
       <x-icon type="home" slot="icon"></x-icon>
       <span slot="label">Home</span>
     </tabbar-item>
-    <tabbar-item link="/test">
+    <tabbar-item link="/place">
       <x-icon type="wifi" slot="icon"></x-icon>
-      <span slot="label">Place</span>
+      <span slot="label">IOT</span>
     </tabbar-item>
     <tabbar-item v-if="roles.includes('admin')" link="/admin">
       <x-icon type="aperture" slot="icon"></x-icon>

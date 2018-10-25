@@ -4,6 +4,8 @@ import store from '@/store'
 import MainPage from '@/components/MainPage'
 import LoginPage from '@/components/LoginPage'
 import AdminPage from '@/components/AdminPage'
+import PlacePage from '@/components/PlacePage'
+import DevicePage from '@/components/DevicePage'
 
 Vue.use(Router)
 
@@ -34,6 +36,20 @@ const router = new Router({
         requireAuth: true,
         hideBack: true
       }
+    },
+    {
+      path: '/place',
+      name: 'PlacePage',
+      component: PlacePage,
+      meta: {
+        requireAuth: true,
+        hideBack: true
+      }
+    },
+    {
+      path: '/device',
+      name: 'DevicePage',
+      component: DevicePage
     }
   ]
 })

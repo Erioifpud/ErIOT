@@ -6,6 +6,7 @@ import LoginPage from '@/components/LoginPage'
 import AdminPage from '@/components/AdminPage'
 import PlacePage from '@/components/PlacePage'
 import DevicePage from '@/components/DevicePage'
+import ClientPage from '@/components/ClientPage'
 
 Vue.use(Router)
 
@@ -50,6 +51,11 @@ const router = new Router({
       path: '/device',
       name: 'DevicePage',
       component: DevicePage
+    },
+    {
+      path: '/client',
+      name: 'ClientPage',
+      component: ClientPage
     }
   ]
 })

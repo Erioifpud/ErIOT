@@ -7,7 +7,8 @@
         :title="place.name"
         is-link
         :link="{ name: 'DevicePage', query: { placeId: place.id } }"
-      ></cell>
+      >
+      </cell>
     </group>
   </div>
 </template>

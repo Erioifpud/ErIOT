@@ -71,11 +71,24 @@ const findAllPlaceClients = () => Place.findAll({
 
 const findPlaceById = (id) => Place.findById(id)
 
+const findDeviceById = (id) => Place.findOne({
+  where: {
+    id
+  },
+  include: [
+    {
+      model: Device,
+      attributes: { exclude: ['placeId'] }
+    }
+  ]
+})
+
 module.exports = {
   findDeviceByPlaceId,
   findOrAddPlaceByName,
   findDeviceByPlaceName,
   findAllPlaces,
   findAllPlaceClients,
-  findPlaceById
+  findPlaceById,
+  findDeviceById
 }

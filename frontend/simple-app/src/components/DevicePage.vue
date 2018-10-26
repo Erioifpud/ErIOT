@@ -1,7 +1,14 @@
 <template>
   <div>
     <group title="可操作的设备">
-      <!-- <cell v-for="device in devices" :key="device.id" :title="device.name" is-link></cell> -->
+      <cell
+        v-for="device in devices"
+        :key="device.id"
+        :title="device.name"
+        is-link
+        :link="{ name: 'ClientPage', query: { deviceId: device.id } }"
+      >
+      </cell>
     </group>
   </div>
 </template>
@@ -24,7 +31,9 @@ export default {
   },
   methods: {
     async getDevices () {
-      const { err, data } = await this.$request('get', 'place')
+      const { err, data } = await this.$request('get', 'device', {
+        placeId: this.$route.query.placeId
+      })
       if (err) {
         this.$vux.toast.text(err.result, 'bottom')
         return
@@ -33,7 +42,7 @@ export default {
     }
   },
   async mounted () {
-    // await this.getDevices()
+    await this.getDevices()
   }
 }
 </script>

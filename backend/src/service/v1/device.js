@@ -9,17 +9,18 @@ async function deviceGet (ctx) {
 
 async function device (ctx) {
   const user = ctx.state.user
-  const { placeId } = ctx.query
-  const placesData = await userDAO.findPlaceById(user.id)
-  const places = placesData.places
-  console.log(1)
-  if (!places.some(item => item.id === parseInt(placeId))) {
+  const placeId = parseInt(ctx.query.placeId)
+  const data = await userDAO.findDeviceById(user.id)
+  if (!data) {
+    respSuccess(ctx, null)
+    return
+  }
+  const place = data.places.find(item => item.id === placeId)
+  if (!place) {
     respError(ctx, 403, '无权访问')
     return
   }
-  console.log(2)
-  const result = await placeDAO.findDeviceById(placeId)
-  respSuccess(ctx, result)
+  respSuccess(ctx, place.devices)
 }
 
 module.exports = (router, prefix) => {

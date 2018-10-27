@@ -3,8 +3,8 @@ const { userDAO, placeDAO } = require('../../model/dao')
 
 async function place (ctx) {
   const user = ctx.state.user
-  const places = await userDAO.findPlaceById(user.id)
-  respSuccess(ctx, places)
+  const data = await userDAO.findPlaceById(user.id)
+  respSuccess(ctx, data.places)
 }
 
 async function placeGet (ctx) {

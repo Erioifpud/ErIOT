@@ -1,4 +1,4 @@
-const { User, Role, Permission, Place } = require('../entity')
+const { User, Role, Permission, Place, Device, Client } = require('../entity')
 const { addUserHandler } = require('./inject')
 
 const addUserByNameAndPass = (info) => User.create(info)
@@ -84,16 +84,87 @@ const findUserPermissionsById = (id) => User.findOne({
 
 const findPlaceById = (id) => User.findOne({
   attributes: ['id', 'username'],
+  required: true,
   where: {
     id
   },
   include: [
     {
       model: Place,
+      required: true,
       through: { attributes: [] }
     }
   ]
 })
+
+const findDeviceById = (id) => User.findOne({
+  attributes: ['id', 'username'],
+  required: true,
+  where: {
+    id
+  },
+  include: [
+    {
+      model: Place,
+      required: true,
+      through: { attributes: [] },
+      include: [
+        {
+          model: Device,
+          required: true,
+          attributes: { exclude: ['placeId'] }
+        }
+      ]
+    }
+  ]
+})
+
+const findClientById = (id) => User.findOne({
+  attributes: ['id', 'username'],
+  required: true,
+  where: {
+    id
+  },
+  include: [
+    {
+      model: Place,
+      required: true,
+      through: { attributes: [] },
+      include: [
+        {
+          model: Device,
+          required: true,
+          attributes: { exclude: ['placeId'] },
+          include: [
+            {
+              model: Client,
+              required: true,
+              through: { attributes: [] }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+})
+
+// const findClientById = (id) => Device.findOne({
+//   include: [
+//     {
+//       model: Device,
+//       required: true,
+//       include: [
+//         {
+//           model: User,
+//           required: true,
+//           where: {
+//             id
+//           }
+//         }
+//       ]
+//     }
+//   ]
+// })
 
 const findUserById = (id) => User.findById(id)
 
@@ -106,5 +177,7 @@ module.exports = {
   findAllUsers,
   findAllUserPermissions,
   findAllUserPlaces,
-  findUserById
+  findUserById,
+  findDeviceById,
+  findClientById
 }

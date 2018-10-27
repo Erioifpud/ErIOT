@@ -1,5 +1,5 @@
-const { respSuccess } = require('../../util/format')
-const { clientDAO } = require('../../model/dao')
+const { respSuccess, respError } = require('../../util/format')
+const { userDAO, clientDAO } = require('../../model/dao')
 
 async function clientGet (ctx) {
   const { clientId } = ctx.params
@@ -7,6 +7,23 @@ async function clientGet (ctx) {
   respSuccess(ctx, result)
 }
 
+async function client (ctx) {
+  const user = ctx.state.user
+  const deviceId = parseInt(ctx.query.deviceId)
+  const data = await userDAO.findClientById(user.id)
+  if (!data || !data.places) {
+    respSuccess(ctx, null)
+    return
+  }
+  const device = data.places.devices.find(item => item.id === deviceId)
+  if (!device) {
+    respError(ctx, 403, '无权访问')
+    return
+  }
+  respSuccess(ctx, device.clients)
+}
+
 module.exports = (router, prefix) => {
+  router.get(prefix + '/', client)
   router.get(prefix + '/:clientId', clientGet)
 }

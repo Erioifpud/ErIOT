@@ -6,6 +6,7 @@ const device = require('./device')
 const query = require('./query')
 const user = require('./user')
 const admin = require('./admin')
+const userData = require('./userData')
 
 module.exports = (router, prefix) => {
   _public(router, prefix + '/public')
@@ -16,4 +17,5 @@ module.exports = (router, prefix) => {
   query(router, prefix + '/query')
   user(router, prefix + '/user')
   admin(router, prefix + '/admin')
+  userData(router, prefix + '/userData')
 }

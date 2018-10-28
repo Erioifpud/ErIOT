@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import utils from './util/utils'
 
 Vue.use(Vuex)
 
@@ -8,7 +9,8 @@ const store = new Vuex.Store({
     title: 'erIOT',
     drawerVisibility: false,
     loading: false,
-    transition: 'forward'
+    transition: 'forward',
+    userData: undefined
   },
   mutations: {
     changeTitle (state, title) {
@@ -29,6 +31,29 @@ const store = new Vuex.Store({
       } else {
         state.transition = 'slide-out'
       }
+    },
+    setUserData (state, action) {
+      state.userData = action
+    }
+  },
+  getters: {
+    getPlacesFromUserData (state) {
+      if (state.userData && state.userData.places) {
+        return state.userData.places
+      }
+      return undefined
+    },
+    getDevicesFromUserData (state, getters) {
+      if (!getters.getPlacesFromUserData) {
+        return undefined
+      }
+      return getters.getPlacesFromUserData.map(item => item.devices)
+    },
+    getClientsFromUserData (state, getters) {
+      if (!getters.getDevicesFromUserData) {
+        return undefined
+      }
+      return getters.getDevicesFromUserData.map(item => item.map(item2 => item2.clients))
     }
   }
 })

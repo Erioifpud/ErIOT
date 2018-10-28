@@ -56,7 +56,7 @@ const findDataByClientId = (clientId, options, raw = false) => {
   //   appendQuery(template, Sequelize.Op.between, 'createdAt', [new Date(now - avr * 60000), now])
   //   template.attributes = [[sequelize.fn('AVG', sequelize.col('data')), 'avr']]
   // }
-  return Client.findAll(template)
+  return Client.findOne(template)
 }
 
 const findOrAddClientByIdAndName = (id, name, transaction) => {

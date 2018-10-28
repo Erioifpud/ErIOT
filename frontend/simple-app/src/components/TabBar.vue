@@ -4,7 +4,7 @@
       <x-icon type="home" slot="icon"></x-icon>
       <span slot="label">Home</span>
     </tabbar-item>
-    <tabbar-item link="/place">
+    <tabbar-item link="/control">
       <x-icon type="wifi" slot="icon"></x-icon>
       <span slot="label">IOT</span>
     </tabbar-item>

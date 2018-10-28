@@ -14,7 +14,7 @@ module.exports = {
           algorithm: jwtConfig.algorithm
         })
         ctx.state.user = decoded.user
-        console.log(decoded)
+        // console.log(decoded)
         const fullUser = await findUserPermissionsById(decoded.user.id)
         const allRules = fullUser.roles.reduce((a, b) => {
           const permissions = b.permissions.map(item => item.rule)

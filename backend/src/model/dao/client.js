@@ -28,7 +28,12 @@ const findDataByClientId = (clientId, options, raw = false) => {
       }
     ]
   }
-  template.limit = options.limit || 10
+  if (!options.limit || options.limit < 1 || options.limit > 100) {
+    template.limit = 10
+  } else {
+    template.limit = options.limit
+  }
+
   const { start, end, min, max } = options
   if (start && !isNaN(new Date(start))) {
     appendQuery(template, Sequelize.Op.gte, 'createdAt', new Date(start))

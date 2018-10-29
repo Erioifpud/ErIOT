@@ -1,6 +1,6 @@
 <template>
   <div>
-    <group title="可操作的地点">
+    <group title="可操作的内容">
       <cell
         v-for="item in list"
         :key="item.id"
@@ -35,6 +35,9 @@ export default {
       'userData'
     ]),
     list () {
+      if (!this.userData) {
+        return []
+      }
       const query = this.$route.query
       const { level } = query
       const [placeId, deviceId, clientId] = (level || '').split('|')

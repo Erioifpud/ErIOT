@@ -2,7 +2,7 @@
   <div>
     <card >
       <cell class="vux-1px-b" slot="header" title="当前状态">
-        <x-button type="primary" mini>添加</x-button>
+        <x-button type="primary" mini @click.native="addPoint">添加</x-button>
       </cell>
       <div slot="content" class="card-demo-flex card-demo-content01">
         <div class="vux-1px-r">
@@ -56,37 +56,16 @@
         </div>
         <datetime-range title="" :start-date="`${new Date().getFullYear()}-01-01`" :end-date="`${new Date().getFullYear()}-12-31`" format="YYYY/MM/DD" v-model="endDate"></datetime-range>
       </cell>
+      <box gap="0.625rem 0.625rem">
+        <x-button type="primary" @click.native="search">搜索</x-button>
+      </box>
     </group>
 
     <divider>查询结果</divider>
     <timeline class="timeline">
-			<timeline-item>
-				<h4 class="recent">【广东】 广州市 已发出</h4>
-				<p class="recent">2016-04-17 12:00:00</p>
-			</timeline-item>
-			<timeline-item>
-				<h4> 申通快递员 广东广州 收件员 xxx 已揽件</h4>
-				<p>2016-04-16 10:23:00</p>
-			</timeline-item>
-			<timeline-item>
-				<h4> 商家正在通知快递公司揽件</h4>
-				<p>2016-04-15 9:00:00</p>
-			</timeline-item>
-      <timeline-item>
-				<h4> 商家正在通知快递公司揽件</h4>
-				<p>2016-04-15 9:00:00</p>
-			</timeline-item>
-      <timeline-item>
-				<h4> 商家正在通知快递公司揽件</h4>
-				<p>2016-04-15 9:00:00</p>
-			</timeline-item>
-      <timeline-item>
-				<h4> 商家正在通知快递公司揽件</h4>
-				<p>2016-04-15 9:00:00</p>
-			</timeline-item>
-      <timeline-item>
-				<h4> 商家正在通知快递公司揽件</h4>
-				<p>2016-04-15 9:00:00</p>
+			<timeline-item v-for="point in datapoints" :key="point.id">
+				<h4 class="recent">{{ point.data }}</h4>
+				<p class="recent">{{ formatSQLDate(point.createdAt) }}</p>
 			</timeline-item>
 		</timeline>
   </div>
@@ -94,7 +73,20 @@
 
 <script>
 import mixin from '@/mixin'
-import { Card, DatetimeRange, XSwitch, XNumber, Timeline, TimelineItem, Group, Range, Cell, XButton, Divider } from 'vux'
+import {
+  Card,
+  DatetimeRange,
+  XSwitch,
+  XNumber,
+  Timeline,
+  TimelineItem,
+  Group,
+  Range,
+  Cell,
+  XButton,
+  Divider,
+  Box
+} from 'vux'
 import moment from 'moment'
 
 export default {
@@ -110,7 +102,8 @@ export default {
     Range,
     Cell,
     XButton,
-    Divider
+    Divider,
+    Box
   },
   data () {
     return {
@@ -123,17 +116,47 @@ export default {
       needStartDate: false,
       startDate: [moment().format('YYYY-MM-DD'), '00', '00'],
       needEndDate: false,
-      endDate: [moment().format('YYYY-MM-DD'), '23', '59']
+      endDate: [moment().format('YYYY-MM-DD'), '23', '59'],
+      datapoints: []
     }
   },
   methods: {
+    search () {
+      this.getDataPoints()
+    },
+    addPoint () {
+      console.log('add point')
+      this.getDataPoints()
+    },
+    formatDateArr (dateArr) {
+      return `${dateArr[0]} ${dateArr[1]}:${dateArr[2]}`
+    },
+    formatSQLDate (date) {
+      return moment(new Date(date)).format('YYYY-MM-DD HH:mm:ss')
+    },
     async getDataPoints () {
-      const { err, data } = await this.$request('get', `client/${this.$route.query.clientId}`)
+      const params = {
+        limit: this.limit
+      }
+      if (this.needMin) {
+        params.min = this.min
+      }
+      if (this.needMax) {
+        params.max = this.max
+      }
+      if (this.needStartDate) {
+        params.start = this.formatDateArr(this.startDate)
+      }
+      if (this.needEndDate) {
+        params.end = this.formatDateArr(this.endDate)
+      }
+      const { err, data } = await this.$request('get', `client/${this.$route.query.clientId}`, params)
       if (err) {
         this.$vux.toast.text(err.result, 'bottom')
         return
       }
       console.log(data)
+      this.datapoints = data.datapoints
     }
   },
   mounted () {

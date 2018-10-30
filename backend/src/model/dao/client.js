@@ -17,6 +17,10 @@ const appendQuery = (template, op, key, val) => {
 }
 
 const findDataByClientId = (clientId, options, raw = false) => {
+  let limit = parseInt(options.limit)
+  if (!limit || limit < 1 || limit > 100) {
+    limit = 10
+  }
   const template = {
     where: {
       id: clientId
@@ -24,16 +28,12 @@ const findDataByClientId = (clientId, options, raw = false) => {
     include: [
       {
         model: DataPoint,
-        attributes: { exclude: ['clientId'] }
+        // attributes: { exclude: ['clientId'] },
+        limit
       }
     ]
   }
-  if (!options.limit || options.limit < 1 || options.limit > 100) {
-    template.limit = 10
-  } else {
-    template.limit = options.limit
-  }
-
+  console.log(template)
   const { start, end, min, max } = options
   if (start && !isNaN(new Date(start))) {
     appendQuery(template, Sequelize.Op.gte, 'createdAt', new Date(start))

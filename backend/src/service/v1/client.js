@@ -10,7 +10,12 @@ async function clientGet (ctx) {
     return
   }
   const result = await clientDAO.findDataByClientId(clientId, ctx.query)
+  console.log(result);
   respSuccess(ctx, result)
+}
+
+async function latest (ctx) {
+
 }
 
 // async function client (ctx) {
@@ -30,6 +35,6 @@ async function clientGet (ctx) {
 // }
 
 module.exports = (router, prefix) => {
-  // router.get(prefix + '/', client)
+  router.get(prefix + '/latest', latest)
   router.get(prefix + '/:clientId', clientGet)
 }

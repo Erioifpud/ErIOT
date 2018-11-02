@@ -70,16 +70,7 @@
 				<p class="recent">{{ sqlDate(point.createdAt).format('YYYY-MM-DD HH:mm:ss') }}</p>
 			</timeline-item>
 		</timeline>
-    <div v-transfer-dom>
-      <x-dialog v-model="showAddDialog" class="dialog-demo" hide-on-blur>
-        <div class="img-box">
-          <img src="https://ws1.sinaimg.cn/large/663d3650gy1fq6824ur1dj20ia0pydlm.jpg" style="max-width:100%">
-        </div>
-        <div @click="showAddDialog=false">
-          <span class="vux-close"></span>
-        </div>
-      </x-dialog>
-    </div>
+    <add-point-dialog :state.sync="showAddDialog"></add-point-dialog>
   </div>
 </template>
 
@@ -102,6 +93,7 @@ import {
   XDialog
 } from 'vux'
 import moment from 'moment'
+import AddPointDialog from './AddPointDialog'
 
 export default {
   mixins: [mixin.updateBar],
@@ -119,7 +111,11 @@ export default {
     Divider,
     Box,
     TransferDom,
-    XDialog
+    XDialog,
+    AddPointDialog
+  },
+  directives: {
+    TransferDom
   },
   data () {
     return {

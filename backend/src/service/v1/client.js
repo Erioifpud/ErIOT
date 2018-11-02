@@ -10,12 +10,20 @@ async function clientGet (ctx) {
     return
   }
   const result = await clientDAO.findDataByClientId(clientId, ctx.query)
-  console.log(result);
   respSuccess(ctx, result)
 }
 
-async function latest (ctx) {
-
+async function clientLatest (ctx) {
+  const user = ctx.state.user
+  const { clientId } = ctx.params
+  const data = await userDAO.findClientByIdAndClientId(user.id, clientId)
+  if (!data) {
+    respError(ctx, 403, '无权访问')
+    return
+  }
+  const result = await clientDAO.findLastestDataPointById(clientId)
+  console.log(result)
+  respSuccess(ctx, result)
 }
 
 // async function client (ctx) {
@@ -35,6 +43,6 @@ async function latest (ctx) {
 // }
 
 module.exports = (router, prefix) => {
-  router.get(prefix + '/latest', latest)
+  router.get(prefix + '/:clientId/latest', clientLatest)
   router.get(prefix + '/:clientId', clientGet)
 }

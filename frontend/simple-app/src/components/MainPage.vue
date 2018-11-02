@@ -40,7 +40,12 @@ export default {
   },
   async mounted () {
     const { data, err } = await this.$request('get', 'user/role')
-    if (!err) {
+    if (err) {
+      this.$router.replace({
+        path: 'login',
+        query: { redirect: this.$route.fullPath }
+      })
+    } else {
       this.user = data
     }
   }

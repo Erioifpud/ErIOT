@@ -79,10 +79,27 @@ const findOrAddClientByIdAndName = (id, name, transaction) => {
 
 const findClientById = (id) => Client.findById(id)
 
+const findLastestDataPointById = (id) => Client.findOne({
+  where: {
+    id
+  },
+  include: [
+    {
+      model: DataPoint,
+      limit: 1,
+      through: { attributes: [] },
+      order: [
+        ['createdAt', 'DESC']
+      ]
+    }
+  ]
+})
+
 module.exports = {
   findDataByClientId,
   findOrAddClientByIdAndName,
   addClientByIdAndName,
   findAllClients,
-  findClientById
+  findClientById,
+  findLastestDataPointById
 }

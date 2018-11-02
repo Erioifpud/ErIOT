@@ -6,17 +6,17 @@
       </cell>
       <div slot="content" class="card-demo-flex card-demo-content01">
         <div class="vux-1px-r">
-          <span>1130</span>
+          <span>{{ latest.data }}</span>
           <br/>
           数据
         </div>
         <div class="vux-1px-r">
-          <span>2018/10/28</span>
+          <span>{{ sqlDate(latest.createdAt).format('YYYY/MM/DD') }}</span>
           <br/>
           日期
         </div>
         <div class="">
-          <span>23:45:37</span>
+          <span>{{ sqlDate(latest.createdAt).format('HH:mm:ss') }}</span>
           <br/>
           时间
         </div>
@@ -24,7 +24,7 @@
     </card>
 
     <group title="查询条件">
-      <cell title="Default" :inline-desc="limit" primary="content">
+      <cell title="界限" :inline-desc="limit" primary="content">
         <range :min="1" :max="100" v-model="limit"></range>
       </cell>
       <!-- 最大最小值 -->
@@ -56,18 +56,30 @@
         </div>
         <datetime-range title="" :start-date="`${new Date().getFullYear()}-01-01`" :end-date="`${new Date().getFullYear()}-12-31`" format="YYYY/MM/DD" v-model="endDate"></datetime-range>
       </cell>
-      <box gap="0.625rem 0.625rem">
-        <x-button type="primary" @click.native="search">搜索</x-button>
-      </box>
     </group>
+
+    <box gap="0.625rem 0.625rem">
+      <x-button type="primary" @click.native="search">搜索</x-button>
+    </box>
 
     <divider>查询结果</divider>
     <timeline class="timeline">
 			<timeline-item v-for="point in datapoints" :key="point.id">
+				<!-- <h4 class="recent">序号: {{ index }}</h4> -->
 				<h4 class="recent">{{ point.data }}</h4>
-				<p class="recent">{{ formatSQLDate(point.createdAt) }}</p>
+				<p class="recent">{{ sqlDate(point.createdAt).format('YYYY-MM-DD HH:mm:ss') }}</p>
 			</timeline-item>
 		</timeline>
+    <div v-transfer-dom>
+      <x-dialog v-model="showAddDialog" class="dialog-demo" hide-on-blur>
+        <div class="img-box">
+          <img src="https://ws1.sinaimg.cn/large/663d3650gy1fq6824ur1dj20ia0pydlm.jpg" style="max-width:100%">
+        </div>
+        <div @click="showAddDialog=false">
+          <span class="vux-close"></span>
+        </div>
+      </x-dialog>
+    </div>
   </div>
 </template>
 
@@ -85,7 +97,9 @@ import {
   Cell,
   XButton,
   Divider,
-  Box
+  Box,
+  TransferDom,
+  XDialog
 } from 'vux'
 import moment from 'moment'
 
@@ -103,7 +117,9 @@ export default {
     Cell,
     XButton,
     Divider,
-    Box
+    Box,
+    TransferDom,
+    XDialog
   },
   data () {
     return {
@@ -117,22 +133,39 @@ export default {
       startDate: [moment().format('YYYY-MM-DD'), '00', '00'],
       needEndDate: false,
       endDate: [moment().format('YYYY-MM-DD'), '23', '59'],
-      datapoints: []
+      datapoints: [],
+      latest: {},
+      showAddDialog: false
     }
   },
   methods: {
     search () {
-      this.getDataPoints()
+      this.refreshAll()
     },
     addPoint () {
-      console.log('add point')
-      this.getDataPoints()
+      this.showAddDialog = true
+      this.refreshAll()
     },
     formatDateArr (dateArr) {
-      return `${dateArr[0]} ${dateArr[1]}:${dateArr[2]}`
+      const [date, hour, minute] = dateArr
+      return `${date} ${hour}:${minute}`
     },
-    formatSQLDate (date) {
-      return moment(new Date(date)).format('YYYY-MM-DD HH:mm:ss')
+    sqlDate (date) {
+      return moment(new Date(date))
+    },
+    async getLatest () {
+      const { err, data } = await this.$request('get', `client/${this.$route.query.clientId}/latest`)
+      if (err) {
+        this.$vux.toast.text(err.result, 'bottom')
+        return
+      }
+      console.log(data)
+      const [result] = data.datapoints
+      this.latest = result
+    },
+    refreshAll () {
+      this.getDataPoints()
+      this.getLatest()
     },
     async getDataPoints () {
       const params = {
@@ -160,7 +193,7 @@ export default {
     }
   },
   mounted () {
-    this.getDataPoints()
+    this.refreshAll()
   }
 }
 </script>

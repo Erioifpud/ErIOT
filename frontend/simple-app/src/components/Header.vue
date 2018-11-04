@@ -1,8 +1,8 @@
 <template>
   <XHeader class="header" :title="title" :left-options="{ showBack: !$route.meta.hideBack }">
-    <!-- <span v-if="$route.path === '/login'" slot="right" @click="toRegister">
-      <p>注册</p>
-    </span> -->
+    <span v-if="$route.meta.hasSetting" slot="right" @click="$store.commit('showSettingDialog')">
+      <x-icon type="android-settings" size="22" style="fill: #fff;"></x-icon>
+    </span>
   </XHeader>
 </template>
 

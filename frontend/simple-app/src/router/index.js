@@ -43,7 +43,8 @@ const router = new Router({
       component: ControlPage,
       meta: {
         requireAuth: true,
-        hideBack: false
+        hideBack: false,
+        hasSetting: true
       }
     },
     {
@@ -51,13 +52,15 @@ const router = new Router({
       name: 'DataPage',
       component: DataPage,
       meta: {
-        requireAuth: true
+        requireAuth: true,
+        hasSetting: true
       }
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
+  store.commit('closeSettingDialog')
   if (to.meta.requireAuth) {
     const ls = window.localStorage
     if (ls.getItem('token')) {

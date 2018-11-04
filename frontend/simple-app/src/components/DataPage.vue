@@ -43,7 +43,6 @@
         <x-number title="" v-model="max" fillable></x-number>
       </cell>
       <!-- 日期 -->
-      <!-- TODO: state -->
       <cell>
         <div slot="title">
           <x-switch title="起始" v-model="needStartDate"></x-switch>
@@ -71,6 +70,12 @@
 			</timeline-item>
 		</timeline>
     <add-point-dialog :state.sync="showAddDialog"></add-point-dialog>
+    <popup-dialog @onConfirm="handleSettingConfirm">
+      <div slot="content">
+        <cell title="客户端设置"></cell>
+        <x-input class="vux-1px-t" title="名称" v-model="newName" :placeholder="clientName"></x-input>
+      </div>
+    </popup-dialog>
   </div>
 </template>
 
@@ -90,10 +95,12 @@ import {
   Divider,
   Box,
   TransferDom,
-  XDialog
+  XDialog,
+  XInput
 } from 'vux'
 import moment from 'moment'
 import AddPointDialog from './AddPointDialog'
+import PopupDialog from './PopupDialog'
 
 export default {
   mixins: [mixin.updateBar],
@@ -112,7 +119,9 @@ export default {
     Box,
     TransferDom,
     XDialog,
-    AddPointDialog
+    AddPointDialog,
+    PopupDialog,
+    XInput
   },
   directives: {
     TransferDom
@@ -131,10 +140,19 @@ export default {
       endDate: [moment().format('YYYY-MM-DD'), '23', '59'],
       datapoints: [],
       latest: {},
-      showAddDialog: false
+      showAddDialog: false,
+      newName: '',
+      clientName: ''
     }
   },
   methods: {
+    handleSettingConfirm () {
+      this.updateName()
+    },
+    async updateName () {
+      // TODO
+      console.log('TODO')
+    },
     search () {
       this.refreshAll()
     },
@@ -155,9 +173,15 @@ export default {
         this.$vux.toast.text(err.result, 'bottom')
         return
       }
-      console.log(data)
-      const [result] = data.datapoints
+      const [result] = data.datapoints.length === 0 ? [{
+        data: NaN,
+        createdAt: 0
+      }] : data.datapoints
       this.latest = result
+      this.initClientName(data.name)
+    },
+    initClientName (name) {
+      this.clientName = name
     },
     refreshAll () {
       this.getDataPoints()
@@ -184,8 +208,8 @@ export default {
         this.$vux.toast.text(err.result, 'bottom')
         return
       }
-      console.log(data)
       this.datapoints = data.datapoints
+      this.initClientName(data.name)
     }
   },
   mounted () {

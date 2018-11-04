@@ -46,7 +46,7 @@ function requestFilter (request) {
   }
   const ls = window.localStorage
   if (ls.getItem('token')) {
-    console.log(request)
+    // console.log(request)
     request.headers.Authorization = `Bearer ${ls.getItem('token')}`
   }
   return request

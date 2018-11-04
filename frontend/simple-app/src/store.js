@@ -10,7 +10,8 @@ const store = new Vuex.Store({
     drawerVisibility: false,
     loading: false,
     transition: 'forward',
-    userData: undefined
+    userData: undefined,
+    settingDialog: false
   },
   mutations: {
     changeTitle (state, title) {
@@ -34,6 +35,12 @@ const store = new Vuex.Store({
     },
     setUserData (state, action) {
       state.userData = action
+    },
+    showSettingDialog (state, action) {
+      state.settingDialog = true
+    },
+    closeSettingDialog (state, action) {
+      state.settingDialog = false
     }
   },
   getters: {

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <group title="可操作的内容">
+    <group :title="`请选择${list.title}`">
       <cell
-        v-for="item in list"
+        v-for="item in list.elements"
         :key="item.id"
         :title="item.name"
         is-link
@@ -10,24 +10,35 @@
       >
       </cell>
     </group>
+    <popup-dialog @onConfirm="handleDialogConfirm">
+      <div slot="content">
+        <cell title="设置"></cell>
+        <x-input class="vux-1px-t" title="名称" v-model="newName" :placeholder="list.current.name"></x-input>
+      </div>
+    </popup-dialog>
   </div>
 </template>
 
 <script>
-import { Group, Cell } from 'vux'
+import { Group, Cell, XDialog, XInput } from 'vux'
 import mixin from '@/mixin'
 import { mapMutations, mapState } from 'vuex'
+import PopupDialog from './PopupDialog'
 
 export default {
   mixins: [mixin.updateBar],
   components: {
     Group,
-    Cell
+    Cell,
+    XDialog,
+    XInput,
+    PopupDialog
   },
   data () {
     return {
       title: 'IoT控制',
-      places: []
+      places: [],
+      newName: ''
     }
   },
   computed: {
@@ -42,18 +53,39 @@ export default {
       const { level } = query
       const [placeId, deviceId, clientId] = (level || '').split('|')
       if (placeId && !deviceId && !clientId) {
-        return this.userData.places.find(item => item.id === parseInt(placeId)).devices
+        const current = this.userData.places.find(item => item.id === parseInt(placeId))
+        return {
+          title: '设备',
+          elements: current.devices,
+          current
+        }
       }
       if (placeId && deviceId && !clientId) {
-        return this.userData.places.find(item => item.id === parseInt(placeId)).devices.find(item => item.id === parseInt(deviceId)).clients
+        const current = this.userData.places.find(item => item.id === parseInt(placeId)).devices.find(item => item.id === parseInt(deviceId))
+        return {
+          title: '终端',
+          elements: current.clients,
+          current
+        }
       }
-      return this.userData.places
+      return {
+        title: '地点',
+        elements: this.userData.places,
+        current: this.userData
+      }
     }
   },
   methods: {
     ...mapMutations([
       'setUserData'
     ]),
+    handleDialogConfirm () {
+      this.updateName(this.newName)
+    },
+    async updateName (newName) {
+      console.log('TODO')
+      // TODO
+    },
     appendLevel (level) {
       const arr = this.$route.query.level ? this.$route.query.level.split('|') : []
       arr.push(level)
@@ -90,5 +122,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
 </style>

@@ -1,9 +1,22 @@
 const { respSuccess, respError } = require('../../util/format')
-const { userDAO, deviceDAO, placeDAO } = require('../../model/dao')
+const { userDAO, deviceDAO } = require('../../model/dao')
 
 async function deviceGet (ctx) {
   const { deviceId } = ctx.params
   const result = await deviceDAO.findClientByDeviceId(deviceId)
+  respSuccess(ctx, result)
+}
+
+async function devicePut (ctx) {
+  const user = ctx.state.user
+  const { deviceId } = ctx.params
+  const { name } = ctx.request.body
+  const data = await userDAO.findDeviceByIdAndDeviceId(user.id, deviceId)
+  if (!data) {
+    respError(ctx, 403, '无权访问')
+    return
+  }
+  const result = await deviceDAO.updateDeviceNameById(deviceId, name)
   respSuccess(ctx, result)
 }
 
@@ -26,4 +39,5 @@ async function deviceGet (ctx) {
 module.exports = (router, prefix) => {
   // router.get(prefix + '/', device)
   router.get(prefix + '/:deviceId', deviceGet)
+  router.put(prefix + '/:deviceId', devicePut)
 }

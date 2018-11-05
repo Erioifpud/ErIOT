@@ -95,11 +95,20 @@ const findLastestDataPointById = (id) => Client.findOne({
   ]
 })
 
+const updateClientNameById = (id, name) => Client.update({
+  name
+}, {
+  where: {
+    id
+  }
+})
+
 module.exports = {
   findDataByClientId,
   findOrAddClientByIdAndName,
   addClientByIdAndName,
   findAllClients,
   findClientById,
-  findLastestDataPointById
+  findLastestDataPointById,
+  updateClientNameById
 }

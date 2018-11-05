@@ -43,6 +43,14 @@ const findOrAddDeviceByName = (name, transaction) => {
   })
 }
 
+const updateDeviceNameById = (id, name) => Device.update({
+  name
+}, {
+  where: {
+    id
+  }
+})
+
 const findDeviceById = (id) => Device.findById(id)
 
 module.exports = {
@@ -50,5 +58,6 @@ module.exports = {
   findOrAddDeviceByName,
   addDeviceByName,
   findAllDevices,
-  findDeviceById
+  findDeviceById,
+  updateDeviceNameById
 }

@@ -151,6 +151,49 @@ const findClientByIdAndClientId = (id, clientId) => User.findOne({
   ]
 })
 
+const findDeviceByIdAndDeviceId = (id, deviceId) => User.findOne({
+  attributes: ['id', 'username'],
+  required: true,
+  where: {
+    id
+  },
+  include: [
+    {
+      model: Place,
+      required: true,
+      through: { attributes: [] },
+      include: [
+        {
+          where: {
+            id: deviceId
+          },
+          model: Device,
+          required: true,
+          attributes: { exclude: ['placeId'] }
+        }
+      ]
+    }
+  ]
+})
+
+const findPlaceByIdAndPlaceId = (id, placeId) => User.findOne({
+  attributes: ['id', 'username'],
+  required: true,
+  where: {
+    id
+  },
+  include: [
+    {
+      where: {
+        id: placeId
+      },
+      model: Place,
+      required: true,
+      through: { attributes: [] }
+    }
+  ]
+})
+
 const findAllDataFromPlaceById = (id) => User.findOne({
   attributes: ['id', 'username'],
   where: {
@@ -190,5 +233,7 @@ module.exports = {
   findUserById,
   findDeviceById,
   findClientByIdAndClientId,
+  findDeviceByIdAndDeviceId,
+  findPlaceByIdAndPlaceId,
   findAllDataFromPlaceById
 }

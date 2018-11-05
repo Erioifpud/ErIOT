@@ -83,6 +83,14 @@ const findDeviceById = (id) => Place.findOne({
   ]
 })
 
+const updatePlaceNameById = (id, name) => Place.update({
+  name
+}, {
+  where: {
+    id
+  }
+})
+
 module.exports = {
   findDeviceByPlaceId,
   findOrAddPlaceByName,
@@ -90,5 +98,6 @@ module.exports = {
   findAllPlaces,
   findAllPlaceClients,
   findPlaceById,
-  findDeviceById
+  findDeviceById,
+  updatePlaceNameById
 }

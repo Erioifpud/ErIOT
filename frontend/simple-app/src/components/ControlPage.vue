@@ -13,7 +13,7 @@
     <popup-dialog @onConfirm="handleDialogConfirm">
       <div slot="content">
         <cell title="设置"></cell>
-        <x-input class="vux-1px-t" title="名称" v-model="newName" :placeholder="list.current.name"></x-input>
+        <x-input class="vux-1px-t" title="名称" v-model="newName" :placeholder="`${list.current && list.current.name}`"></x-input>
       </div>
     </popup-dialog>
   </div>
@@ -47,7 +47,7 @@ export default {
     ]),
     list () {
       if (!this.userData) {
-        return []
+        return {}
       }
       const query = this.$route.query
       const { level } = query
@@ -83,8 +83,24 @@ export default {
       this.updateName(this.newName)
     },
     async updateName (newName) {
-      console.log('TODO')
-      // TODO
+      let url = ''
+      if (this.list.title === '终端') {
+        url = 'device'
+      } else if (this.list.title === '设备') {
+        url = 'place'
+      } else {
+        return
+      }
+      const { data, err } = await this.$request('put', `${url}/${this.list.current.id}`, {
+        name: newName
+      })
+      if (err) {
+        this.$vux.toast.text(err.result, 'bottom')
+        return
+      }
+      const [result] = data.result
+      this.$vux.toast.text(result ? '修改成功' : '修改失败', 'bottom')
+      this.getPlaces()
     },
     appendLevel (level) {
       const arr = this.$route.query.level ? this.$route.query.level.split('|') : []

@@ -1,22 +1,38 @@
 <template>
   <div v-transfer-dom>
-    <x-dialog v-model="state" class="dialog-demo">
-      <div class="img-box">
-        <img src="https://ws1.sinaimg.cn/large/663d3650gy1fq6824ur1dj20ia0pydlm.jpg" style="max-width:100%">
+    <x-dialog v-model="state">
+      <div>
+        <cell title="添加数据点"></cell>
+        <group>
+          <x-switch :title="`${isSwitch ? '开关' : '数值'}`" v-model="isSwitch"></x-switch>
+          <x-switch v-if="isSwitch" title="状态" v-model="switchValue"></x-switch>
+          <x-number v-else title="数据" v-model="sensorValue" fillable></x-number>
+        </group>
       </div>
-      <div @click="$emit('update:state', false)">
-        <span class="vux-close">123</span>
-        456
+      <div class="action-box vux-1px-t">
+        <div class="action-confirm vux-1px-r" @click="handleDialogConfirm">确认</div>
+        <div class="action-cancel" @click="$emit('update:state', false)">取消</div>
       </div>
     </x-dialog>
   </div>
 </template>
 
 <script>
-import { XDialog, TransferDom } from 'vux'
+import { XDialog, TransferDom, XSwitch, Cell, XNumber, Group } from 'vux'
 export default {
   components: {
-    XDialog
+    XDialog,
+    XSwitch,
+    Cell,
+    XNumber,
+    Group
+  },
+  data () {
+    return {
+      isSwitch: true,
+      switchValue: false,
+      sensorValue: 0
+    }
   },
   directives: {
     TransferDom
@@ -26,10 +42,31 @@ export default {
       type: Boolean,
       required: true
     }
+  },
+  methods: {
+    handleDialogConfirm () {
+      this.$emit('update:state', false)
+    }
   }
 }
 </script>
 
 <style>
+.action-box {
+  display: flex;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  font-size: 1rem;
+}
 
+.action-confirm {
+  flex: 1;
+  color: #01b20a;
+  line-height: inherit;
+}
+
+.action-cancel {
+  flex: 1;
+  line-height: inherit;
+}
 </style>

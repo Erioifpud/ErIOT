@@ -21,12 +21,19 @@ const findDataByClientId = (clientId, options, raw = false) => {
   if (!limit || limit < 1 || limit > 100) {
     limit = 10
   }
+  let order = options.order.toUpperCase()
+  if (order !== 'DESC' && order !== 'ASC') {
+    order = 'DESC'
+  }
   const template = {
     where: {
       id: clientId
     },
     include: [
       {
+        order: [
+          ['id', order]
+        ],
         model: DataPoint,
         // attributes: { exclude: ['clientId'] },
         limit
@@ -103,6 +110,15 @@ const updateClientNameById = (id, name) => Client.update({
   }
 })
 
+const insertDataPointById = async (id, value) => {
+  const dataPoint = await DataPoint.create({
+    data: value
+  })
+  const client = await Client.findById(id)
+  client.addDatapoints(dataPoint)
+  return dataPoint
+}
+
 module.exports = {
   findDataByClientId,
   findOrAddClientByIdAndName,
@@ -110,5 +126,6 @@ module.exports = {
   findAllClients,
   findClientById,
   findLastestDataPointById,
-  updateClientNameById
+  updateClientNameById,
+  insertDataPointById
 }

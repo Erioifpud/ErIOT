@@ -45,6 +45,7 @@ export default {
   },
   methods: {
     handleDialogConfirm () {
+      this.$emit('onConfirm', this.isSwitch ? Number(this.switchValue) : this.sensorValue)
       this.$emit('update:state', false)
     }
   }

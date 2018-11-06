@@ -2,7 +2,7 @@
   <div>
     <card >
       <cell class="vux-1px-b" slot="header" title="当前状态">
-        <x-button type="primary" mini @click.native="addPoint">添加</x-button>
+        <x-button type="primary" mini @click.native="handleShowAddDialog">添加</x-button>
       </cell>
       <div slot="content" class="card-demo-flex card-demo-content01">
         <div class="vux-1px-r">
@@ -27,31 +27,35 @@
       <cell title="界限" :inline-desc="limit" primary="content">
         <range :min="1" :max="100" v-model="limit"></range>
       </cell>
+      <!-- 排序 -->
+      <cell title="排序" :inline-desc="desc ? '降序' : '升序'" primary="content">
+        <x-switch title="" v-model="desc"></x-switch>
+      </cell>
       <!-- 最大最小值 -->
       <cell>
         <div slot="title">
-          <x-switch title="最小值" v-model="needMin"></x-switch>
+          <x-switch title="最小值" style="padding-left: 0" v-model="needMin"></x-switch>
         </div>
         <!-- <x-input v-model="min" type="number" :disabled="!needMin" placeholder="min"></x-input> -->
-        <x-number title="" v-model="min" fillable></x-number>
+        <x-number title="" style="padding-right: 0" v-model="min" fillable></x-number>
       </cell>
       <cell>
         <div slot="title">
-          <x-switch title="最大值" v-model="needMax"></x-switch>
+          <x-switch title="最大值" style="padding-left: 0" v-model="needMax"></x-switch>
         </div>
         <!-- <x-input v-model="max" type="number" :disabled="!needMax" placeholder="max"></x-input> -->
-        <x-number title="" v-model="max" fillable></x-number>
+        <x-number title="" style="padding-right: 0" v-model="max" fillable></x-number>
       </cell>
       <!-- 日期 -->
       <cell>
         <div slot="title">
-          <x-switch title="起始" v-model="needStartDate"></x-switch>
+          <x-switch title="起始" style="padding-left: 0" v-model="needStartDate"></x-switch>
         </div>
         <datetime-range title="" :start-date="`${new Date().getFullYear()}-01-01`" :end-date="`${new Date().getFullYear()}-12-31`" format="YYYY/MM/DD" v-model="startDate"></datetime-range>
       </cell>
       <cell>
         <div slot="title">
-          <x-switch title="终止" v-model="needEndDate"></x-switch>
+          <x-switch title="终止" style="padding-left: 0" v-model="needEndDate"></x-switch>
         </div>
         <datetime-range title="" :start-date="`${new Date().getFullYear()}-01-01`" :end-date="`${new Date().getFullYear()}-12-31`" format="YYYY/MM/DD" v-model="endDate"></datetime-range>
       </cell>
@@ -63,13 +67,13 @@
 
     <divider>查询结果</divider>
     <timeline class="timeline">
-			<timeline-item v-for="point in datapoints" :key="point.id">
+			<timeline-item v-for="(point, i) in datapoints" :key="i">
 				<!-- <h4 class="recent">序号: {{ index }}</h4> -->
 				<h4 class="recent">{{ point.data }}</h4>
 				<p class="recent">{{ sqlDate(point.createdAt).format('YYYY-MM-DD HH:mm:ss') }}</p>
 			</timeline-item>
 		</timeline>
-    <add-point-dialog :state.sync="showAddDialog"></add-point-dialog>
+    <add-point-dialog :state.sync="showAddDialog" @onConfirm="handleAddPoint"></add-point-dialog>
     <popup-dialog @onConfirm="handleSettingConfirm">
       <div slot="content">
         <cell title="客户端设置"></cell>
@@ -142,23 +146,45 @@ export default {
       latest: {},
       showAddDialog: false,
       newName: '',
-      clientName: ''
+      clientName: '',
+      desc: true
     }
   },
   methods: {
-    handleSettingConfirm () {
-      this.updateName()
+    handleAddPoint (value) {
+      console.log(123)
+      this.addPoint(value)
     },
-    async updateName () {
-      // TODO
-      console.log('TODO')
+    handleSettingConfirm () {
+      this.updateName(this.newName)
+    },
+    async updateName (newName) {
+      const { data, err } = await this.$request('put', `client/${this.$route.query.clientId}`, {
+        name: newName
+      })
+      if (err) {
+        this.$vux.toast.text(err.result, 'bottom')
+        return
+      }
+      const [result] = data.result
+      this.$vux.toast.text(result ? '修改成功' : '修改失败', 'bottom')
+    },
+    async addPoint (value) {
+      const { err } = await this.$request('post', `client/${this.$route.query.clientId}`, {
+        value
+      })
+      if (err) {
+        this.$vux.toast.text(err.result, 'bottom')
+        return
+      }
+      this.$vux.toast.text('添加成功', 'bottom')
+      this.refreshAll()
     },
     search () {
       this.refreshAll()
     },
-    addPoint () {
+    handleShowAddDialog () {
       this.showAddDialog = true
-      this.refreshAll()
     },
     formatDateArr (dateArr) {
       const [date, hour, minute] = dateArr
@@ -189,7 +215,8 @@ export default {
     },
     async getDataPoints () {
       const params = {
-        limit: this.limit
+        limit: this.limit,
+        order: this.desc ? 'desc' : 'asc'
       }
       if (this.needMin) {
         params.min = this.min

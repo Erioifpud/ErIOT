@@ -39,6 +39,19 @@ async function clientPut (ctx) {
   respSuccess(ctx, result)
 }
 
+async function clientPost (ctx) {
+  const user = ctx.state.user
+  const { clientId } = ctx.params
+  const { value } = ctx.request.body
+  const data = await userDAO.findClientByIdAndClientId(user.id, clientId)
+  if (!data) {
+    respError(ctx, 403, '无权访问')
+    return
+  }
+  const result = await clientDAO.insertDataPointById(clientId, value)
+  respSuccess(ctx, result)
+}
+
 // async function client (ctx) {
 //   const user = ctx.state.user
 //   const deviceId = parseInt(ctx.query.deviceId)
@@ -59,4 +72,5 @@ module.exports = (router, prefix) => {
   router.get(prefix + '/:clientId/latest', clientLatest)
   router.get(prefix + '/:clientId', clientGet)
   router.put(prefix + '/:clientId', clientPut)
+  router.post(prefix + '/:clientId', clientPost)
 }

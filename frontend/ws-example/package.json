@@ -1,0 +1,10 @@
+{
+  "name": "ws-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Erioifpud",
+  "license": "MIT",
+  "dependencies": {
+    "mqtt": "^2.18.8"
+  }
+}

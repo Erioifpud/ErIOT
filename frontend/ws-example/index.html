@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/uikit.min.css">
+  <link rel="stylesheet" href="./css/uikit-rtl.min.css">
+  <link rel="stylesheet" href="./index.css">
+  <script src="./js/uikit-icons.min.js"></script>
+  <script src="./js/uikit.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+  <script src="./index.js"></script>
+</head>
+<body>
+  <div class="container">
+    <button class="uk-button uk-button-default uk-margin-small-right" type="button" uk-toggle="target: #modal-login">Setting</button>
+
+    <div id="modal-login" uk-modal>
+      <div class="uk-modal-dialog uk-modal-body">
+          <h2 class="uk-modal-title">MQTT Setting</h2>
+          <div class="uk-margin">
+            <select class="uk-select" id="channel">
+              <option value="pub">Publish</option>
+              <option value="sub">Subscribe</option>
+            </select>
+          </div>
+          <div class="uk-margin">
+            <input class="uk-input" id="server" type="text" placeholder="Server" value="localhost">
+          </div>
+          <div class="uk-margin">
+            <input class="uk-input" id="port" type="text" placeholder="Port" value="2995">
+          </div>
+          <div class="uk-margin">
+            <input class="uk-input" id="place" type="text" placeholder="Place" value="livingroom">
+          </div>
+          <div class="uk-margin">
+            <input class="uk-input" id="device" type="text" placeholder="Device" value="test">
+          </div>
+          <div class="uk-margin">
+            <input class="uk-input" id="client" type="text" placeholder="Client" value="e3e7e0d1749b42055cf0628067efe9caf7a4c5e7a7ad3615c320289fee436d64">
+          </div>
+          <p class="uk-text-right">
+              <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+              <button class="uk-button uk-button-primary uk-modal-close" type="button" id="connectBtn">Connect</button>
+          </p>
+      </div>
+    </div>
+
+    <canvas id="chart"></canvas>
+  </div>
+</body>
+</html>

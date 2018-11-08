@@ -35,6 +35,7 @@ class Client {
       console.log('sent:', message)
       return this.client.publish(this._channel('pub'), message)
     }
+    return undefined
   }
 
   sleep(ms) {

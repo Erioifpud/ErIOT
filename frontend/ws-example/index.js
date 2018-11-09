@@ -42,7 +42,7 @@ function initCanvas(ctx) {
 }
 
 function updateChart(chart, point) {
-  // console.log(point);
+  console.log(point)
   chart.data.datasets[0].data.push(point)
   chart.update()
 }
@@ -51,6 +51,11 @@ window.onload = () => {
   const points = []
   const ctx = document.querySelector("#chart").getContext('2d')
   const chart = initCanvas(ctx)
+
+  document.querySelector('#clearBtn').addEventListener('click', () => {
+    chart.data.datasets[0].data = []
+    chart.update()
+  })
 
   document.querySelector('#connectBtn').addEventListener('click', () => {
     const channel = document.querySelector('#channel').value

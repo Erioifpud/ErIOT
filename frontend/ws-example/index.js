@@ -1,8 +1,8 @@
 const mqtt = require('mqtt')
 
-function connect(channel, server, port, place, device, client) {
+function connect(server, port, place, device, client) {
   
-  if ( channel && server && port && place && device && client) {
+  if (server && port && place && device && client) {
     return mqtt.connect(`mqtt://${server}:${port}`)
   }
   return undefined
@@ -58,27 +58,26 @@ window.onload = () => {
   })
 
   document.querySelector('#connectBtn').addEventListener('click', () => {
-    const channel = document.querySelector('#channel').value
     const server = document.querySelector('#server').value
     const port = document.querySelector('#port').value
     const place = document.querySelector('#place').value
     const device = document.querySelector('#device').value
     const client = document.querySelector('#client').value
 
-    const mqttClient = connect(channel, server, port, place, device, client)
+    const mqttClient = connect(server, port, place, device, client)
     if (!mqttClient) {
       return
     }
     mqttClient.on('connect', () => {
       console.log('connected')
-      mqttClient.subscribe(`${channel}/${place}/${device}/${client}`)
+      mqttClient.subscribe(`${place}/${device}/${client}`)
       mqttClient.on('message', (topic, payload) => {
         console.log(topic, payload.toString())
         // points.push(parseFloat(payload.toString()))
         // console.log(points)
-        const [value, time] = payload.toString().split(' ')
+        const value = payload.toString()
         updateChart(chart, {
-          x: new Date(parseInt(time)),
+          x: new Date(),
           y: parseFloat(value)
         })
       })

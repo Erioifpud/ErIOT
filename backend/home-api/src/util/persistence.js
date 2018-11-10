@@ -1,7 +1,7 @@
 const { placeDAO, deviceDAO, clientDAO, dataPointDAO } = require('../model/dao')
 const { sequelize } = require('../db')
 
-const saveTopicAndMessage = async (topic, msg) => {
+const saveTopicAndMessage = async (name, topic, msg) => {
   const { placeName, deviceName, clientId } = topic
   let transactionPromise = sequelize.transaction((t) => {
     return placeDAO.findOrAddPlaceByName(placeName, t)
@@ -25,10 +25,10 @@ const saveTopicAndMessage = async (topic, msg) => {
   } else {
     // device可以包括现有的client，所以得先确保client唯一，不能直接添加
     transactionPromise = sequelize.transaction((t) => {
-      return clientDAO.findOrAddClientByIdAndName(clientId, 'unnamed client', t)
+      return clientDAO.findOrAddClientByIdAndName(clientId, name, t)
     })
-    const clientModel = (await transactionPromise)[0]
-    // clientModel = (await clientDAO.findOrAddClientByIdAndName(clientId, 'unnamed client'))[0]
+
+    clientModel = (await transactionPromise)[0]
     deviceModel.addClients(clientModel)
   }
 

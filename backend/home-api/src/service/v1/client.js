@@ -1,5 +1,6 @@
 const { respSuccess, respError } = require('../../util/format')
 const { userDAO, clientDAO } = require('../../model/dao')
+const { sendMessage } = require('../../mqtt')
 
 async function clientGet (ctx) {
   const user = ctx.state.user
@@ -48,6 +49,9 @@ async function clientPost (ctx) {
     respError(ctx, 403, '无权访问')
     return
   }
+  const [place] = data.places
+  const [device] = place.devices
+  sendMessage(place.name, device.name, clientId, value)
   const result = await clientDAO.insertDataPointById(clientId, value)
   respSuccess(ctx, result)
 }

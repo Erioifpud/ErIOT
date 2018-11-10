@@ -5,7 +5,7 @@ const { saveTopicAndMessage } = require('../util/persistence')
 const client = mqtt.connect(mqttConfig.server)
 
 client.on('connect', function () {
-  client.subscribe('pub/+/#', (err) => {
+  client.subscribe('+/#', (err) => {
     if (!err) {
       console.log('mqtt client init!')
     }
@@ -14,16 +14,16 @@ client.on('connect', function () {
 
 client.on('message', async (topic, message) => {
   // const re = /^pub\/(?<placeName>\w{64})\/(?<deviceName>\w+)\/(?<clientId>\w+)$/
-  const re = /^pub\/(\w+)\/(\w+)\/(\w{64})$/
+  const re = /^(\w+)\/(\w+)\/(\w{64})$/
   if (re.test(topic)) {
     console.log('received:', topic, message.toString())
-    const [_, placeName, deviceName, clientId] = re.exec(topic)
-    await saveTopicAndMessage({ placeName, deviceName, clientId }, message.toString())
+    const [, placeName, deviceName, clientId] = re.exec(topic)
+    await saveTopicAndMessage(client.options.clientId, { placeName, deviceName, clientId }, message.toString())
   }
 })
 
-const sendMessage = (clientId, room, deviceName, message) => {
-  client.publish(`sub/${clientId}/${room}/${deviceName}`, message)
+const sendMessage = (place, deviceName, clientId, message) => {
+  client.publish(`${place}/${deviceName}/${clientId}`, message.toString())
 }
 
 module.exports = {

@@ -1,47 +1,30 @@
 {
   "name": "platform",
   "version": "1.0.0",
-  "description": "",
-  "private": true,
-  "egg": {
-    "declarations": true
-  },
+  "main": "app.js",
+  "author": "Erioifpud",
+  "license": "MIT",
   "dependencies": {
-    "egg": "^2.15.1",
-    "egg-scripts": "^2.11.0"
-  },
-  "devDependencies": {
-    "autod": "^3.0.1",
-    "autod-egg": "^1.1.0",
-    "egg-bin": "^4.11.0",
-    "egg-ci": "^1.11.0",
-    "egg-mock": "^3.21.0",
-    "eslint": "^5.13.0",
-    "eslint-config-egg": "^7.1.0",
-    "webstorm-disable-index": "^1.2.0"
-  },
-  "engines": {
-    "node": ">=8.9.0"
+    "@koa/cors": "2",
+    "@types/bookshelf": "^0.13.1",
+    "@types/koa": "^2.0.48",
+    "bcrypt": "^3.0.5",
+    "bookshelf": "^0.14.2",
+    "bookshelf-secure-password": "^3.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "0.13",
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-jwt": "^3.5.1",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "koa2-swagger-ui": "^2.13.1",
+    "log4js": "^4.1.0",
+    "md5": "^2.2.1",
+    "mysql": "^2.16.0",
+    "nodemon": "^1.18.10"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-platform",
-    "stop": "egg-scripts stop --title=egg-server-platform",
-    "dev": "egg-bin dev",
-    "debug": "egg-bin debug",
-    "test": "npm run lint -- --fix && npm run test-local",
-    "test-local": "egg-bin test",
-    "cov": "egg-bin cov",
-    "lint": "eslint .",
-    "ci": "npm run lint && npm run cov",
-    "autod": "autod"
-  },
-  "ci": {
-    "version": "8"
-  },
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "author": "Erioifpud",
-  "license": "MIT"
+    "serve": "nodemon"
+  }
 }

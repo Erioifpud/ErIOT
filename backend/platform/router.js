@@ -19,7 +19,7 @@ fs.readdirSync(apiPath).forEach(dirName => {
     const { prefix = '', routes = {} } = routeInfo
     Object.entries(routes).forEach(([k, v]) => {
       const { handler, method = 'get' } = v
-      handler && router[method](`/api${prefix}${k}`, handler)
+      handler && router[method.toLowerCase()](`/api${prefix}${k}`, handler)
     })
   })
 })

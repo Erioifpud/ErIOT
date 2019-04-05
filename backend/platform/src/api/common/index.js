@@ -1,6 +1,5 @@
-const { User } = require('../../database')
 const { userDAO } = require('../../database/DAO')
-const { response } = require('../../util')
+const { response, responseWithToken, omit, signToken } = require('../../util')
 
 function validate (body) {
   const { username, password } = body
@@ -27,11 +26,13 @@ async function login (ctx) {
   }
   try {
     const result = await userDAO.login(username, password)
-    response.call(ctx, {
+    const payload = {
       id: result.id,
       name: result.get('name'),
       number: result.get('number')
-    })
+    }
+    const token = signToken(payload)
+    responseWithToken.call(ctx, payload, token)
   } catch (err) {
     response.call(ctx, {}, 403, '用户名或密码错误')
     ctx.logger.error('login', '用户名或密码错误', username)

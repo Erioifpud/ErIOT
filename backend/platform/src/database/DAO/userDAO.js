@@ -1,5 +1,5 @@
 const { User } = require('../')
-const md5 = require('md5');
+const md5 = require('md5')
 const bcrypt = require('bcrypt')
 
 module.exports = {
@@ -18,6 +18,12 @@ module.exports = {
       admin_flag: false
     })
     return user.save()
+  },
+  findByKey (value, key) {
+    return User.forge({ [key]: value }).fetch()
+  },
+  find (options) {
+    return User.forge(options).fetch()
   }
 }
 

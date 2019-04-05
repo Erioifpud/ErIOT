@@ -2,9 +2,12 @@ const Koa = require('koa')
 const app = new Koa()
 const router = require('../router')
 const bodyParser = require('koa-bodyparser')
-const cors = require('@koa/cors');
-const koaLogger = require('koa-logger');
-const log4js = require('log4js');
+const cors = require('@koa/cors')
+const koaLogger = require('koa-logger')
+const log4js = require('log4js')
+const authorization = require('./middleware/authorization')
+const renewal = require('./middleware/renewal')
+const jwtConfig = require('../config/jwt')
 
 
 log4js.configure({
@@ -15,7 +18,7 @@ log4js.configure({
   categories: { default: { appenders: ['dateFile', 'cli'], level: 'debug' } }
 })
  
-const logger = log4js.getLogger();
+const logger = log4js.getLogger()
 
 app.use(async (ctx, next) => {
   ctx.logger = logger
@@ -23,9 +26,16 @@ app.use(async (ctx, next) => {
 })
 app.use(koaLogger())
 app.use(cors())
+app.use(authorization({
+  whitelist: [/\/api\/common\/*/]
+}))
+app.use(renewal({
+  deadline: 1800
+}))
 app.use(bodyParser())
 app.use(router.routes())
 app.use(router.allowedMethods())
+
 
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000')

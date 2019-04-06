@@ -29,7 +29,8 @@ async function login (ctx) {
     const payload = {
       id: result.id,
       name: result.get('name'),
-      number: result.get('number')
+      number: result.get('number'),
+      // secret: result.get('secret')
     }
     const token = signToken(payload)
     responseWithToken.call(ctx, payload, token)
@@ -53,7 +54,8 @@ async function register (ctx) {
     response.call(ctx, {
       id: result.id,
       name: result.get('name'),
-      number: result.get('number')
+      number: result.get('number'),
+      // secret: result.get('secret')
     })
   } catch (err) {
     response.call(ctx, {}, 403, '用户名重复')

@@ -7,7 +7,6 @@ const koaLogger = require('koa-logger')
 const log4js = require('log4js')
 const authorization = require('./middleware/authorization')
 const renewal = require('./middleware/renewal')
-const jwtConfig = require('../config/jwt')
 
 
 log4js.configure({
@@ -19,6 +18,7 @@ log4js.configure({
 })
  
 const logger = log4js.getLogger()
+
 
 app.use(async (ctx, next) => {
   ctx.logger = logger

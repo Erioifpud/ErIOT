@@ -19,6 +19,9 @@ const Channel = bookshelf.Model.extend({
   tableName: 'channel',
   fields: function () {
     return this.hasMany(Field)
+  },
+  user: function () {
+    return this.belongsTo(User)
   }
 })
 

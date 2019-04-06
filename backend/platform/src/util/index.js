@@ -85,7 +85,30 @@ function resourceRoutes (resourceName, handlerObj) {
   return {
     prefix: '',
     routes: routesConfig.reduce((a, b) => {
-      a[b.path] = b
+      const route = a[b.path]
+      if (route) {
+        // a[b.path] = {
+        //   ...route,
+        //   method: [b.method].concat(route.method)
+        // }
+
+        // a[b.path].method = [b.method].concat(route.method)
+
+        a[b.path].map.push({
+          method: b.method,
+          handler: b.handler
+        })
+      } else {
+        a[b.path] = {
+          ...b,
+          map: [
+            {
+              method: b.method,
+              handler: b.handler
+            }
+          ]
+        }
+      }
       return a
     }, {})
   }

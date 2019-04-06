@@ -18,8 +18,15 @@ fs.readdirSync(apiPath).forEach(dirName => {
     // routerFn(router, '/api')
     const { prefix = '', routes = {} } = routeInfo
     Object.entries(routes).forEach(([k, v]) => {
-      const { handler, method = 'get' } = v
-      handler && router[method.toLowerCase()](`/api${prefix}${k}`, handler)
+      const { map } = v
+      if (map) {
+        map.forEach(pair => {
+          router[pair.method.toLowerCase()].call(router, `/api${prefix}${k}`, pair.handler)
+        })
+      } else {
+        const { handler, method = 'get' } = v
+        router[method.toLowerCase()].call(router, `/api${prefix}${k}`, handler)
+      }
     })
   })
 })

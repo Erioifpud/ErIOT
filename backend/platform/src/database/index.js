@@ -29,6 +29,9 @@ const Field = bookshelf.Model.extend({
   tableName: 'field',
   points: function () {
     return this.hasMany(Point)
+  },
+  channel: function () {
+    return this.belongsTo(Channel)
   }
 })
 

@@ -67,7 +67,7 @@ function resourceRoutes (resourceName, handlerObj) {
       path: `/${resourceName}/:id`,
       method: 'PUT'
     },
-    delete: {
+    destroy: {
       path: `/${resourceName}/:id`,
       method: 'DELETE'
     }

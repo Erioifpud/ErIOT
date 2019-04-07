@@ -23,5 +23,9 @@ module.exports = {
   create (options) {
     const channel = new Channel(options)
     return channel.save()
-  }
+  },
+  // findReleatedFieldsByKey (value, key) {
+  //   return Channel.where({ [key]: value }).fetch({ withRelated: ['fields'] })
+  //     .then(channel => channel.related('fields'))
+  // },
 }

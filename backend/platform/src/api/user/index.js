@@ -58,20 +58,27 @@ async function update (ctx) {
   })
   try {
     const result = await user.authenticate(password)
-    console.log(result);
   } catch (err) {
     response.call(ctx, {}, 401, '原密码错误')
     return
   }
-  number && user.set('number', number)
-  newPassword && user.set('password', newPassword)
-  const result = await user.save()
-  response.call(ctx, {
-    id: result.id,
-    name: result.get('name'),
-    number: result.get('number'),
-    // secret: result.get('secret')
-  })
+  if (number && +number !== +user.get('number')) {
+    user.set('number', number)
+  }
+  if (newPassword && newPassword !== password) {
+    user.set('password', newPassword)
+  }
+  try {
+    const result = await user.save()
+    response.call(ctx, {
+      id: result.id,
+      name: result.get('name'),
+      number: result.get('number'),
+      // secret: result.get('secret')
+    })
+  } catch (err) {
+    response.call(ctx, {}, 400, '信息修改失败')
+  }
 }
 
 module.exports = resourceRoutes('user', {

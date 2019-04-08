@@ -1,32 +1,39 @@
-const { channelDAO, userDAO } = require('../../database/DAO')
+const { channelDAO, userDAO, fieldDAO } = require('../../database/DAO')
 const { response, resourceRoutes } = require('../../util')
 
 async function create (ctx) {
-  // const { name, private } = ctx.request.body
-  // const { decoded } = ctx.auth
-  // const digest = md5(name + +new Date())
-  // const { user } = await channelDAO.findReleatedUserByKey(name, 'name')
-  // if (user && +user.id === +decoded.id) {
-  //   response.call(ctx, {}, 400, '同一账户下存在同名Channel')
-  //   return
-  // }
-  // try {
-  //   const channel = await channelDAO.create({
-  //     name, 
-  //     private_flag: !!private,
-  //     key: digest,
-  //     user_id: decoded.id
-  //   })
-  //   response.call(ctx, {
-  //     id: channel.get('id'),
-  //     name: channel.get('name'),
-  //     key: channel.get('key'),
-  //     private: !!channel.get('private_flag')
-  //   })
-  //   return
-  // } catch (err) {
-  //   response.call(ctx, {}, 400, '创建失败')
-  // }
+  const { name, unit, unitName } = ctx.request.body
+  const { apiKey } = ctx.auth
+  const channel = await channelDAO.findByApiKey(apiKey)
+  if (!channel) {
+    response.call(ctx, {}, 404, '找不到该Channel')
+    return
+  }
+  const existedField = await fieldDAO.find({
+    name,
+    channel_id: channel.get('id')
+  })
+  if (existedField) {
+    response.call(ctx, {}, 400, '同一Channel下存在同名Field')
+    return
+  }
+  try {
+    const field = await fieldDAO.create({
+      unit,
+      unit_name: unitName,
+      name,
+      channel_id: channel.get('id')
+    })
+    response.call(ctx, {
+      id: field.get('id'),
+      name: field.get('name'),
+      unit: field.get('unit'),
+      unitName: field.get('unit_name')
+    })
+    return
+  } catch (err) {
+    response.call(ctx, {}, 400, '创建失败')
+  }
 }
 
 async function index (ctx) {
@@ -123,9 +130,9 @@ async function update (ctx) {
 //   } catch (err) {
 //     response.call(ctx, {}, 400, '信息修改失败')
 //   }
-// }
+}
 
-// async function destroy (ctx) {
+async function destroy (ctx) {
 //   const { id } = ctx.params
 //   const { decoded, apiKey } = ctx.auth
 //   const channel = await channelDAO.findByKey(id, 'id')

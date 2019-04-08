@@ -17,6 +17,9 @@ module.exports = {
   //       return result.models.filter(channel => +channel.get('user_id') === +id)
   //     })
   // },
+  find (options) {
+    return Field.forge(options).fetch()
+  },
   findByKey (value, key) {
     return Field.forge({ [key]: value }).fetch()
   },

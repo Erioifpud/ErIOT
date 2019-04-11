@@ -1,5 +1,5 @@
 <template>
-  <keep-alive :name="exclude">
+  <keep-alive :exclude="exclude">
     <router-view flex-box="1" v-transition></router-view>
   </keep-alive>
 </template>
@@ -12,7 +12,7 @@ import mixin from '@/mixin'
 
 @Component
 export default class Index extends mixins(mixin.UpdateMenu) {
-  exclude = []
+  exclude = ['me-edit']
 
   menu = {
     current: '/me'

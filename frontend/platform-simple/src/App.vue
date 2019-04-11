@@ -60,6 +60,7 @@ html, body, #app {
   text-align: center;
   color: #2c3e50;
   transition: all 0.3s ease-in-out;
+  background-color: #f9f9f9;
 }
 #nav {
   padding: 30px;

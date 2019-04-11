@@ -22,6 +22,7 @@ export default [
         }
       },
       {
+        name: 'me-edit',
         path: 'edit',
         component: Edit
       }

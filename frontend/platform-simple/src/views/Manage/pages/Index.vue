@@ -15,7 +15,7 @@ export default class Index extends mixins(mixin.UpdateMenu) {
   exclude = []
 
   menu = {
-    current: '/home'
+    current: '/manage'
   }
 }
 </script>

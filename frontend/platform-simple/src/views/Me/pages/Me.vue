@@ -22,7 +22,7 @@
           </div>
           <div flex="main:justify box:mean cross:center">
             <span>用户名: </span>
-            <span>{{ auth.id }}</span>
+            <span>{{ auth.name }}</span>
           </div>
           <div flex="main:justify box:mean cross:center">
             <span>学号: </span>
@@ -61,9 +61,11 @@ export default class Me extends mixins(mixin.UpdateHeader) {
     this.$router.push('/me/edit')
   }
   /* lifecycle */
-  async activated () {
-    const auth = await this.$axios.get('/user')
-    this.$store.commit('setAuth', auth)
+  activated () {
+    this.$nextTick(async () => {
+      const auth = await this.$axios.get('/user')
+      this.$store.commit('setAuth', auth)
+    })
   }
 }
 </script>

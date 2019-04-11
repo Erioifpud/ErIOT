@@ -10,6 +10,7 @@ import 'vueg/css/transition-min.css'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import ripple from '@/directives/ripple'
+import Clipboard from 'v-clipboard'
 
 // 开发环境使用mock
 // if (process.env.NODE_ENV === 'development') {
@@ -34,6 +35,7 @@ Vue.use(vueg, router, {
 })
 
 Vue.use(Vuetify)
+Vue.use(Clipboard)
 
 Vue.directive('ripples', ripple)
 

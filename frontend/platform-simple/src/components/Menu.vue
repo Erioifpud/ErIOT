@@ -50,9 +50,11 @@ export default class Menu extends Vue {
 @import '../assets/vars';
 
 .menu {
+  position: relative;
   height: 3rem;
   box-shadow: 0 0.02rem 0.12rem rgba(0, 0, 0, 0.2),
               0 0.02rem 0.08rem rgba(0, 0, 0, 0.2);
+  z-index: 1090;
 
   &__item {
     &--selected {

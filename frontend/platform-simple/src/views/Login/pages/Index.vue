@@ -1,5 +1,5 @@
 <template>
-  <keep-alive :name="exclude">
+  <keep-alive :exclude="exclude">
     <router-view flex-box="1" v-transition></router-view>
   </keep-alive>
 </template>

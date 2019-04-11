@@ -84,23 +84,34 @@ class Utils extends Vue {
     })
   }
 
-  showDialog (message: string, title?: string, persistent?: boolean, leftBtn?: Btn, rightBtn?: Btn) {
+  showDialog (message: any, title?: string, persistent?: boolean, leftBtn?: Btn, rightBtn?: Btn) {
     if (!leftBtn && !rightBtn) {
       leftBtn = {
         text: 'OK'
       }
     }
-    store.commit('showDialog', {
-      message,
+    let payload = {
+      message: '',
+      component: undefined,
       title,
       leftBtn,
       rightBtn,
       persistent
-    })
+    }
+    if (typeof message === 'string') {
+      payload.message = message
+    } else {
+      payload.component = message
+    }
+    store.commit('showDialog', payload)
   }
 
   showMessageDialog (message: string, title?: string, persistent?: boolean) {
     this.showDialog(message, title, persistent)
+  }
+
+  showComponentDialog (component: Vue, title?:string, persistent?: boolean, leftBtn?: Btn, rightBtn?: Btn) {
+    this.showDialog(component, title, persistent, leftBtn, rightBtn)
   }
 }
 

@@ -4,12 +4,14 @@ import store from '@/store'
 import homeRoutes from './views/Home/routes'
 import meRoutes from './views/Me/routes'
 import loginRoutes from './views/Login/routes'
+import manageRoutes from './views/Manage/routes'
 
 Vue.use(Router)
 
 const router = new Router({
   routes: [
     ...homeRoutes,
+    ...manageRoutes,
     ...meRoutes,
     ...loginRoutes,
     // 其他url重定向至首页

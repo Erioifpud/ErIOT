@@ -6,7 +6,15 @@
   >
     <v-card style="text-align: left">
       <v-card-title v-if="dialog.title" class="headline">{{ dialog.title }}</v-card-title>
-      <v-card-text>{{ dialog.message }}</v-card-text>
+      <template v-if="dialog.component">
+        <!-- <v-card-text>{{ dialog.message }}</v-card-text> -->
+        <v-card-text>
+          <component ref="comp" :is="dialog.component"></component>
+        </v-card-text>
+      </template>
+      <template v-else-if="dialog.message">
+        <v-card-text>{{ dialog.message }}</v-card-text>
+      </template>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn v-if="dialog.leftBtn" color="green darken-1" flat @click="handleLeftBtn">{{ dialog.leftBtn.text }}</v-btn>
@@ -34,16 +42,30 @@ export default class Dialog extends Vue {
   /* data */
   /* computed */
   /* methods */
-  handleLeftBtn () {
+  async handleLeftBtn () {
     if (this.dialog.leftBtn && typeof this.dialog.leftBtn.handler === 'function') {
-      this.dialog.leftBtn.handler()
+      let payload
+      if (this.$refs.comp && this.$refs.comp.collect) {
+        payload = this.$refs.comp.collect()
+      }
+      const flag = await this.dialog.leftBtn.handler(payload)
+      if (flag) {
+        return
+      }
     }
     this.closeDialog()
   }
 
-  handleRightBtn () {
+  async handleRightBtn () {
     if (this.dialog.RightBtn && typeof this.dialog.RightBtn.handler === 'function') {
-      this.dialog.RightBtn.handler()
+      let payload
+      if (this.$refs.comp && this.$refs.comp.collect) {
+        payload = this.$refs.comp.collect()
+      }
+      const flag = await this.dialog.RightBtn.handler(payload)
+      if (flag) {
+        return
+      }
     }
     this.closeDialog()
   }

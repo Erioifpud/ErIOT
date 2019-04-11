@@ -151,13 +151,14 @@ export default new Vuex.Store<IState>({
      * @param state
      * @param param1 \{ message, title = '', leftBtn = undefined, rightBtn = undefined, persistent = false \}
      */
-    showDialog (state, { message, title = '', leftBtn = undefined, rightBtn = undefined, persistent = false }) {
+    showDialog (state, { message, component = undefined,  title = '', leftBtn = undefined, rightBtn = undefined, persistent = false }) {
       state.dialog = {
         title,
+        component,
         message,
         leftBtn,
         rightBtn,
-        persistent
+        persistent,
       }
     },
     setAuth (state, auth) {

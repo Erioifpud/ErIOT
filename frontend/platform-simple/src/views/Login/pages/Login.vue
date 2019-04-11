@@ -11,6 +11,7 @@
       label="密码"
       required
       class="account__input"
+      type="password"
     ></v-text-field>
     <v-btn color="primary" class="account__action-btn" block @click="handleClick">{{ loginText[+isLogin] }}</v-btn>
   </div>

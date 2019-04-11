@@ -9,8 +9,8 @@ export default [
     name: 'Home',
     meta: {
       inMenu: {
-        icon: 'home',
-        title: '首页'
+        icon: 'analytics',
+        title: '仪表盘'
       }
     },
     component: Index,

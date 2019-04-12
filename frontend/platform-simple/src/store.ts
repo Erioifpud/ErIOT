@@ -30,7 +30,8 @@ interface IState {
   menu: {},
   auth: {
     [key: string]: any
-  }
+  },
+  apiKey: string
 }
 
 export default new Vuex.Store<IState>({
@@ -48,7 +49,8 @@ export default new Vuex.Store<IState>({
     dialog: {},
     header: {},
     menu: {},
-    auth: {}
+    auth: {},
+    apiKey: ''
   },
   // 与Dialog与Toast相关的方法在mixin中都有进一步的封装
   mutations: {
@@ -163,6 +165,9 @@ export default new Vuex.Store<IState>({
     },
     setAuth (state, auth) {
       state.auth = auth
+    },
+    setApiKey (state, key) {
+      state.apiKey = key
     },
     // 使vuex-persist支持strict模式
     RESTORE_MUTATION: vuexLocal.RESTORE_MUTATION

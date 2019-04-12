@@ -38,35 +38,13 @@ instance.interceptors.response.use((response: AxiosResponse) => {
     if (response.data.code === 401 && !router.currentRoute.path.startsWith('/login')) {
       router.push('/login')
     }
-    return Promise.reject(response)
-  }
-  return Promise.reject(response)
-  // // 用户请求有误，但后端能返回模版
-  // if (response.data.code) {
-
-  //   // 判断用户未授权，并且不在登陆页时跳转至登录页
-  //   if (response.data.code === 401 && !router.currentRoute.path.startsWith('/login')) {
-  //     router.push('/login')
-  //   }
-  //   return Promise.reject(response)
-  //   // 用户请求成功或服务器发生错误
-  // } else {
-  //   // 用户请求成功
-  //   if (response.data.code === 200) {
-  //     return response
-  //   // 服务器发生错误
-  //   } else {
-  //     return Promise.reject(response)
-  //   }
-  // }
-}, (error) => {
-  // 处理用户请求成功的情况
-  if (typeof error.data.code === 'number') {
     store.dispatch('showToast', {
-      text: error.data.message
+      text: response.data.message
     })
-  // 处理服务器发生错误的情况
-  } else if (error.status !== 200) {
+    return undefined
+  }
+}, (error) => {
+  if (error.status !== 200) {
     store.dispatch('showToast', {
       text: '请求失败'
     })

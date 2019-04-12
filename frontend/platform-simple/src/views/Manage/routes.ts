@@ -1,5 +1,7 @@
 const Index = () => import(/* webpackChunkName: "manage" */ '@/views/Manage/pages/Index.vue')
 const Channels = () => import(/* webpackChunkName: "manage" */ '@/views/Manage/pages/Channels.vue')
+const Fields = () => import(/* webpackChunkName: "manage" */ '@/views/Manage/pages/Fields.vue')
+const Datapoints = () => import(/* webpackChunkName: "manage" */ '@/views/Manage/pages/Datapoints.vue')
 
 export default [
   {
@@ -8,7 +10,7 @@ export default [
     meta: {
       inMenu: {
         icon: 'outlet',
-        title: '管理'
+        title: '频道'
       }
     },
     component: Index,
@@ -20,11 +22,16 @@ export default [
           isHome: true,
         }
       },
-      // {
-      //   name: 'me-edit',
-      //   path: 'edit',
-      //   component: Edit
-      // }
+      {
+        name: 'manage-field',
+        path: 'field/:channelId',
+        component: Fields,
+      },
+      {
+        name: 'manage-datapoint',
+        path: 'datapoint/:fieldId',
+        component: Datapoints,
+      }
     ]
   }
 ]

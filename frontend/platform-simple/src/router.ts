@@ -5,6 +5,7 @@ import homeRoutes from './views/Home/routes'
 import meRoutes from './views/Me/routes'
 import loginRoutes from './views/Login/routes'
 import manageRoutes from './views/Manage/routes'
+import docsRoutes from './views/Docs/routes'
 
 Vue.use(Router)
 
@@ -13,6 +14,7 @@ const router = new Router({
     ...homeRoutes,
     ...manageRoutes,
     ...meRoutes,
+    ...docsRoutes,
     ...loginRoutes,
     // 其他url重定向至首页
     {
@@ -38,6 +40,8 @@ const router = new Router({
 // })
 
 router.beforeEach((to, from, next) => {
+  // 关闭已打开的Dialog
+  store.commit('closeDialog')
   // 通过localStorage取得已同步的token
   // const token = JSON.parse(window.localStorage.getItem('token') || 'null')
   const token = window.localStorage.getItem('token')

@@ -12,10 +12,10 @@ import mixin from '@/mixin'
 
 @Component
 export default class Index extends mixins(mixin.UpdateMenu) {
-  exclude = ['manage-datapoint']
+  exclude = []
 
   menu = {
-    current: '/manage'
+    current: '/docs'
   }
 }
 </script>

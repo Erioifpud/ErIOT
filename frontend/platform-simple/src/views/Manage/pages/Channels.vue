@@ -24,8 +24,8 @@
         </v-card-title>
         <v-card-actions>
           <v-btn flat color="error" @click="handleApiKey(chn.key)">API-KEY</v-btn>
-          <v-btn flat color="warning" @click="handleEdit">修改</v-btn>
-          <v-btn flat color="info">打开</v-btn>
+          <v-btn flat color="warning" @click="handleEdit(chn.id)">修改</v-btn>
+          <v-btn flat color="info" @click="handleEnter(chn)">打开</v-btn>
         </v-card-actions>
       </v-card>
     </div>
@@ -35,14 +35,14 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
-// import {  } from 'vuex-class'
+import { Mutation } from 'vuex-class'
 import mixin from '@/mixin'
-import AddItemDialog from '../components/AddItemDialog'
+import ChannelDialog from '../components/ChannelDialog'
 import moment from 'moment'
 
 @Component({
   components: {
-    AddItemDialog
+    ChannelDialog
   }
 })
 export default class Channels extends mixins(mixin.UpdateHeader, mixin.Utils) {
@@ -57,11 +57,13 @@ export default class Channels extends mixins(mixin.UpdateHeader, mixin.Utils) {
     }
   }
 
+  selectedId: number = NaN
+
   channels = []
   /* computed */
   /* methods */
   openAddPopup () {
-    this.showComponentDialog(AddItemDialog, '新建Channel', false, {
+    this.showComponentDialog(ChannelDialog, '新建Channel', false, {
       text: '确认',
       handler: this.handleAddConfirm
     })
@@ -76,12 +78,18 @@ export default class Channels extends mixins(mixin.UpdateHeader, mixin.Utils) {
       name: payload.name,
       privateFlag: payload.privateFlag
     })
+    if (!data) {
+      return true
+    }
     this.refreshChannels()
   }
 
   async refreshChannels () {
     const data = await this.$axios.get('/channel/')
-    this.channels = data
+    if (!data) {
+      return
+    }
+    this.channels = data.channels
   }
 
   dateFormat (dateStr: string) {
@@ -98,26 +106,44 @@ export default class Channels extends mixins(mixin.UpdateHeader, mixin.Utils) {
     })
   }
 
-  handleEdit () {
-    this.showComponentDialog(AddItemDialog, '编辑Channel', false, {
+  handleEdit (id: number) {
+    this.selectedId = id
+    this.showComponentDialog(ChannelDialog, '编辑Channel', false, {
       text: '确认',
       handler: this.handleEditConfirm
     })
   }
 
   async handleEditConfirm (payload: any) {
-    if (!payload.name || payload.name.length > 16) {
+    if (payload.name && payload.name.length > 16) {
       this.showToast('Channel名称长度必须在1至16之间')
       return true
     }
-    const data = await this.$axios.put('/channel/', {
+    const data = await this.$axios.put('/channel/' + this.selectedId, {
       name: payload.name,
-      privateFlag: payload.privateFlag
+      private: payload.privateFlag
     })
+    if (!data) {
+      return
+    }
+    this.selectedId = NaN
     this.refreshChannels()
+  }
+
+  @Mutation('setApiKey') setApiKey: any
+
+  handleEnter (payload: any) {
+    this.$router.push({
+      name: 'manage-field',
+      params: {
+        channelId: payload.id.toString()
+      }
+    })
+    this.setApiKey(payload.key)
   }
   /* lifecycle */
   activated () {
+    this.selectedId = NaN
     this.refreshChannels()
   }
 }

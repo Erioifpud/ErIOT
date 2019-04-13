@@ -38,7 +38,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import { State } from 'vuex-class'
 import mixin from '@/mixin'
-import FieldDialog from '../components/FieldDialog'
+import FieldDialog from '@/views/Manage/components/FieldDialog.vue'
 import moment from 'moment'
 
 @Component
@@ -79,11 +79,11 @@ export default class Fields extends mixins(mixin.UpdateHeader, mixin.Utils) {
     if (!data) {
       return
     }
-    this.fields = data.fields
+    this.fields = (data as any).fields
   }
 
   openAddPopup () {
-    this.showComponentDialog(FieldDialog, '新建Field', false, {
+    this.showComponentDialog((FieldDialog as any), '新建Field', false, {
       text: '确认',
       handler: this.handleAddConfirm
     })
@@ -123,7 +123,7 @@ export default class Fields extends mixins(mixin.UpdateHeader, mixin.Utils) {
 
   handleEdit (id: number) {
     this.selectedId = id
-    this.showComponentDialog(FieldDialog, '编辑Field', false, {
+    this.showComponentDialog((FieldDialog as any), '编辑Field', false, {
       text: '确认',
       handler: this.handleEditConfirm
     })

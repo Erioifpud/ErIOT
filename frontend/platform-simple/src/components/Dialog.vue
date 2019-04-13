@@ -45,8 +45,8 @@ export default class Dialog extends Vue {
   async handleLeftBtn () {
     if (this.dialog.leftBtn && typeof this.dialog.leftBtn.handler === 'function') {
       let payload
-      if (this.$refs.comp && this.$refs.comp.collect) {
-        payload = this.$refs.comp.collect()
+      if (this.$refs.comp && (this.$refs.comp as any).collect) {
+        payload = (this.$refs.comp as any).collect()
       }
       const flag = await this.dialog.leftBtn.handler(payload)
       if (flag) {
@@ -59,8 +59,8 @@ export default class Dialog extends Vue {
   async handleRightBtn () {
     if (this.dialog.RightBtn && typeof this.dialog.RightBtn.handler === 'function') {
       let payload
-      if (this.$refs.comp && this.$refs.comp.collect) {
-        payload = this.$refs.comp.collect()
+      if (this.$refs.comp && (this.$refs.comp as any).collect) {
+        payload = (this.$refs.comp as any).collect()
       }
       const flag = await this.dialog.RightBtn.handler(payload)
       if (flag) {

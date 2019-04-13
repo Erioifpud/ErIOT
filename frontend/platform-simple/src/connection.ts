@@ -5,11 +5,22 @@ import store from './store'
 // 初始化axios并且设置超时时间
 const instance = axios.create({
   timeout: 3000,
-  baseURL: 'http://localhost:3000/api/',
+  baseURL: 'http://192.168.1.101:3000/api/',
   headers: {
     'Content-Type': 'application/json'
   }
 })
+
+interface Response {
+  code: number
+  message: string
+  data: ResponseData
+  token?: string
+}
+
+interface ResponseData {
+  data: any
+}
 
 instance.interceptors.request.use((config: AxiosRequestConfig) => {
   const token = window.localStorage.getItem('token')
@@ -43,7 +54,7 @@ instance.interceptors.response.use((response: AxiosResponse) => {
     })
     return undefined
   }
-}, (error) => {
+}, (error: AxiosResponse) => {
   if (error.status !== 200) {
     store.dispatch('showToast', {
       text: '请求失败'

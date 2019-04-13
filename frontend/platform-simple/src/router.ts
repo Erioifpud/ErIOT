@@ -5,7 +5,6 @@ import homeRoutes from './views/Home/routes'
 import meRoutes from './views/Me/routes'
 import loginRoutes from './views/Login/routes'
 import manageRoutes from './views/Manage/routes'
-import docsRoutes from './views/Docs/routes'
 
 Vue.use(Router)
 
@@ -14,7 +13,6 @@ const router = new Router({
     ...homeRoutes,
     ...manageRoutes,
     ...meRoutes,
-    ...docsRoutes,
     ...loginRoutes,
     // 其他url重定向至首页
     {

@@ -1,6 +1,6 @@
 {
-  "name": "erio-web-app-template",
-  "short_name": "erio-web-app-template",
+  "name": "IOT Dashboard",
+  "short_name": "Dashboard",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
@@ -15,6 +15,6 @@
   ],
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#f0e6b8"
+  "background_color": "#FFFFFF",
+  "theme_color": "#504299"
 }

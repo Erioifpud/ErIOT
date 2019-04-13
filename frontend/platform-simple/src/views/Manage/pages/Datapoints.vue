@@ -2,6 +2,7 @@
   <div class="datapoints">
     <ve-line :data="chartData" :settings="chartSettings"></ve-line>
     <v-btn color="info" block @click="handleUpload">上传测试数据</v-btn>
+    <v-btn color="success" block @click="handleRefresh">刷新图表</v-btn>
   </div>
 </template>
 
@@ -10,9 +11,10 @@ import { Vue, Component } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import { State } from 'vuex-class'
 import mixin from '@/mixin'
-import VeLine from 'v-charts/lib/line.common'
+// import VeLine from 'v-charts/lib/line.common'
+import { VeLine } from 'v-charts/lib/index.esm'
 import moment from 'moment'
-import PointDialog from '../components/PointDialog'
+import PointDialog from '@/views/Manage/components/PointDialog.vue'
 
 @Component({
   components: {
@@ -30,6 +32,10 @@ export default class Datapoints extends mixins(mixin.UpdateHeader, mixin.Utils) 
     title: '数据点',
     leftBtn: {
       icon: 'arrow-back'
+    },
+    rightBtn: {
+      icon: 'information-circle',
+      handler: this.showMessageDialog.bind(this, '系统还未完全部署，暂时只能手动进行图表数据的更新。')
     }
   }
 
@@ -89,11 +95,11 @@ export default class Datapoints extends mixins(mixin.UpdateHeader, mixin.Utils) 
     if (!data) {
       return
     }
-    const points = data.datapoints
+    const points = (data as any).datapoints
     this.points.splice(0, points.length)
     this.points = this.points.concat(points)
 
-    this.$set(this.chartData, 'rows', this.points.map(point => {
+    this.$set(this.chartData, 'rows', this.points.map((point: any) => {
       return {
         'date': this.formatDate(point.createdAt),
         'data': point.value
@@ -103,7 +109,7 @@ export default class Datapoints extends mixins(mixin.UpdateHeader, mixin.Utils) 
   }
 
   handleUpload () {
-    this.showComponentDialog(PointDialog, '测试数据', false, {
+    this.showComponentDialog((PointDialog as any), '测试数据', false, {
       text: '确认',
       handler: this.handleUploadTestPoint
     })
@@ -145,6 +151,10 @@ export default class Datapoints extends mixins(mixin.UpdateHeader, mixin.Utils) 
 
   formatDate (dateStr: string) {
     return moment(new Date(dateStr)).format('HH:mm:ss')
+  }
+
+  handleRefresh () {
+    this.refreshDatapoints()
   }
 
   // resetAll () {

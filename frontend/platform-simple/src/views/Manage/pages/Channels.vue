@@ -37,7 +37,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import { Mutation } from 'vuex-class'
 import mixin from '@/mixin'
-import ChannelDialog from '../components/ChannelDialog'
+import ChannelDialog from '@/views/Manage/components/ChannelDialog.vue'
 import moment from 'moment'
 
 @Component({
@@ -63,7 +63,7 @@ export default class Channels extends mixins(mixin.UpdateHeader, mixin.Utils) {
   /* computed */
   /* methods */
   openAddPopup () {
-    this.showComponentDialog(ChannelDialog, '新建Channel', false, {
+    this.showComponentDialog((ChannelDialog as any), '新建Channel', false, {
       text: '确认',
       handler: this.handleAddConfirm
     })
@@ -89,7 +89,7 @@ export default class Channels extends mixins(mixin.UpdateHeader, mixin.Utils) {
     if (!data) {
       return
     }
-    this.channels = data.channels
+    this.channels = (data as any).channels
   }
 
   dateFormat (dateStr: string) {
@@ -108,7 +108,7 @@ export default class Channels extends mixins(mixin.UpdateHeader, mixin.Utils) {
 
   handleEdit (id: number) {
     this.selectedId = id
-    this.showComponentDialog(ChannelDialog, '编辑Channel', false, {
+    this.showComponentDialog((ChannelDialog as any), '编辑Channel', false, {
       text: '确认',
       handler: this.handleEditConfirm
     })

@@ -1,0 +1,298 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "平台主要分3个层次，分别是Channel、Field和Datapoint，Channel与Field是**一对多**关系，Field与Datapoint也是**一对多**关系。\n\n用户的认证通过JWT实现，因此在需要验明用户身份时应该主动提供token进行认证，token可以在两种情况下获取，分别是**登录**和**对已有token的续期**，*简单来说，如果服务器给你提供token，那么token肯定在响应对象中的第一层（和code、message同级）*。\n\n每个Channel都有自己的api-key作为**唯一标示**，api-key只有**Channel所有者**能查看，通过api-key能使用大部分接口，所以不建议将它分享给其他人，因为这意味着其他人也有权限对你的Channel以及Field和Datapoint进行操作。\nChannel的**创建**与**修改**操作无法通过api-key使用，需要用户的身份证明(token)。",
+    "version": "1.0.0",
+    "title": "IOT Platform",
+    "contact": {
+      "email": "erioifpud@zuo.si"
+    }
+  },
+  "host": "127.0.0.1:3000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "Common",
+      "description": "通用接口，比如登录和注册"
+    },
+    {
+      "name": "User",
+      "description": "用户信息的相关接口"
+    },
+    {
+      "name": "Channel",
+      "description": "直译是“频道”，每个用户可以拥有多个频道，概念等同于设备，参考ThingSpeak"
+    },
+    {
+      "name": "Field",
+      "description": "直译是“域”，每个频道可以包含多个域，概念等同于设备收集的数据类型，比如温度或亮度，也可参考ThingSpeak"
+    },
+    {
+      "name": "Datapoint",
+      "description": "数据点，每个域可以包含多个数据点，和域一起可以理解成“在温度这个数据类型里有多个温度数据点”"
+    }
+  ],
+  "securityDefinitions": {
+    "JWT": {
+      "description": "用户身份证明",
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    },
+    "API_KEY": {
+      "description": "Channel访问资格证明",
+      "type": "apiKey",
+      "name": "api-key",
+      "in": "header"
+    }
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths":{
+    "/common/login": {
+      "post": {
+        "tags": [
+          "Common"
+        ],
+        "summary": "用户登录",
+        "description": "提供**用户名**和**密码**进行登录",
+        "operationId": "login",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "包含了账号与密码的一个对象",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "响应的常规结构，token项可选，在token续期或登录成功后携带",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          }
+        }
+      }
+    },
+    "/common/register": {
+      "post": {
+        "tags": [
+          "Common"
+        ],
+        "summary": "用户注册",
+        "description": "提供**用户名**和**密码**进行注册",
+        "operationId": "register",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "包含了账号与密码的一个对象",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "响应的常规结构，token项可选，在token续期或登录成功后携带",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "JWT": ""
+          }
+        ],
+        "summary": "获取当前用户信息",
+        "description": "获取**当前用户**信息，不提供登录标识(token)无法访问",
+        "operationId": "userGet",
+       
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "响应的常规结构，token项可选，在token续期或登录成功后携带",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "JWT": ""
+          }
+        ],
+        "summary": "获取指定用户信息",
+        "description": "获取**指定用户**信息，不提供登录标识(token)无法访问，**仅供管理员使用**",
+        "operationId": "userGetId",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "响应的常规结构，token项可选，在token续期或登录成功后携带",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "JWT": ""
+          }
+        ],
+        "summary": "修改指定用户信息",
+        "description": "修改**指定用户**信息（用户名或密码），不提供登录标识(token)无法访问，**默认情况下只能修改自身信息**，修改时必须提供**原密码**",
+        "operationId": "userUpdate",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "包含了账号、密码和新密码的一个对象",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "响应的常规结构，token项可选，在token续期或登录成功后携带",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          }
+        }
+      }
+    },
+    "/channel": {
+      "get": {
+        "tags": [
+          "Channel"
+        ],
+        "security": [
+          {
+            "JWT": ""
+          }
+        ],
+        "summary": "获取当前用户下所有Channel",
+        "description": "获取**当前用户**下所有Channel，不提供登录标识(token)无法访问",
+        "operationId": "channelGet",
+       
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "响应的常规结构，token项可选，在token续期或登录成功后携带",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "UpdateUser": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "newPassword": {
+          "type": "string"
+        }
+      }
+    },
+    "Response": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object"
+        },
+        "token": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

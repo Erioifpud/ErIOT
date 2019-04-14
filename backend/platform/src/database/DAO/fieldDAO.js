@@ -11,12 +11,12 @@ module.exports = {
   // findByApiKey (key) {
   //   return Channel.where({ key }).fetch()
   // },
-  // findAllByUserId(id) {
-  //   return Channel.fetchAll({ withRelated: ['user'] })
-  //     .then(result => {
-  //       return result.models.filter(channel => +channel.get('user_id') === +id)
-  //     })
-  // },
+  findAllByChannelId(id) {
+    return Field.fetchAll({ withRelated: ['channel'] })
+      .then(result => {
+        return result.models.filter(field => +field.get('channel_id') === +id)
+      })
+  },
   find (options) {
     return Field.forge(options).fetch()
   },

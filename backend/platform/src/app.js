@@ -7,7 +7,9 @@ const koaLogger = require('koa-logger')
 const log4js = require('log4js')
 const authorization = require('./middleware/authorization')
 const renewal = require('./middleware/renewal')
+const koaSwagger = require('koa2-swagger-ui')
 
+global.__src = __dirname
 
 log4js.configure({
   appenders: { 
@@ -20,6 +22,12 @@ log4js.configure({
 const logger = log4js.getLogger()
 
 
+app.use(koaSwagger({
+  routePrefix: '/swagger',
+  swaggerOptions: {
+    url: 'http://localhost:3000/api/docs',
+  }
+}))
 app.use(async (ctx, next) => {
   ctx.logger = logger
   await next()
@@ -27,7 +35,7 @@ app.use(async (ctx, next) => {
 app.use(koaLogger())
 app.use(cors())
 app.use(authorization({
-  whitelist: [/\/api\/common\/*/, { regex: /\/api\/channel\/\d+/, method: 'get' }]
+  whitelist: [/\/api\/common\/*/, { regex: /\/api\/channel\/\d+/, method: 'get' }, /\/api\/docs\/*/]
 }))
 app.use(renewal({
   deadline: 1800

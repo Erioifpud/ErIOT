@@ -1,0 +1,76 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "平台主要分3个层次，分别是Channel、Field和Datapoint，Channel与Field是**一对多**关系，Field与Datapoint也是**一对多**关系。\n\n用户的认证通过JWT实现，因此在需要验明用户身份时应该主动提供token进行认证，token可以在三种情况下获取，分别是**登录**、**注册**和**对已有token的续期**，*简单来说，如果服务器给你提供token，那么token肯定在响应对象中的第一层（和code、message同级）*。\n\n每个Channel都有自己的api-key作为**唯一标示**，api-key只有**Channel所有者**能查看，通过api-key能使用大部分接口，所以不建议将它分享给其他人，因为这意味着其他人也有权限对你的Channel以及Field和Datapoint进行操作。\nChannel的**创建**与**修改**操作无法通过api-key使用，需要用户的身份证明(token)。",
+    "version": "1.0.0",
+    "title": "IOT Platform",
+    "contact": {
+      "email": "erioifpud@zuo.si"
+    }
+  },
+  "host": "127.0.0.1:3000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "Common",
+      "description": "通用接口，比如登录和注册"
+    },
+    {
+      "name": "User",
+      "description": "用户信息的相关接口"
+    },
+    {
+      "name": "Channel",
+      "description": "直译是“频道”，每个用户可以拥有多个频道，概念等同于设备，参考ThingSpeak"
+    },
+    {
+      "name": "Field",
+      "description": "直译是“域”，每个频道可以包含多个域，概念等同于设备收集的数据类型，比如温度或亮度，也可参考ThingSpeak"
+    },
+    {
+      "name": "Datapoint",
+      "description": "数据点，每个域可以包含多个数据点，和域一起可以理解成“在温度这个数据类型里有多个温度数据点”"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths":{
+    "/common/login": {
+      "post": {
+        "tags": [
+          "Common"
+        ],
+        "summary": "用户登录",
+        "description": "提供**用户名**和**密码**进行登录",
+        "operationId": "login",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "username",
+            "name": "用户名",
+            "description": "1123",
+            "required": true
+          },
+          {
+            "in": "password",
+            "name": "密码",
+            "description": "1123",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "4456"
+          }
+        }
+      }
+    }
+  }
+}

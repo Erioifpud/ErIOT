@@ -30,6 +30,8 @@ async function login (ctx) {
       id: result.id,
       name: result.get('name'),
       number: result.get('number'),
+      createdAt: result.get('created_at'),
+      updatedAt: result.get('updated_at'),
       // secret: result.get('secret')
     }
     const token = signToken(payload)
@@ -55,6 +57,8 @@ async function register (ctx) {
       id: result.id,
       name: result.get('name'),
       number: result.get('number'),
+      createdAt: result.get('created_at'),
+      updatedAt: result.get('updated_at'),
       // secret: result.get('secret')
     })
   } catch (err) {

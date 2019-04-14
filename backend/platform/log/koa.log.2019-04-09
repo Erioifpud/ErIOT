@@ -1,0 +1,180 @@
+[2019-04-04T17:22:20.436] [DEBUG] default - 123
+[2019-04-04T17:22:49.496] [DEBUG] default - 123
+[2019-04-04T17:28:03.290] [DEBUG] default - 123
+[2019-04-04T17:28:25.680] [ERROR] default - 123
+[2019-04-04T17:33:21.084] [DEBUG] default - 123
+[2019-04-04T17:38:42.980] [ERROR] default - register 用户名重复 abc
+[2019-04-05T15:40:39.110] [ERROR] default - register 用户名重复 abcd
+[2019-04-05T15:51:33.341] [ERROR] default - login 用户名或密码错误 abc
+[2019-04-05T15:52:12.524] [ERROR] default - login 用户名或密码错误 abc
+[2019-04-05T15:52:25.211] [ERROR] default - login 用户名或密码错误 abc
+[2019-04-05T17:30:36.091] [ERROR] default - ReferenceError: omit is not defined
+    at vertifyToken (/Users/erioifpud/Documents/Project/erIOT/backend/platform/src/util/index.js:99:40)
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/src/middleware/authorization.js:15:17
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at cors (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/@koa/cors/index.js:55:14)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at logger (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa-logger/index.js:67:13)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at app.use (/Users/erioifpud/Documents/Project/erIOT/backend/platform/src/app.js:25:9)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:133:19)
+    at emitTwo (events.js:126:13)
+    at Server.emit (events.js:214:7)
+    at parserOnIncoming (_http_server.js:634:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:117:17)
+[2019-04-05T17:31:27.644] [ERROR] default - TypeError: this.omit is not a function
+    at vertifyToken (/Users/erioifpud/Documents/Project/erIOT/backend/platform/src/util/index.js:99:59)
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/src/middleware/authorization.js:15:17
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at cors (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/@koa/cors/index.js:55:14)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at logger (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa-logger/index.js:67:13)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at app.use (/Users/erioifpud/Documents/Project/erIOT/backend/platform/src/app.js:25:9)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:133:19)
+    at emitTwo (events.js:126:13)
+    at Server.emit (events.js:214:7)
+    at parserOnIncoming (_http_server.js:634:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:117:17)
+[2019-04-05T17:32:10.309] [ERROR] default - ReferenceError: omit is not defined
+    at vertifyToken (/Users/erioifpud/Documents/Project/erIOT/backend/platform/src/util/index.js:99:54)
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/src/middleware/authorization.js:15:17
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at cors (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/@koa/cors/index.js:55:14)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at logger (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa-logger/index.js:67:13)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at app.use (/Users/erioifpud/Documents/Project/erIOT/backend/platform/src/app.js:25:9)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:133:19)
+    at emitTwo (events.js:126:13)
+    at Server.emit (events.js:214:7)
+    at parserOnIncoming (_http_server.js:634:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:117:17)
+[2019-04-05T17:34:29.325] [ERROR] default - { JsonWebTokenError: jwt must be provided
+    at Object.module.exports [as verify] (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/jsonwebtoken/verify.js:53:17)
+    at vertifyToken (/Users/erioifpud/Documents/Project/erIOT/backend/platform/src/util/index.js:104:14)
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/src/middleware/authorization.js:15:17
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at cors (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/@koa/cors/index.js:55:14)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at logger (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa-logger/index.js:67:13)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at app.use (/Users/erioifpud/Documents/Project/erIOT/backend/platform/src/app.js:25:9)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:133:19)
+    at emitTwo (events.js:126:13)
+    at Server.emit (events.js:214:7)
+    at parserOnIncoming (_http_server.js:634:12) name: 'JsonWebTokenError', message: 'jwt must be provided' }
+[2019-04-05T17:36:37.087] [ERROR] default - ReferenceError: verifyToken is not defined
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/src/middleware/authorization.js:15:7
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at cors (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/@koa/cors/index.js:55:14)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at logger (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa-logger/index.js:67:13)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at app.use (/Users/erioifpud/Documents/Project/erIOT/backend/platform/src/app.js:25:9)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:133:19)
+    at emitTwo (events.js:126:13)
+    at Server.emit (events.js:214:7)
+    at parserOnIncoming (_http_server.js:634:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:117:17)
+[2019-04-05T17:36:50.941] [ERROR] default - ReferenceError: verifyToken is not defined
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/src/middleware/authorization.js:15:7
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at cors (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/@koa/cors/index.js:55:14)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at logger (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa-logger/index.js:67:13)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at app.use (/Users/erioifpud/Documents/Project/erIOT/backend/platform/src/app.js:25:9)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:133:19)
+    at emitTwo (events.js:126:13)
+    at Server.emit (events.js:214:7)
+    at parserOnIncoming (_http_server.js:634:12)
+    at HTTPParser.parserOnHeadersComplete (_http_common.js:117:17)
+[2019-04-05T17:37:01.651] [ERROR] default - { JsonWebTokenError: jwt must be provided
+    at Object.module.exports [as verify] (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/jsonwebtoken/verify.js:53:17)
+    at verifyToken (/Users/erioifpud/Documents/Project/erIOT/backend/platform/src/util/index.js:104:14)
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/src/middleware/authorization.js:15:17
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at cors (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/@koa/cors/index.js:55:14)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at logger (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa-logger/index.js:67:13)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at app.use (/Users/erioifpud/Documents/Project/erIOT/backend/platform/src/app.js:25:9)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:133:19)
+    at emitTwo (events.js:126:13)
+    at Server.emit (events.js:214:7)
+    at parserOnIncoming (_http_server.js:634:12) name: 'JsonWebTokenError', message: 'jwt must be provided' }
+[2019-04-05T17:37:02.000] [ERROR] default - register 用户名重复 abcd
+[2019-04-05T17:37:06.949] [ERROR] default - { JsonWebTokenError: jwt must be provided
+    at Object.module.exports [as verify] (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/jsonwebtoken/verify.js:53:17)
+    at verifyToken (/Users/erioifpud/Documents/Project/erIOT/backend/platform/src/util/index.js:104:14)
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/src/middleware/authorization.js:15:17
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at cors (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/@koa/cors/index.js:55:14)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at logger (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa-logger/index.js:67:13)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at app.use (/Users/erioifpud/Documents/Project/erIOT/backend/platform/src/app.js:25:9)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:133:19)
+    at emitTwo (events.js:126:13)
+    at Server.emit (events.js:214:7)
+    at parserOnIncoming (_http_server.js:634:12) name: 'JsonWebTokenError', message: 'jwt must be provided' }
+[2019-04-05T17:39:01.327] [ERROR] default - { JsonWebTokenError: jwt must be provided
+    at Object.module.exports [as verify] (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/jsonwebtoken/verify.js:53:17)
+    at verifyToken (/Users/erioifpud/Documents/Project/erIOT/backend/platform/src/util/index.js:105:14)
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/src/middleware/authorization.js:15:17
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at cors (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/@koa/cors/index.js:55:14)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at logger (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa-logger/index.js:67:13)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at app.use (/Users/erioifpud/Documents/Project/erIOT/backend/platform/src/app.js:25:9)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:133:19)
+    at emitTwo (events.js:126:13)
+    at Server.emit (events.js:214:7)
+    at parserOnIncoming (_http_server.js:634:12) name: 'JsonWebTokenError', message: 'jwt must be provided' }
+[2019-04-05T17:40:18.725] [ERROR] default - { JsonWebTokenError: jwt must be provided
+    at Object.module.exports [as verify] (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/jsonwebtoken/verify.js:53:17)
+    at verifyToken (/Users/erioifpud/Documents/Project/erIOT/backend/platform/src/util/index.js:105:14)
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/src/middleware/authorization.js:15:17
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at cors (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/@koa/cors/index.js:55:14)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at logger (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa-logger/index.js:67:13)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at app.use (/Users/erioifpud/Documents/Project/erIOT/backend/platform/src/app.js:25:9)
+    at dispatch (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:42:32)
+    at /Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/node_modules/koa-compose/index.js:34:12
+    at Application.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:151:12)
+    at Server.handleRequest (/Users/erioifpud/Documents/Project/erIOT/backend/platform/node_modules/koa/lib/application.js:133:19)
+    at emitTwo (events.js:126:13)
+    at Server.emit (events.js:214:7)
+    at parserOnIncoming (_http_server.js:634:12) name: 'JsonWebTokenError', message: 'jwt must be provided' }
+[2019-04-07T00:17:32.618] [ERROR] default - register 用户名重复 abcd

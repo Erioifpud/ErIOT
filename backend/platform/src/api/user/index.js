@@ -9,6 +9,8 @@ async function index (ctx) {
       id: user.id,
       name: user.get('name'),
       number: user.get('number'),
+      createdAt: user.get('created_at'),
+      updatedAt: user.get('updated_at'),
       // secret: result.get('secret')
     })
   } else {
@@ -27,6 +29,8 @@ async function show (ctx) {
         id: target.id,
         name: target.get('name'),
         number: target.get('number'),
+        createdAt: user.get('created_at'),
+        updatedAt: user.get('updated_at'),
         // secret: result.get('secret')
       })
     } else {
@@ -57,16 +61,18 @@ async function update (ctx) {
     id: decoded.id
   })
   try {
-    const result = await user.authenticate(password)
+    await user.authenticate(password)
   } catch (err) {
     response.call(ctx, {}, 401, '原密码错误')
     return
   }
   if (number && +number !== +user.get('number')) {
     user.set('number', number)
+    user.set('updated_at', new Date())
   }
   if (newPassword && newPassword !== password) {
     user.set('password', newPassword)
+    user.set('updated_at', new Date())
   }
   try {
     const result = await user.save()
@@ -74,6 +80,8 @@ async function update (ctx) {
       id: result.id,
       name: result.get('name'),
       number: result.get('number'),
+      createdAt: user.get('created_at'),
+      updatedAt: user.get('updated_at'),
       // secret: result.get('secret')
     })
   } catch (err) {

@@ -15,6 +15,14 @@ function formatFields (fields) {
 async function create (ctx) {
   const { name, private } = ctx.request.body
   const { decoded } = ctx.auth
+  if (!name) {
+    response.call(ctx, {}, 400, '缺少Channel名称')
+    return
+  }
+  if (name.length > 16) {
+    response.call(ctx, {}, 400, 'Channel名称过长')
+    return
+  }
   const digest = md5(name + +new Date())
   const { user } = await channelDAO.findReleatedUserByKey(name, 'name')
   if (user && +user.id === +decoded.id) {
@@ -32,7 +40,9 @@ async function create (ctx) {
       id: channel.get('id'),
       name: channel.get('name'),
       key: channel.get('key'),
-      private: !!channel.get('private_flag')
+      private: !!channel.get('private_flag'),
+      createdAt: channel.get('created_at'),
+      updatedAt: channel.get('updated_at'),
     })
     return
   } catch (err) {
@@ -55,12 +65,16 @@ async function index (ctx) {
   //   })
   // }
   // response.call(ctx, result)
-  response.call(ctx, channels.map(chn => ({
-    id: chn.get('id'),
-    name: chn.get('name'),
-    key: chn.get('key'),
-    private: !!chn.get('private_flag')
-  })))
+  response.call(ctx, {
+    channels: channels.map(chn => ({
+      id: chn.get('id'),
+      name: chn.get('name'),
+      key: chn.get('key'),
+      private: !!chn.get('private_flag'),
+      createdAt: chn.get('created_at'),
+      updatedAt: chn.get('updated_at'),
+    })
+  )})
 }
 
 async function show (ctx) {
@@ -100,6 +114,8 @@ async function show (ctx) {
         name: channel.get('name'),
         key: channel.get('key'),
         private: !!channel.get('private_flag'),
+        createdAt: channel.get('created_at'),
+        updatedAt: channel.get('updated_at'),
         // fields: formatFields(fields)
       })
       return
@@ -111,6 +127,8 @@ async function show (ctx) {
       name: channel.get('name'),
       key: channel.get('key'),
       private: !!channel.get('private_flag'),
+      createdAt: channel.get('created_at'),
+      updatedAt: channel.get('updated_at'),
       // fields: formatFields(fields)
     })
     return
@@ -131,17 +149,21 @@ async function update (ctx) {
   if (name && name !== channel.get('name')) {
     channel.set('name', name)
     channel.set('key', md5(name + +new Date()))
+    channel.set('updated_at', new Date())
   }
-  if (private && private !== channel.get('private_flag')) {
+  if (private !== undefined && +private !== +channel.get('private_flag')) {
     channel.set('private_flag', +private)
+    channel.set('updated_at', new Date())
   }
   try {
     const result = await channel.save()
     response.call(ctx, {
-      id: channel.get('id'),
+      id: result.get('id'),
       name: result.get('name'),
       key: result.get('key'),
-      private: !!channel.get('private_flag')
+      private: !!result.get('private_flag'),
+      createdAt: result.get('created_at'),
+      updatedAt: result.get('updated_at'),
     })
   } catch (err) {
     response.call(ctx, {}, 400, '信息修改失败')
@@ -170,7 +192,17 @@ async function destroy (ctx) {
     }
   }
   if (decoded) {
-
+    if (+channel.get('user_id') !== +decoded.id) {
+      response.call(ctx, {}, 400, '无权删除该Channel')
+      return
+    }
+    try {
+      await channel.destroy()
+      response.call(ctx, {})
+      return
+    } catch (err) {
+      response.call(ctx, {}, 400, '删除失败')
+    }
     return
   }
   response.call(ctx, {}, 400, 'Channel删除失败')

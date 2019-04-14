@@ -36,7 +36,10 @@ const Field = bookshelf.Model.extend({
 })
 
 const Point = bookshelf.Model.extend({
-  tableName: 'point'
+  tableName: 'point',
+  field: function () {
+    return this.belongsTo(Field)
+  }
 })
 
 module.exports = {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn small color="primary" @click="test">Primary</v-btn>
+    <v-btn small color="primary" @click="test">莫名其妙的按钮</v-btn>
   </div>
 </template>
 
@@ -24,7 +24,7 @@ export default class Test extends mixins(mixin.UpdateHeader, mixin.Utils) {
   }
 
   test () {
-    this.showMessageDialog('123', 'title', true)
+    this.showMessageDialog('大白菜', '胡萝卜🥕', true)
   }
 }
 </script>

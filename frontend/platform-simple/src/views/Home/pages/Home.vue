@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    主页
+    别看了，这里还没想好要放什么
     <div>
       <router-link to="/home/test">测试</router-link>
     </div>

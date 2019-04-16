@@ -168,7 +168,7 @@ export default class Datapoints extends mixins(mixin.UpdateHeader, mixin.Utils) 
       this.$router.push('/')
     }
     this.getField()
-    this.refreshDatapoints()
+    // this.refreshDatapoints()
   }
 
   deactivated () {
@@ -180,5 +180,7 @@ export default class Datapoints extends mixins(mixin.UpdateHeader, mixin.Utils) 
 <style lang="scss" scoped>
 .datapoints {
   padding: 1rem;
+  position: relative;
+  overflow: auto;
 }
 </style>

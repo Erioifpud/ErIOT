@@ -1,3 +1,4 @@
+const axios = require('axios')
 const { userDAO } = require('../../database/DAO')
 const { response, responseWithToken, omit, signToken } = require('../../util')
 
@@ -19,7 +20,29 @@ function validate (body) {
 
 async function login (ctx) {
   const { body } = ctx.request
-  const { username, password } = body
+  const { username, password, data } = body
+  if (!data) {
+    response.call(ctx, {}, 400, '未完成验证码')
+    return
+  }
+  const { appid, ret, ticket, randstr } = data
+  if (ret !== 0) {
+    response.call(ctx, {}, 400, '验证码错误')
+    return
+  }
+  const resp = await axios.get('https://ssl.captcha.qq.com/ticket/verify', {
+    params: {
+      aid: appid,
+      AppSecretKey: '0EQgYZy4eFFA-yw9_Z3Wj-Q**',
+      Ticket: ticket,
+      Randstr: randstr,
+      UserIP: ctx.request.ip
+    }
+  })
+  if (resp.data.response !== '1') {
+    response.call(ctx, {}, 400, `验证码错误：${resp.data.err_msg}`)
+    return
+  }
   if (!validate(body)) {
     response.call(ctx, {}, 400, '参数格式错误')
     return
@@ -44,7 +67,29 @@ async function login (ctx) {
 
 async function register (ctx) {
   const { body } = ctx.request
-  const { username, password } = body
+  const { username, password, data } = body
+  if (!data) {
+    response.call(ctx, {}, 400, '未完成验证码')
+    return
+  }
+  const { appid, ret, ticket, randstr } = data
+  if (ret !== 0) {
+    response.call(ctx, {}, 400, '验证码错误')
+    return
+  }
+  const resp = await axios.get('https://ssl.captcha.qq.com/ticket/verify', {
+    params: {
+      aid: appid,
+      AppSecretKey: '0EQgYZy4eFFA-yw9_Z3Wj-Q**',
+      Ticket: ticket,
+      Randstr: randstr,
+      UserIP: ctx.request.ip
+    }
+  })
+  if (resp.data.response !== '1') {
+    response.call(ctx, {}, 400, `验证码错误：${resp.data.err_msg}`)
+    return
+  }
   if (!validate(body)) {
     response.call(ctx, {
       test: 'test'

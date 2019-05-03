@@ -168,7 +168,7 @@ export default class Datapoints extends mixins(mixin.UpdateHeader, mixin.Utils) 
       this.$router.push('/')
     }
     this.getField()
-    // this.refreshDatapoints()
+    this.refreshDatapoints()
   }
 
   deactivated () {

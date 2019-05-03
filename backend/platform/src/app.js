@@ -35,7 +35,7 @@ app.use(async (ctx, next) => {
 app.use(koaLogger())
 app.use(cors())
 app.use(authorization({
-  whitelist: [/\/api\/common\/*/, { regex: /\/api\/channel\/\d+/, method: 'get' }, /\/api\/docs\/*/]
+  whitelist: [/\/api\/common\/*/, { regex: /\/api\/channel\/\d+/, method: 'get' }, /\/api\/docs\/*/, /\/api\/datapoint\/*/]
 }))
 app.use(renewal({
   deadline: 1800

@@ -9,6 +9,7 @@ async function index (ctx) {
       id: user.id,
       name: user.get('name'),
       number: user.get('number'),
+      sckey: user.get('sckey'),
       createdAt: user.get('created_at'),
       updatedAt: user.get('updated_at'),
       // secret: result.get('secret')
@@ -29,6 +30,7 @@ async function show (ctx) {
         id: target.id,
         name: target.get('name'),
         number: target.get('number'),
+        sckey: target.get('sckey'),
         createdAt: user.get('created_at'),
         updatedAt: user.get('updated_at'),
         // secret: result.get('secret')
@@ -42,15 +44,15 @@ async function show (ctx) {
 }
 
 async function update (ctx) {
-  const { password, number, newPassword } = ctx.request.body
+  const { password, number, newPassword, sckey } = ctx.request.body
   const { decoded } = ctx.auth
   const { id } = ctx.params
   if (!password) {
     response.call(ctx, {}, 400, '参数格式错误')
     return
   }
-  if (!number && !newPassword) {
-    response.call(ctx, {}, 200, '信息无需修改')
+  if (!number && !newPassword && !sckey) {
+    response.call(ctx, {}, 201, '信息无需修改')
     return
   }
   if (+decoded.id !== +id) {
@@ -74,12 +76,17 @@ async function update (ctx) {
     user.set('password', newPassword)
     user.set('updated_at', new Date())
   }
+  if (sckey) {
+    user.set('sckey', sckey)
+    user.set('updated_at', new Date())
+  }
   try {
     const result = await user.save()
     response.call(ctx, {
       id: result.id,
       name: result.get('name'),
       number: result.get('number'),
+      sckey: result.get('sckey'),
       createdAt: user.get('created_at'),
       updatedAt: user.get('updated_at'),
       // secret: result.get('secret')

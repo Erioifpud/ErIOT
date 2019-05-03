@@ -5,7 +5,7 @@ import store from './store'
 // 初始化axios并且设置超时时间
 const instance = axios.create({
   timeout: 3000,
-  baseURL: 'http://192.168.1.101:3000/api/',
+  baseURL: 'http://localhost:3000/api/',
   headers: {
     'Content-Type': 'application/json'
   }

@@ -13,6 +13,11 @@
       class="account__input"
       type="password"
     ></v-text-field>
+    <div class="account__captcha" ref="captcha">
+      <v-btn color="info" block>
+        点此显示验证码
+      </v-btn>
+    </div>
     <v-btn color="primary" class="account__action-btn" block @click="handleClick">{{ loginText[+isLogin] }}</v-btn>
   </div>
 </template>
@@ -24,7 +29,7 @@ import { mixins } from 'vue-class-component'
 import mixin from '@/mixin'
 
 @Component
-export default class Me extends mixins(mixin.UpdateHeader, mixin.UpdateMenu) {
+export default class Me extends mixins(mixin.UpdateHeader, mixin.UpdateMenu, mixin.Utils) {
   /* props */
   /* vuex */
   /* data */
@@ -35,6 +40,10 @@ export default class Me extends mixins(mixin.UpdateHeader, mixin.UpdateMenu) {
       handler: this.toggleLoginOrRegister
     }
   }
+
+  captcha = null
+
+  captchaData = null
 
   menu = {
     show: false
@@ -54,6 +63,10 @@ export default class Me extends mixins(mixin.UpdateHeader, mixin.UpdateMenu) {
   }
 
   handleClick () {
+    if (!this.captchaData) {
+      this.showToast('请完成验证码')
+      return
+    }
     if (this.isLogin) {
       this.handleLogin()
     } else {
@@ -64,7 +77,8 @@ export default class Me extends mixins(mixin.UpdateHeader, mixin.UpdateMenu) {
   async handleLogin () {
     const data = await this.$axios.post('/common/login', {
       username: this.name,
-      password: this.password
+      password: this.password,
+      data: this.captchaData
     })
     if (data) {
       this.$router.push('/home')
@@ -74,12 +88,30 @@ export default class Me extends mixins(mixin.UpdateHeader, mixin.UpdateMenu) {
   }
 
   async handleRegister () {
-    await this.$axios.post('/common/register', {
+    const data = await this.$axios.post('/common/register', {
       username: this.name,
-      password: this.password
+      password: this.password,
+      data: this.captchaData
     })
+    if (data) {
+      this.showToast('注册成功')
+      this.isLogin = true
+    }
   }
+
+  async onCaptcha (payload: any) {
+    this.captchaData = payload
+  }
+
   /* lifecycle */
+  activated () {
+    this.captcha = new window.TencentCaptcha(this.$refs.captcha, '2095678355', this.onCaptcha)
+  }
+
+  deactivated () {
+    this.captcha = null
+    this.captchaData = null
+  }
 }
 </script>
 

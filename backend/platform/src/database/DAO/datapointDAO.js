@@ -21,7 +21,7 @@ module.exports = {
     return Point.forge(options).fetch()
   },
   findAll (options, limit, start, end, desc) {
-    return Point.forge(options).query(function (qb) {
+    return Point.where(options).query(function (qb) {
       start && qb.where('created_at', '>=', new Date(parseInt(start, 10)))
       end && qb.where('created_at', '<', new Date(parseInt(end, 10)))
       desc && qb.orderBy('id', 'DESC')

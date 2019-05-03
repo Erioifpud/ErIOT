@@ -5906,7 +5906,7 @@ mqtt-packet@^5.6.0:
 
 mqtt@^2.18.8:
   version "2.18.8"
-  resolved "http://registry.npm.taobao.org/mqtt/download/mqtt-2.18.8.tgz#9d213ccab92151accfb21ee8c0860dc6866ab259"
+  resolved "https://registry.npm.taobao.org/mqtt/download/mqtt-2.18.8.tgz#9d213ccab92151accfb21ee8c0860dc6866ab259"
   integrity sha1-nSE8yrkhUazPsh7owIYNxoZqslk=
   dependencies:
     commist "^1.0.0"

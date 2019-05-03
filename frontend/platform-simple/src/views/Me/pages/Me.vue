@@ -28,6 +28,10 @@
             <span>学号: </span>
             <span>{{ auth.number || '空' }}</span>
           </div>
+          <div flex="main:justify box:mean cross:center">
+            <span>SCKEY: </span>
+            <span>{{ auth.sckey ? '已填写' : '未填写' }}</span>
+          </div>
         </template>
 
       </v-layout>

@@ -21,6 +21,13 @@
           label="学号"
         ></v-text-field>
       </div>
+      <div class="me-edit__field">
+        <v-text-field
+          v-model="sckey"
+          label="SCKEY"
+          placeholder="从ServerChan获取"
+        ></v-text-field>
+      </div>
       <v-btn class="me-edit__confirm" color="primary" @click="handleConfirm">确定</v-btn>
     </div>
   </div>
@@ -53,6 +60,8 @@ export default class Edit extends mixins(mixin.UpdateHeader, mixin.Utils) {
   newPassword = ''
 
   num = ''
+
+  sckey = ''
   /* computed */
   /* methods */
   handleConfirm () {
@@ -60,14 +69,15 @@ export default class Edit extends mixins(mixin.UpdateHeader, mixin.Utils) {
       this.showMessageDialog('请填写旧密码')
       return
     }
-    if (!this.newPassword && !this.num) {
+    if (!this.newPassword && !this.num && !this.sckey) {
       this.showMessageDialog('请填写需要修改的信息')
       return
     }
     const data = this.$axios.put('/user/' + this.auth.id, {
       password: this.password,
       newPassword: this.newPassword,
-      number: this.num
+      number: this.num,
+      sckey: this.sckey
     })
     if (data) {
       this.showToast('修改成功')

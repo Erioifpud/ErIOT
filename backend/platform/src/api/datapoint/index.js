@@ -54,10 +54,14 @@ async function create (ctx) {
     response.call(ctx, {}, 404, '找不到该Field')
     return
   }
+  const now = new Date()
   const point = await datapointDAO.create({
     value,
-    field_id: field.id
+    field_id: field.id,
+    created_at: now,
+    updated_at: now
   })
+  ctx.state.mqtt.publish('/erioifpud.cn@gmail.com/9c1ba7f4f5847873e88fb03bd84e1bf9|11', `${point.get('created_at')}|${value}`)
   response.call(ctx, {
     id: point.id,
     value: point.get('value'),

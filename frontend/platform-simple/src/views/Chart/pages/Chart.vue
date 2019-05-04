@@ -1,6 +1,6 @@
 <template>
   <div class="chart">
-    <trigger-chart apiKey="9c1ba7f4f5847873e88fb03bd84e1bf9" fieldId="11"></trigger-chart>
+    <trigger-chart :apiKey="apiKey" :fieldId="id"></trigger-chart>
   </div>
 </template>
 
@@ -16,9 +16,22 @@ import TriggerChart from '@/components/TriggerChart'
     TriggerChart
   }
 })
-export default class Chart extends Vue {
-  // header = {
-  //   title: '首页'
-  // }
+export default class Chart extends mixins(mixin.Utils) {
+  /* props */
+  /* vuex */
+  /* data */
+  /* computed */
+  get apiKey () {
+    return this.$route.query.key
+  }
+
+  get id () {
+    return this.$route.query.id
+  }
+  /* methods */
+  /* lifecycle */
+  activated () {
+    this.showToast(`${this.apiKey} | ${this.id}`)
+  }
 }
 </script>

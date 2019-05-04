@@ -3,6 +3,7 @@
     <ve-line :data="chartData" :settings="chartSettings"></ve-line>
     <v-btn color="info" block @click="handleUpload">上传测试数据</v-btn>
     <v-btn color="success" block @click="handleRefresh">刷新图表</v-btn>
+    <v-btn color="indigo" dark block @click="handleTriggerChart">触发式图表</v-btn>
   </div>
 </template>
 
@@ -155,6 +156,16 @@ export default class Datapoints extends mixins(mixin.UpdateHeader, mixin.Utils) 
 
   handleRefresh () {
     this.refreshDatapoints()
+  }
+
+  handleTriggerChart () {
+    this.$router.push({
+      path: '/chart',
+      query: {
+        key: this.apiKey,
+        id: this.$route.params.fieldId
+      }
+    })
   }
 
   // resetAll () {

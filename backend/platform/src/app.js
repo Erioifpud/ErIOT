@@ -8,6 +8,7 @@ const log4js = require('log4js')
 const authorization = require('./middleware/authorization')
 const renewal = require('./middleware/renewal')
 const koaSwagger = require('koa2-swagger-ui')
+const MQTT = require('async-mqtt')
 
 global.__src = __dirname
 
@@ -33,6 +34,15 @@ app.use(async (ctx, next) => {
   await next()
 })
 app.use(koaLogger())
+app.use(async (ctx, next) => {
+  var options = {
+    username: 'erioifpud.cn@gmail.com',
+    password: '9c8e3810',
+  }
+  const mqtt = MQTT.connect('mqtt://mqtt.dioty.co:1883', options)
+  ctx.state.mqtt = mqtt
+  await next()
+})
 app.use(cors())
 app.use(authorization({
   whitelist: [/\/api\/common\/*/, { regex: /\/api\/channel\/\d+/, method: 'get' }, /\/api\/docs\/*/, /\/api\/datapoint\/*/]

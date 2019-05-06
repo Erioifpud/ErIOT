@@ -5,11 +5,11 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Component } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 // import {  } from 'vuex-class'
 import mixin from '@/mixin'
-import TriggerChart from '@/components/TriggerChart'
+import TriggerChart from '@/components/TriggerChart.vue'
 
 @Component({
   components: {

@@ -105,7 +105,8 @@ export default class Me extends mixins(mixin.UpdateHeader, mixin.UpdateMenu, mix
 
   /* lifecycle */
   activated () {
-    this.captcha = new window.TencentCaptcha(this.$refs.captcha, '2095678355', this.onCaptcha)
+    const TencentCaptcha = (window as any).TencentCaptcha
+    this.captcha = new TencentCaptcha(this.$refs.captcha, '2095678355', this.onCaptcha)
   }
 
   deactivated () {

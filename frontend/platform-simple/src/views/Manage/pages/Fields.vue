@@ -27,6 +27,7 @@
           <!-- <v-btn flat color="error" @click="handleApiKey(chn.key)">API-KEY</v-btn> -->
           <v-btn flat color="warning" @click="handleEdit(field.id)">修改</v-btn>
           <v-btn flat color="info" @click="handleEnter(field.id)">打开</v-btn>
+          <v-btn flat color="indigo" @click="handleAction(field.id)">动作</v-btn>
         </v-card-actions>
       </v-card>
     </div>
@@ -160,6 +161,15 @@ export default class Fields extends mixins(mixin.UpdateHeader, mixin.Utils) {
   handleEnter (id: number) {
     this.$router.push({
       name: 'manage-datapoint',
+      params: {
+        fieldId: id.toString()
+      }
+    })
+  }
+
+  handleAction (id: number) {
+    this.$router.push({
+      name: 'manage-action',
       params: {
         fieldId: id.toString()
       }

@@ -33,10 +33,6 @@ export default class Datapoints extends mixins(mixin.UpdateHeader, mixin.Utils) 
     title: '数据点',
     leftBtn: {
       icon: 'arrow-back'
-    },
-    rightBtn: {
-      icon: 'information-circle',
-      handler: this.showMessageDialog.bind(this, '系统还未完全部署，暂时只能手动进行图表数据的更新。')
     }
   }
 

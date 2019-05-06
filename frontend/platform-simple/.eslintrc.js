@@ -4,9 +4,9 @@ module.exports = {
     node: true
   },
   'extends': [
-    'plugin:vue/recommended',
-    '@vue/standard',
-    '@vue/typescript'
+    'plugin:vue/essential',
+    '@vue/standard'
+    // '@vue/typescript'
   ],
   rules: {
     'no-console': 'off',

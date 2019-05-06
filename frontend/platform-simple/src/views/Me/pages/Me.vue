@@ -7,7 +7,7 @@
             :size="100"
             color="grey lighten-4"
           >
-            <img src="https://avatars0.githubusercontent.com/u/8306955?s=460&v=4" alt="avatar">
+            <img src="/img/8306955.png" alt="avatar">
           </v-avatar>
         </v-flex>
 

@@ -127,11 +127,20 @@ function verifyToken (token) {
   return jwt.verify(token, jwtConfig.secret || '', omit(jwtConfig, 'secret'))
 }
 
+const actionTable = {
+  0: '===',
+  1: '<',
+  2: '>',
+  3: '<=',
+  4: '>='
+}
+
 module.exports = {
   response,
   responseWithToken,
   resourceRoutes,
   omit,
   signToken,
-  verifyToken
+  verifyToken,
+  actionTable
 }

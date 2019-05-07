@@ -27,6 +27,7 @@
     "nodemon": "^1.18.10"
   },
   "scripts": {
-    "serve": "nodemon"
+    "serve": "nodemon",
+    "start": "node src/app.js"
   }
 }

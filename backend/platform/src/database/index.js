@@ -42,9 +42,17 @@ const Point = bookshelf.Model.extend({
   }
 })
 
+const Action = bookshelf.Model.extend({
+  tableName: 'action',
+  field: function () {
+    return this.belongsTo(Field)
+  }
+})
+
 module.exports = {
   User,
   Channel,
   Field,
-  Point
+  Point,
+  Action
 }

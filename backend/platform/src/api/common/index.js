@@ -15,6 +15,10 @@ function validate (body) {
   if (trimedUsername.length > 16 || trimedPassword > 16) {
     return false
   }
+  const re = new RegExp('[`~!@#$^&*()=|{}\':;\',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“\'。，、？%+_]')
+  if (re.test(username) || re.test(password)) {
+    return false
+  }
   return true
 }
 

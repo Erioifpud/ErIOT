@@ -8,7 +8,7 @@ module.exports = {
     plugins: [
       new VConsolePlugin({
         filter: [],
-        enable: true
+        enable: false
       })
     ]
   },

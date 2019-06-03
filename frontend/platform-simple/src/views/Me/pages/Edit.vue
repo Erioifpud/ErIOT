@@ -88,7 +88,7 @@ export default class Edit extends mixins(mixin.UpdateHeader, mixin.Utils) {
 
   handleTips () {
     this.showDialog(`“每人每天发送上限500条，相同内容5分钟内不能重复发送，不同内容一分钟只能发送30条。主要是防止程序出错的情况。
-由于很多死循环请求导致服务器费用飙升，24小时请求接口超过1000次的账户将被封禁。” ----- ServerChan`, '玩脱了自己负责', false, {
+由于很多死循环请求导致服务器费用飙升，24小时请求接口超过1000次的账户将被封禁。” ----- ServerChan （由于服务器部署在国外机房，这个推送不是很稳定，有几率推送失败）`, '玩脱了自己负责', false, {
       text: '跳转ServerChan',
       handler: () => {
         window.open('http://sc.ftqq.com/')

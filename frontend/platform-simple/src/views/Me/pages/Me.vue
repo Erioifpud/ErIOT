@@ -35,6 +35,7 @@
         </template>
 
       </v-layout>
+      <v-btn color="error" class="me__logout-btn" block @click="handleClick">注销</v-btn>
     </v-container>
   </div>
 </template>
@@ -70,6 +71,11 @@ export default class Me extends mixins(mixin.UpdateHeader) {
       const auth = await this.$axios.get('/user')
       this.$store.commit('setAuth', auth)
     })
+  }
+
+  handleClick () {
+    this.$store.commit('setAuth', {})
+    this.$router.push('/login')
   }
 }
 </script>

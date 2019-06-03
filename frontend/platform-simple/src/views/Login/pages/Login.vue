@@ -94,8 +94,11 @@ export default class Me extends mixins(mixin.UpdateHeader, mixin.UpdateMenu, mix
       data: this.captchaData
     })
     if (data) {
-      this.showToast('注册成功')
+      this.showToast('注册成功，请登陆')
       this.isLogin = true
+      this.$router.push('/home')
+      const auth = await this.$axios.get('/user')
+      this.$store.commit('setAuth', auth)
     }
   }
 

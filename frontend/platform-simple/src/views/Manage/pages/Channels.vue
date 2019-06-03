@@ -22,7 +22,7 @@
             </div> -->
           </div>
         </v-card-title>
-        <v-card-actions>
+        <v-card-actions flex="box:justify">
           <v-btn flat color="error" @click="handleApiKey(chn.key)">API-KEY</v-btn>
           <v-btn flat color="warning" @click="handleEdit(chn.id)">修改</v-btn>
           <v-btn flat color="info" @click="handleEnter(chn)">打开</v-btn>
@@ -97,7 +97,7 @@ export default class Channels extends mixins(mixin.UpdateHeader, mixin.Utils) {
   }
 
   handleApiKey (key: string) {
-    this.showDialog('API-KEY很重要，不要随意告诉别人。', undefined, true, {
+    this.showDialog('API-KEY很重要，不要随意告诉别人。\n' + key, undefined, true, {
       text: '确认',
       handler: () => {
         this.$clipboard(key)
@@ -107,6 +107,14 @@ export default class Channels extends mixins(mixin.UpdateHeader, mixin.Utils) {
   }
 
   handleEdit (id: number) {
+    this.selectedId = id
+    this.showComponentDialog((ChannelDialog as any), '编辑Channel', false, {
+      text: '确认',
+      handler: this.handleEditConfirm
+    })
+  }
+
+  handleRemove (id: number) {
     this.selectedId = id
     this.showComponentDialog((ChannelDialog as any), '编辑Channel', false, {
       text: '确认',

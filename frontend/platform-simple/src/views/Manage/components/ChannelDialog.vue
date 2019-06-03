@@ -14,9 +14,9 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import { mixins } from 'vue-class-component'
+// import { mixins } from 'vue-class-component'
 // import {  } from 'vuex-class'
-import mixin from '@/mixin'
+// import mixin from '@/mixin'
 
 @Component
 export default class AddItemDialog extends Vue {

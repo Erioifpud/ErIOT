@@ -4,8 +4,8 @@ import store from './store'
 
 // 初始化axios并且设置超时时间
 const instance = axios.create({
-  timeout: 3000,
-  baseURL: 'http://localhost:3000/api/',
+  timeout: 10000,
+  baseURL: 'https://simple-platform.herokuapp.com/api/',
   headers: {
     'Content-Type': 'application/json'
   }
@@ -55,6 +55,15 @@ instance.interceptors.response.use((response: AxiosResponse) => {
     return undefined
   }
 }, (error: AxiosResponse) => {
+  if(error instanceof Error && (error as Error).message.indexOf('timeout') !== -1){
+    store.dispatch('showToast', {
+      text: '请求超时正在重试'
+    })
+    store.commit('hideLoading', true)
+    return instance.request(error.config)
+    // return Promise.reject(error)
+  }
+  console.log(error instanceof Error)
   if (error.status !== 200) {
     store.dispatch('showToast', {
       text: '请求失败'

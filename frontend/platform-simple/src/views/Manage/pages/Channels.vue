@@ -5,7 +5,7 @@
     </div>
     <div v-else class="channels__cards" flex="dir:top cross:stretch">
       <v-card class="channels__card" v-for="chn in channels" :key="chn.id">
-        <v-card-title primary-title>
+        <v-card-title primary-title v-long-press="handleRemove(chn.id, chn.key)">
           <div class="channels__card-title" flex="main:justify cross:stretch box:mean">
             <!-- <div flex-box="1">
               <ion-icon class="channels__chn-icon" name="cube"></ion-icon>
@@ -114,12 +114,29 @@ export default class Channels extends mixins(mixin.UpdateHeader, mixin.Utils) {
     })
   }
 
-  handleRemove (id: number) {
-    this.selectedId = id
-    this.showComponentDialog((ChannelDialog as any), '编辑Channel', false, {
-      text: '确认',
-      handler: this.handleEditConfirm
+  handleRemove (id: number, key: string) {
+    return (ev: Element) => {
+      this.selectedId = id
+      this.showDialog('真的要删除🐴?', undefined, true, {
+        text: '确认',
+        handler: () => {
+          this.remove(id, key)
+        }
+      }, {
+        text: '不了不了'
+      })
+    }
+  }
+
+  async remove (id: number, key: string) {
+    const data = await this.$axios.delete('/channel/' + id, {
+      headers: {
+        'api-key': key
+      }
     })
+    if (data) {
+      this.refreshChannels()
+    }
   }
 
   async handleEditConfirm (payload: any) {

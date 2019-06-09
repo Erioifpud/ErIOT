@@ -5,7 +5,7 @@ import store from './store'
 // 初始化axios并且设置超时时间
 const instance = axios.create({
   timeout: 10000,
-  baseURL: 'https://simple-platform.herokuapp.com/api/',
+  baseURL: 'https://platform.applinzi.com/api/',
   headers: {
     'Content-Type': 'application/json'
   }

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-btn small color="primary" @click="test">莫名其妙的按钮</v-btn>
-    <v-btn small color="success" @click="test2">联系方式</v-btn>
+    <v-btn small color="primary" @click="test">测试按钮</v-btn>
+    <v-btn small color="success" @click="test2">问题反馈</v-btn>
   </div>
 </template>
 

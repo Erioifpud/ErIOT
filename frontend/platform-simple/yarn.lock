@@ -9005,6 +9005,11 @@ vue-loader@^15.4.2:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-long-press-directive@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npm.taobao.org/vue-long-press-directive/download/vue-long-press-directive-1.0.2.tgz#97720c599185b7b10b7292d75739a4c26a78da4c"
+  integrity sha1-l3IMWZGFt7ELcpLXVzmkwmp42kw=
+
 vue-property-decorator@^7.0.0:
   version "7.2.0"
   resolved "http://registry.npm.taobao.org/vue-property-decorator/download/vue-property-decorator-7.2.0.tgz#8e6b0f4dcc630c357135f76366ba7bd91f1db015"

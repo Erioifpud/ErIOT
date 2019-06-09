@@ -91,20 +91,42 @@ async function checkAction (opts) {
     const code = act.get('code')
     const threshold = act.get('threshold')
     const sign = actionTable[+code]
-    if (eval(`${+cur}${sign}${+threshold}`)) {
-      notifyWechat(key, cur, sign, threshold)
+    // console.log(code, threshold, sign)
+    // if (eval(`${+cur}${sign}${+threshold}`)) {
+    //   notifyWechat(key, cur, sign, threshold)
+    // }
+    switch (sign) {
+      case '=':
+        cur === threshold && notifyWechat(key, cur, sign, threshold)
+        break
+      case '<':
+        cur < threshold && notifyWechat(key, cur, sign, threshold)
+        break
+      case '>':
+        cur > threshold && notifyWechat(key, cur, sign, threshold)
+        break
+      case '<=':
+        cur <= threshold && notifyWechat(key, cur, sign, threshold)
+        break
+      case '>=':
+        cur >= threshold && notifyWechat(key, cur, sign, threshold)
+        break
+      default:
+        break
     }
   })
 }
 
 function notifyWechat (key, cur, sign, threshold) {
+  console.log('notifyWechat', key, cur, sign, threshold)
   const url = `https://sc.ftqq.com/${key}.send`
   axios.get(url, {
     params: {
       text: '动作',
       desp: `当前数据为${cur}，已满足触发条件"${sign}"，阈值为${threshold}。`
     }
-  })
+  }).catch(console.log)
+  // console.log(resp)
   // console.log(`当前数据为${cur}，已满足触发条件"${sign}"，阈值为${threshold}。`)
 }
 

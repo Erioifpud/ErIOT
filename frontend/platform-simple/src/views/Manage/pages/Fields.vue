@@ -5,7 +5,7 @@
     </div>
     <div v-else class="fields__cards" flex="dir:top cross:stretch">
       <v-card class="fields__card" v-for="field in fields" :key="field.id">
-        <v-card-title primary-title>
+        <v-card-title primary-title v-long-press="handleRemove(field.id)">
           <div class="fields__card-title" flex="main:justify cross:stretch box:mean">
             <!-- <div flex-box="1">
               <ion-icon class="channels__chn-icon" name="cube"></ion-icon>
@@ -174,6 +174,31 @@ export default class Fields extends mixins(mixin.UpdateHeader, mixin.Utils) {
         fieldId: id.toString()
       }
     })
+  }
+
+  handleRemove (id: number) {
+    return (ev: Element) => {
+      this.selectedId = id
+      this.showDialog('真的要删除🐴?', undefined, true, {
+        text: '确认',
+        handler: () => {
+          this.remove(id, this.apiKey)
+        }
+      }, {
+        text: '不了不了'
+      })
+    }
+  }
+
+  async remove (id: number, key: string) {
+    const data = await this.$axios.delete('/field/' + id, {
+      headers: {
+        'api-key': key
+      }
+    })
+    if (data) {
+      this.refreshFields()
+    }
   }
   /* lifecycle */
   activated () {

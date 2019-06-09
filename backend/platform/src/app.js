@@ -12,7 +12,7 @@ const MQTT = require('async-mqtt')
 
 global.__src = __dirname
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 5050
 
 log4js.configure({
   appenders: { 
@@ -58,5 +58,5 @@ app.use(router.allowedMethods())
 
 
 app.listen(PORT, () => {
-  console.log('Server is running on http://localhost:3000')
+  console.log('Server is running on http://localhost:3000', process.env.PORT)
 })

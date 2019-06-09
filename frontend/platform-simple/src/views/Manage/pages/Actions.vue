@@ -123,7 +123,7 @@ export default class Actions extends mixins(mixin.UpdateHeader, mixin.Utils) {
   }
 
   async handleRemove (id: number) {
-    this.showDialog('真的要删除🐴?', undefined, false, {
+    this.showDialog('真的要删除🐴?', undefined, true, {
       text: '确认',
       handler: () => {
         this.remove(id)

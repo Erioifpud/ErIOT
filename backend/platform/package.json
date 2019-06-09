@@ -8,6 +8,7 @@
     "@koa/cors": "2",
     "@types/bookshelf": "^0.13.1",
     "@types/koa": "^2.0.48",
+    "async-mqtt": "^2.3.0",
     "axios": "^0.18.0",
     "bcrypt": "^3.0.5",
     "bookshelf": "^0.14.2",
@@ -24,7 +25,8 @@
     "log4js": "^4.1.0",
     "md5": "^2.2.1",
     "mysql": "^2.16.0",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "yarn": "^1.16.0"
   },
   "scripts": {
     "serve": "nodemon",

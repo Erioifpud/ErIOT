@@ -57,16 +57,51 @@ export default class TriggerChart extends Vue {
   }
 
   async initChart () {
+    await this.initHistoryPoints()
+
     var options = {
       // clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8),
       username: 'erioifpud.cn@gmail.com',
       password: '9c8e3810'
     }
     this.client = MQTT.connect(this.link, options)
-    await this.client.subscribe(this.root + this.topic)
-    this.client.on('message', (topic: string, message: string) => {
-      this.addPoint(message.toString())
+    this.client.on('connect', async () => {
+      console.log('connected')
+      await this.client.subscribe(this.root + this.topic)
+      this.client.on('message', (topic: string, message: string) => {
+        console.log(topic, message)
+        this.addPoint(message.toString())
+      })
     })
+  }
+
+  async initHistoryPoints () {
+    let params = {
+      id: this.fieldId,
+      start: undefined,
+      desc: true
+    }
+    // this.newestDate && (params.start = +this.newestDate)
+    const data = await this.$axios.get('/datapoint/', {
+      params,
+      headers: {
+        'api-key': this.apiKey
+      }
+    })
+    if (!data) {
+      return
+    }
+    const points = (data as any).datapoints
+    this.points.splice(0, points.length)
+    this.points = this.points.concat(points)
+    this.points.reverse()
+
+    this.$set(this.chartData, 'rows', this.points.map((point: any) => {
+      return {
+        'date': this.formatDate(point.createdAt),
+        'data': point.value
+      }
+    }))
   }
 
   addPoint (points: string) {
@@ -98,7 +133,7 @@ export default class TriggerChart extends Vue {
   /* lifecycle */
   async mounted () {
     if (this.apiKey && this.fieldId) {
-      this.initChart()
+      await this.initChart()
     }
     // console.log('init')
   }

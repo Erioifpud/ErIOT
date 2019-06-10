@@ -15,7 +15,8 @@ export default [
         path: '',
         component: Chart,
         meta: {
-          isHome: true
+          isHome: true,
+          withoutAuth: true
         }
       }
     ]

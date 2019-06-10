@@ -63,6 +63,10 @@ export default class Me extends mixins(mixin.UpdateHeader, mixin.UpdateMenu, mix
   }
 
   handleClick () {
+    if (!this.name.trim() || !this.password.trim()) {
+      this.showToast('请输入用户名/密码')
+      return
+    }
     if (!this.captchaData) {
       this.showToast('请完成验证码')
       return
@@ -76,8 +80,8 @@ export default class Me extends mixins(mixin.UpdateHeader, mixin.UpdateMenu, mix
 
   async handleLogin () {
     const data = await this.$axios.post('/common/login', {
-      username: this.name,
-      password: this.password,
+      username: this.name.trim(),
+      password: this.password.trim(),
       data: this.captchaData
     })
     if (data) {
@@ -90,8 +94,8 @@ export default class Me extends mixins(mixin.UpdateHeader, mixin.UpdateMenu, mix
 
   async handleRegister () {
     const data = await this.$axios.post('/common/register', {
-      username: this.name,
-      password: this.password,
+      username: this.name.trim(),
+      password: this.password.trim(),
       data: this.captchaData
     })
     if (data) {

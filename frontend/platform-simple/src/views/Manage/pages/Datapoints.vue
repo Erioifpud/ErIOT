@@ -1,9 +1,10 @@
 <template>
   <div class="datapoints">
     <ve-line :data="chartData" :settings="chartSettings"></ve-line>
-    <v-btn color="info" block @click="handleUpload">上传测试数据</v-btn>
+    <v-btn color="info" block @click="handleUpload">产生模拟上传数据</v-btn>
     <v-btn color="success" block @click="handleRefresh">刷新图表</v-btn>
     <v-btn color="indigo" dark block @click="handleTriggerChart">触发式图表</v-btn>
+    <v-btn color="indigo" dark block @click="handleCopyUrl">复制图表链接</v-btn>
   </div>
 </template>
 
@@ -162,6 +163,11 @@ export default class Datapoints extends mixins(mixin.UpdateHeader, mixin.Utils) 
         id: this.$route.params.fieldId
       }
     })
+  }
+
+  handleCopyUrl () {
+    this.$clipboard(`https://platform.erio.work/#/chart?key=${this.apiKey}&id=${this.$route.params.fieldId}`)
+    this.showToast('已复制至剪贴板')
   }
 
   // resetAll () {

@@ -20,7 +20,7 @@ export default class PointDialog extends Vue {
   /* props */
   /* vuex */
   /* data */
-  value = 0
+  value = 50
   /* computed */
   /* methods */
   collect () {

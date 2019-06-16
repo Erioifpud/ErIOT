@@ -166,7 +166,7 @@ export default class Datapoints extends mixins(mixin.UpdateHeader, mixin.Utils) 
   }
 
   handleCopyUrl () {
-    this.$clipboard(`https://platform.erio.work/#/chart?key=${this.apiKey}&id=${this.$route.params.fieldId}`)
+    this.$clipboard(`http://platform.applinzi.com/chart#key=${this.apiKey}&id=${this.$route.params.fieldId}`)
     this.showToast('已复制至剪贴板')
   }
 

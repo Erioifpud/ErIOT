@@ -45,7 +45,7 @@ export default class TriggerChart extends Vue {
   }
   /* computed */
   get link () {
-    return `mqtt://${this.server}:${this.port}`
+    return `ws://${this.server}:${this.port}`
   }
 
   get topic () {

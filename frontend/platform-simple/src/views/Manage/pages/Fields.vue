@@ -11,7 +11,7 @@
               <ion-icon class="channels__chn-icon" name="cube"></ion-icon>
             </div> -->
             <div flex-box="1">
-              <div class="grey--text">ID: {{ field.id }}</div>
+              <div class="grey--text">域 ID: {{ field.id }}</div>
               <div>名称: {{ field.name }}</div>
               <div>单位名称: {{ field.unitName || '暂无' }}</div>
               <div>单位符号: {{ field.unit || '暂无' }}</div>

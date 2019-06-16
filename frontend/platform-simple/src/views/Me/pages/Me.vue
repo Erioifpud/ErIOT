@@ -7,7 +7,7 @@
             :size="100"
             color="grey lighten-4"
           >
-            <img src="/img/8306955.png" alt="avatar">
+            <img src="/img/8306955.webp" alt="avatar">
           </v-avatar>
         </v-flex>
 

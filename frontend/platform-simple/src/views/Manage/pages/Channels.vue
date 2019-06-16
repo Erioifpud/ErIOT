@@ -11,7 +11,7 @@
               <ion-icon class="channels__chn-icon" name="cube"></ion-icon>
             </div> -->
             <div flex-box="1">
-              <div class="grey--text">ID: {{ chn.id }}</div>
+              <div class="grey--text">频道 ID: {{ chn.id }}</div>
               <div>名称: {{ chn.name }}</div>
               <div>{{ chn.private ? '私有' : '公开'}}</div>
               <div>创建: {{ dateFormat(chn.createdAt) }}</div>

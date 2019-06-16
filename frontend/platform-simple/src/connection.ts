@@ -24,7 +24,7 @@ interface ResponseData {
 
 instance.interceptors.request.use((config: AxiosRequestConfig) => {
   const token = window.localStorage.getItem('token')
-  if (!token && !router.currentRoute.path.startsWith('/login')) {
+  if (!token && !router.currentRoute.path.startsWith('/login') && !router.currentRoute.meta.withoutAuth) {
     router.push('/login')
   } else {
     config.headers['Authorization'] = `Bearer ${token}`

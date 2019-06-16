@@ -44,6 +44,24 @@ export default class App extends Vue {
   /* computed */
   /* methods */
   /* lifecycle */
+  created () {
+    // const isIPhone = window.navigator.userAgent.match(/[iphone|ipad]/gi)
+    // let dpr = isIPhone ? window.devicePixelRatio : 1
+    // const scale = 1 / dpr
+    // let meta = document.querySelector('meta[name="viewport"]')
+    // if (meta) {
+    //   meta.setAttribute('content', `width=device-width,initial-scale=${scale},maximum-scale=${scale},minimum-scale=${scale}`)
+    // } else {
+    //   meta = document.createElement('meta')
+    //   meta.setAttribute('name', 'viewport')
+    //   meta.setAttribute('content', `width=device-width,initial-scale=${scale},maximum-scale=${scale},minimum-scale=${scale}`)
+    //   document.head.appendChild(meta)
+    // }
+
+    // document.addEventListener('DOMContentLoaded', () => {
+    //   document.documentElement.style.fontSize = `${14 * dpr}px`
+    // })
+  }
 }
 </script>
 
@@ -51,6 +69,14 @@ export default class App extends Vue {
 html, body, #app {
   margin: 0;
   height: 100%;
+}
+
+.application--wrap {
+  min-height: 100% !important;
+}
+
+.v-btn__content {
+  font-size: 0.875rem;
 }
 
 #app {

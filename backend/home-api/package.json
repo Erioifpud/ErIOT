@@ -18,7 +18,7 @@
     "mqtt": "^2.18.8",
     "mysql2": "^1.6.1",
     "nodemon": "^1.18.4",
-    "sequelize": "^4.39.0",
+    "sequelize": "^5.15.1",
     "vertx3-full": "^3.5.1"
   },
   "scripts": {
